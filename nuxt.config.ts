@@ -44,5 +44,4 @@ export default defineNuxtConfig({
   build: {
     transpile: lifecycle === "build" ? ["element-plus"] : [],
   },
-  nitro: { preset: "cloudflare yarn build" },
 });
