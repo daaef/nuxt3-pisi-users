@@ -1,0 +1,37 @@
+@use "element-plus/dist/index.css";
+:root {
+  --el-color-white: #fafafa;
+  --el-color-black: #202020;
+  --el-color-primary: #3063E9;
+  --el-color-success-rgb: #05A753;
+  --el-color-warning-rgb: #FF8F6B;
+  --el-color-danger-rgb: #ce5555;
+  --el-color-error-rgb: #E51919;
+  --el-color-info-rgb: #547FC9;
+  --el-button-font-weight: 3s00;
+}
+/*
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'white': #fafafa,
+    'black': #202020,
+    'primary': (
+      'base': #2936AC,
+    ),
+    'success': (
+      'base': #05A753,
+    ),
+    'warning': (
+      'base': #FF8F6B,
+    ),
+    'danger': (
+      'base': #ce5555,
+    ),
+    'error': (
+      'base': #E51919,
+    ),
+    'info': (
+      'base': #547FC9,
+    ),
+  )
+);*/
