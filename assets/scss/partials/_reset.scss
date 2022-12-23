@@ -1,0 +1,38 @@
+*,
+html,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box !important;
+  font-family: "Montserrat", sans-serif;
+}
+main {
+  min-height: 100vh;
+}
+html {
+  overflow-y: auto !important;
+  font-size: 14px !important;
+}
+[class^="iconly-"],
+[class*="iconly-"] {
+  font-size: 1rem;
+}
+
+header {
+  &.v-sheet.v-app-bar {
+    background: transparent !important;
+  }
+}
+
+.img-contain {
+  object-fit: contain;
+}
+
+.my-page-enter-active,
+.my-page-leave-active {
+  transition: opacity 0.3s;
+}
+.my-page-enter,
+.my-page-leave-to {
+  opacity: 0;
+}

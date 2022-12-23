@@ -1,0 +1,86 @@
+.table {
+  margin-top: 30px;
+  thead {
+    position: relative;
+    &:before {
+      content: '';
+      border: solid 1px #e8e8f3;
+      border-radius: 25px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    tr {
+      th {
+        line-height: 0;
+      }
+    }
+  }
+  tbody {
+    tr {
+      position: relative;
+      cursor: pointer;
+      td {
+        position: relative;
+        z-index: 2;
+      }
+      td:last-child {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      td:first-child {
+        font-weight: 600;
+        &:before {
+          content: '';
+          position: absolute;
+          background: transparent;
+          top: 0;
+          left: 0;
+          width: 8px;
+          height: 100%;
+          border-top-left-radius: 25px;
+          border-bottom-left-radius: 25px;
+          transition: 0.3s ease-in-out;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          background: #ffffff;
+          left: 4px;
+          top: 0;
+          width: 8px;
+          height: 100%;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          transition: 0.3s ease-in-out;
+        }
+      }
+      &:after {
+        content: '';
+        position: absolute;
+        background: transparent;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: 0.3s ease-in-out;
+      }
+      &:hover,
+      &.row--active {
+        td:first-child {
+          &:before {
+            background: $primary;
+          }
+          &:after {
+            background: #e8e8f3;
+          }
+        }
+        &:after {
+          background: #e8e8f3;
+        }
+      }
+    }
+  }
+}

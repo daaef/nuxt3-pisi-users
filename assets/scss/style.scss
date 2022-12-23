@@ -1,20 +1,48 @@
-@use "partials/variables";
+@import "partials/base";
+.el-input--small .el-input__inner {
+  --el-input-inner-height: 35px !important;
+}
+.el-input {
+  --el-input-bg-color: #eeeeee !important;
+  .el-input__wrapper {
+    box-shadow: none !important;
+  }
+}
+.el-input.el-input-group__prepend {
+  & > .el-input__wrapper {
+    box-shadow: none !important;
+    background: #eeeeee !important;
+    border-radius: 12px !important;
+  }
+}
+
+.el-input-group__prepend {
+  background: none !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  .el-input__wrapper {
+    background: #eeeeee !important;
+    border-bottom-left-radius: 12px;
+    border-top-left-radius: 12px;
+    //border-radius: 12px !important;
+  }
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .main {
   display: flex;
   .sidebar {
     min-width: 250px;
-    background: variables.$secondary;
+    background: $secondary;
     height: 100vh;
     padding-top: 20px;
     .el-menu-item {
       position: relative;
-      color: #3063E9;
+      color: #3063e9;
       overflow: hidden;
       padding-left: 30px !important;
       & > * {
@@ -25,8 +53,8 @@
       }
       &:not(.non-default):before {
         transition: 0.3s ease-in-out;
-        content: '';
-        background: variables.$primary;
+        content: "";
+        background: $primary;
         position: absolute;
         top: 0;
         left: 20px;
@@ -36,7 +64,8 @@
         border-top-left-radius: 8px;
         border-bottom-left-radius: 8px;
       }
-      &:not(.non-default).is-active, &:not(.non-default):hover {
+      &:not(.non-default).is-active,
+      &:not(.non-default):hover {
         color: #fafafa;
         background: transparent;
         &:before {
@@ -53,7 +82,7 @@
       font-weight: normal;
     }
     .line-less {
-      & > *{
+      & > * {
         line-height: 1.2;
         &:last-child {
           display: flex;
@@ -82,7 +111,7 @@
     .stack--container {
       position: relative;
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         bottom: 0;
         height: 100%;

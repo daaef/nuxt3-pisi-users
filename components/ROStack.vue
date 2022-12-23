@@ -2,64 +2,7 @@
   <div class="stack--container mb-6">
     <div class="main--stack">
       <div class="exchange--inputs">
-        <div class="mt-4">
-          <el-form
-              label-position="top"
-              :model="myForm"
-          >
-          <el-form-item
-              label="Sell">
-            <el-input
-              v-model="input3"
-              placeholder="Please input"
-              class="input-with-select"
-          >
-            <template #prefix>
-              <i :class="`cf cf-${selected.toLowerCase()} text-xl mr-2`" />
-            </template>
-            <template #prepend>
-              <el-select v-model="selected" placeholder="Select" style="width: 80px">
-                <el-option
-                    v-for="coin in store.coins"
-                    :label="coin.name"
-                    :key="coin.id"
-                    :value="coin.name"
-                >
-                  <ROCurrency :icon="coin.name" :name="coin.name" />
-                </el-option>
-              </el-select>
-<!--              <el-dropdown>
-                <span class="el-dropdown-link">
-                  hey<el-icon class="el-icon&#45;&#45;right"><arrow-down /></el-icon>
-                </span>
-                <template #dropdown>
-                  <el-dropdown-menu>
-                    <el-dropdown-item>
-                      <ROCurrency icon="btc" name="BTC" />
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                      <ROCurrency icon="btc" name="BTC" />
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                      <ROCurrency icon="btc" name="BTC" />
-                    </el-dropdown-item>
-                    <el-dropdown-item>Action 4</el-dropdown-item>
-                    <el-dropdown-item>Action 5</el-dropdown-item>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>-->
-            </template>
-          </el-input>
-          </el-form-item>
-          </el-form>
-        </div>
-        <el-button
-            class="mt-4 ml-5"
-            type="primary"
-            size="large"
-        >Search <i class="iconly-Search ml-2 icli"></i
-        ></el-button
-        >
+          <ROInputWithAddon :coins="store.coins" />
       </div>
       <div class="rates-text flex text-sm">
         <span class="bold mr-1 text-gray-400">Official rate:</span>
@@ -80,8 +23,13 @@ import {watchEffect} from "@vue/runtime-core";
   const handleClose = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
   }
+  const focusEve = (e: any) => {
+    console.log(e, 'e is')
+    focusedMode.value = true
+  }
   const myForm = ref({})
   const input3 = ref('')
+  const focusedMode = ref(false)
   const selected = ref('')
 </script>
 
@@ -89,7 +37,84 @@ import {watchEffect} from "@vue/runtime-core";
   .cf.cf-btc {
     color: #f2a900;
   }
+  .cf {
+    height: 25px;
+    width: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    border-radius: 50%;
+  }
+  .cf.cf-eth {
+    color: #323232;
+    background: #EDEFF1;
+    padding: 3px;
+    font-size: calc(1.5rem - 6px);
+  }
+  .cf.cf-trx {
+    color: #fafafa;
+    background: #EB0029;
+    padding: 3px;
+    font-size: calc(1.5rem - 6px);
+  }
+  .cf.cf-doge {
+    color: #fafafa;
+    background: #C2A633;
+    padding: 3px;
+    font-size: calc(1.5rem - 6px);
+  }
+  .cf.cf-matic {
+    color: #fafafa;
+    background: #7950DD;
+    padding: 3px;
+    font-size: calc(1.5rem - 6px);
+  }
+  .cf.cf-yfi {
+    color: #0657F9;
+  }
+  .cf.cf-usdt {
+    color: #22A079;
+  }
   .el-input-group--prepend .el-input-group__prepend .el-select .el-input .el-input__wrapper {
     box-shadow: none !important;
+    background: #EEEEEE;
+  }
+
+  .el-form {
+    display: flex;
+    align-items: center;
+    .el-button, img {
+      margin-top: 6px;
+    }
+  }
+  .p-inputgroup {
+    width: fit-content;
+    min-width: 300px;
+    background: #EEEEEE;
+    border-radius: 8px;
+    transition: .3s ease-in-out;
+    &:has(input:focus){
+      box-shadow: 0px 5px 20px -10px gray;
+    }
+    .p-inputtext {
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .p-dropdown {
+      box-shadow: none !important;
+    }
+    & > * {
+      &.addon {
+        width: 125px;
+        flex: unset;
+      }
+      input {
+        background: transparent;
+        border: none;
+      }
+      background: transparent;
+      border: none;
+    }
   }
 </style>

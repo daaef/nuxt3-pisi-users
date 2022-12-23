@@ -5,7 +5,7 @@ const input3 = useState('0')
 
 <template>
   <div class="page-content">
-    <el-button type="primary" size="large">Create sell offer</el-button>
+    <button type="primary" size="large">Create sell offer</button>
     <h4 class="header--title">Buy</h4>
     <LazyROStack />
   </div>

@@ -1,6 +1,10 @@
 <template>
-  <span class="a-icon flex items-center">
-    <i :class="`cf cf-${icon.toLowerCase()} text-2xl mr-2`" />
+  <span class="a-icon flex items-center" v-if="type === 'currency'">
+    <span :class="`${name?.toLowerCase()} mr-2 rounded-circle`">{{ icon }}</span>
+    {{ name }}
+  </span>
+  <span v-else class="a-icon flex items-center">
+    <i :class="`cf cf-${name?.toLowerCase()} mr-2`" />
     {{ name }}
   </span>
 </template>
@@ -8,7 +12,8 @@
 <script lang="ts" setup>
   defineProps({
     icon: String,
-    name: String
+    name: String,
+    type: String
   })
 </script>
 

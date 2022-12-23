@@ -1,0 +1,87 @@
+.table :where(thead, tfoot) :where(th, td),
+.table :where(tbody th, tbody td) {
+  background: transparent;
+  border-color: #e8e8f3;
+}
+
+.close--btn {
+  position: absolute;
+  display: none;
+  top: 0;
+  transform: translateY(calc(-100% - 2px));
+  right: 0;
+  i {
+    font-size: 2rem;
+  }
+}
+
+.hor--pane {
+  display: flex;
+  margin-top: 50px;
+  justify-content: space-between;
+  .select-set {
+    display: flex;
+    select {
+      background: #e8e8f3;
+      color: $primary;
+      font-weight: 400;
+    }
+  }
+}
+
+.dashboard--container {
+  padding: 0 46px;
+  display: flex;
+  transition: 0.3s ease-in-out;
+  @media (max-width: 499px) {
+    .hor--pane {
+      flex-direction: column;
+      .select-set {
+        margin-top: 10px;
+      }
+    }
+  }
+  &:has(.user--details) {
+    @media (max-width: 1024px) {
+      .hor--pane {
+        flex-direction: column;
+        .select-set {
+          margin-top: 10px;
+        }
+      }
+    }
+    @media (max-width: 890px) {
+      .user--details {
+        position: absolute;
+        right: 0;
+        z-index: 20;
+      }
+
+      .close--btn {
+        display: block;
+      }
+    }
+  }
+  .dashboard-view {
+    min-width: calc(100% - 480px);
+    flex: 1;
+  }
+  .user--details {
+    background: #e8e8f3;
+    height: calc(100vh - 115px);
+    max-width: 500px;
+    width: 100%;
+    margin-top: 50px;
+    padding: 15px;
+    margin-left: 20px;
+    .user--content {
+      background: #ffffff;
+      border-radius: 15px;
+      height: 100%;
+      padding: 15px;
+    }
+  }
+}
+.user--container {
+  transition: 0.3s ease-in-out;
+}

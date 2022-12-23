@@ -1,5 +1,6 @@
 const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -40,8 +41,11 @@ export default defineNuxtConfig({
     "~/assets/css/style.css",
     "~/assets/css/bulk-style.css",
     "~/assets/cryptofont.min.css",
+    "primevue/resources/themes/saga-blue/theme.css",
+    "primevue/resources/primevue.css",
+    "primeicons/primeicons.css",
   ],
   build: {
-    transpile: lifecycle === "build" ? ["element-plus"] : [],
+    transpile: ["primevue"], // fix dev error: Cannot find module 'vueuc'
   },
 });

@@ -1,6 +1,5 @@
 <template>
-  <Menu :model="items" />
-<!--  <el-menu
+  <el-menu
       :default-active="$route.fullPath"
       class="sidebar"
       @open="handleOpen"
@@ -10,7 +9,7 @@
     <div class="header-sidebar">
       <img src="/auth-logo.png" alt="" />
     </div>
-    <div class="sidebar&#45;&#45;grid">
+    <div class="sidebar--grid">
       <div class="">
 
         <el-sub-menu index="1">
@@ -19,7 +18,7 @@
               <h4>Matthew Ero</h4>
               <div class="text-gray-400">
                 <i class="iconly-Location mr-1 text-xl icli" />
-                &lt;!&ndash;                  <el-icon><location /></el-icon>&ndash;&gt;
+                <!--                  <el-icon><location /></el-icon>-->
                 <span>Nigeria</span>
               </div>
             </div>
@@ -62,56 +61,16 @@
         </el-menu-item>
       </div>
     </div>
-  </el-menu>-->
+  </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useToast } from 'primevue/usetoast';
-
-    const toast = useToast();
-    const menu = ref();
-    const items = ref([
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            toast.add({severity:'success', summary:'Updated', detail:'Data Updated', life: 3000});
-          }
-        },
-          {
-            label: 'Delete',
-            icon: 'pi pi-times',
-            command: () => {
-              toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
-            }
-          }
-        ]},
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Vue Website',
-          icon: 'pi pi-external-link',
-          url: 'https://vuejs.org/'
-        },
-          {
-            label: 'Router',
-            icon: 'pi pi-upload',
-            command: () => {
-              window.location.hash = "/fileupload"
-            }
-          }
-        ]}
-    ]);
-
-    const toggle = (event: any) => {
-      menu.value.toggle(event);
-    };
-    const save = () => {
-      toast.add({severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000});
-    };
+  const handleOpen = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath)
+  }
+  const handleClose = (key: string, keyPath: string[]) => {
+    console.log(key, keyPath)
+  }
 </script>
 
 <style scoped>

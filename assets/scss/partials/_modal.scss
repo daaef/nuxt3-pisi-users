@@ -1,0 +1,47 @@
+.deactivate--modal {
+  .rotate--icon {
+    transform: rotate(-180deg);
+    i {
+      color: $primary;
+      font-size: 4rem;
+    }
+  }
+}
+
+.v-dialog__content,
+.v-overlay--active {
+  z-index: 2000000 !important;
+}
+
+.v-dialog {
+  border-radius: 15px !important;
+  max-width: 350px !important;
+  z-index: 20002 !important;
+  overflow-x: hidden;
+  .v-card__text {
+    padding-top: 20px !important;
+  }
+  .history--title {
+    margin-bottom: 15px;
+    display: flex;
+    color: $primary;
+    i {
+      color: $primary;
+    }
+  }
+  p {
+    margin-bottom: 0 !important;
+  }
+  .history--content {
+    &:not(:last-of-type) {
+      border-bottom: solid 1px $primary;
+    }
+    padding: 8px 0 !important;
+  }
+  .transfer-arrows {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
