@@ -2,7 +2,12 @@
   <div class="stack--container mb-6">
     <div class="main--stack">
       <div class="exchange--inputs">
-          <ROInputWithAddon :coins="store.coins" />
+		<div class="input--grid">
+          <ROInputWithAddon type="currency" label="From" :currencies="store.currencies" />
+		  <img class="mx-3" src="/exchange.svg" alt="" />
+		  <ROCustomDropdown :coins="store.coins" label="To" />
+		  <Button class="primary" label="Search" icon="pi pi-search" />
+		</div>
       </div>
       <div class="rates-text flex text-sm">
         <span class="bold mr-1 text-gray-400">Official rate:</span>
@@ -116,5 +121,19 @@ import {watchEffect} from "@vue/runtime-core";
       background: transparent;
       border: none;
     }
+  }
+  .input--grid {
+	display: flex;
+	align-items: center;
+	img {
+	  margin-top: 22px;
+	}
+	.p-button {
+	  margin-top: 23px;
+	  margin-left: 10px;
+	}
+  }
+  .exchange--inputs {
+	margin-bottom: 15px;
   }
 </style>

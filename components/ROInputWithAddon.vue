@@ -1,11 +1,11 @@
 <template>
   <div class="">
-  <h4 class="font-bold">From</h4>
+  <h4 class="font-bold">{{ label }}</h4>
   <div class="p-inputgroup mt-1">
-    <Dropdown class="addon" v-model="selectedData" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Country">
+    <Dropdown class="addon" v-model="selectedData" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
       <template #value="slotProps">
         <div class="country-item country-item-value" v-if="slotProps.value">
-          <ROCurrency :icon="slotProps.value.name" :name="slotProps.value.name" :type="coins?.length ? '' : 'currency'"/>
+          <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
         </div>
         <span v-else>
           {{slotProps.placeholder}}
@@ -13,8 +13,8 @@
       </template>
       <template #option="slotProps">
         <div class="flex justify-between items-center w-full">
-          <ROCurrency :icon="slotProps.option.icon" :name="slotProps.option.name" :type="coins?.length ? '' : 'currency'"/>
-          <p class="ml-5 capitalize">{{slotProps.option.icon}}</p>
+          <ROCurrency :icon="slotProps.option" :type="coins?.length ? '' : 'currency'"/>
+          <p class="ml-5 capitalize">{{slotProps.option.coin}}</p>
         </div>
       </template>
     </Dropdown>
@@ -28,17 +28,16 @@
 defineProps({
   currencies: Array,
   coins: Array,
-  name: String,
+  label: String,
   type: String
 })
-const selectedData = ref(
-    {
-      id: 1,
-      coin: "Bitcoin",
-      name: "BTC",
-      icon: "btc",
-      selected: false,
-    })
+const selectedData = ref({
+	  id: 1,
+	  coin: "Naira",
+	  name: "NGN",
+	  icon: "₦",
+	  selected: false,
+	})
 const input3 = ref('')
 const selected = ref('')
 </script>

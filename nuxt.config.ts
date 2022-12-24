@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     "~/assets/css/style.css",
     "~/assets/css/bulk-style.css",
     "~/assets/cryptofont.min.css",
-    "primevue/resources/themes/saga-blue/theme.css",
+    "primevue/resources/themes/lara-light-indigo/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
   ],

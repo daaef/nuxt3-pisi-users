@@ -1,119 +1,38 @@
 <template>
-  <Menu :model="items" />
-<!--  <el-menu
-      :default-active="$route.fullPath"
-      class="sidebar"
-      @open="handleOpen"
-      @close="handleClose"
-      router
-  >
-    <div class="header-sidebar">
-      <img src="/auth-logo.png" alt="" />
-    </div>
-    <div class="sidebar&#45;&#45;grid">
-      <div class="">
-
-        <el-sub-menu index="1">
-          <template #title>
-            <div class="flex flex-col line-less justify-center">
-              <h4>Matthew Ero</h4>
-              <div class="text-gray-400">
-                <i class="iconly-Location mr-1 text-xl icli" />
-                &lt;!&ndash;                  <el-icon><location /></el-icon>&ndash;&gt;
-                <span>Nigeria</span>
-              </div>
-            </div>
-          </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item two</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item class="mt-10" index="/">
-          <i class="iconly-Activity mr-2 text-xl icli" />
-          <span>Transactions</span>
-        </el-menu-item>
-      </div>
-      <div class="">
-        <el-menu-item class="mb-3" index="/2">
-          <i class="iconly-Swap mr-2 text-xl icli" />
-          <span>Exchange</span>
-        </el-menu-item>
-        <el-menu-item index="/3">
-          <i class="iconly-Time-Circle mr-2 text-xl icli" />
-          <span>History</span>
-        </el-menu-item>
-      </div>
-      <div class="">
-        <el-menu-item index="/4">
-          <i class="iconly-Info-Circle mr-2 text-xl icli" />
-          <span>Help Center</span>
-        </el-menu-item>
-        <el-menu-item index="6" class="non-default">
-          <i class="iconly-Logout mr-2 text-xl icli" />
-          <span>Logout</span>
-        </el-menu-item>
-      </div>
-    </div>
-  </el-menu>-->
+  <div class="ro--sidebar">
+	<div class="logo--holder">
+	  <img src="/auth-logo.png" alt="Logo">
+	</div>
+	<div class="user--info">
+	  <div tabindex="0" class="collapse collapse-arrow rounded-box">
+		<input type="checkbox" class="peer" />
+		<div class="collapse-title">
+		  <span class="text-lg font-medium">Focus me to see content</span>
+		</div>
+		<div class="collapse-content">
+		  <p>tabindex="0" attribute is necessary to make the div focusable</p>
+		</div>
+	  </div>
+	</div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useToast } from 'primevue/usetoast';
 
-    const toast = useToast();
-    const menu = ref();
-    const items = ref([
-      {
-        label: 'Options',
-        items: [{
-          label: 'Update',
-          icon: 'pi pi-refresh',
-          command: () => {
-            toast.add({severity:'success', summary:'Updated', detail:'Data Updated', life: 3000});
-          }
-        },
-          {
-            label: 'Delete',
-            icon: 'pi pi-times',
-            command: () => {
-              toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
-            }
-          }
-        ]},
-      {
-        label: 'Navigate',
-        items: [{
-          label: 'Vue Website',
-          icon: 'pi pi-external-link',
-          url: 'https://vuejs.org/'
-        },
-          {
-            label: 'Router',
-            icon: 'pi pi-upload',
-            command: () => {
-              window.location.hash = "/fileupload"
-            }
-          }
-        ]}
-    ]);
-
-    const toggle = (event: any) => {
-      menu.value.toggle(event);
-    };
-    const save = () => {
-      toast.add({severity: 'success', summary: 'Success', detail: 'Data Saved', life: 3000});
-    };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+	.ro--sidebar {
+	  padding: 30px 0 30px 30px;
+	  height: 100vh;
+	  width: 270px;
+	  background: #e8e8f3;
+	  transition: .3s ease-in-out;
+	  translate: none;
+	  .logo--holder {
+		img {
+		  height: 35px;
+		}
+	  }
+	}
 </style>
