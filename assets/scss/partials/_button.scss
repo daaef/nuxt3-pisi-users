@@ -1,10 +1,15 @@
 .btn, .p-button {
   text-transform: none;
+  border: none !important;
   .p-button-label {
     font-weight: 400 !important;
   }
   &.primary {
     background: $primary!important;
+  }
+  &.secondary {
+    background: $secondary!important;
+    color: $primary!important;
   }
   border-radius: 8px!important;
   .iconly-Arrow-Right {

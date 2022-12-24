@@ -12,6 +12,7 @@ import MultiSelect from "primevue/multiselect";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 import {FilterMatchMode} from "primevue/api";
+import Dialog from "primevue/dialog";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(PrimeVue, { ripple: true, inputStyle: "filled" });
@@ -26,5 +27,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.component("MultiSelect", MultiSelect);
   nuxtApp.vueApp.component("Column", Column);
   nuxtApp.vueApp.component("DataTable", DataTable);
+  nuxtApp.vueApp.component("Dialog", Dialog);
   //other components that you need
 });

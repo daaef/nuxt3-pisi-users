@@ -2,7 +2,7 @@
   <div class="">
   <h4 class="font-bold">{{ label }}</h4>
   <div class="p-inputgroup mt-1">
-    <Dropdown class="addon" v-model="selectedData" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
+    <Dropdown v-if="!addon" class="addon" v-model="selectedData" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
       <template #value="slotProps">
         <div class="country-item country-item-value" v-if="slotProps.value">
           <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -18,7 +18,15 @@
         </div>
       </template>
     </Dropdown>
-    <InputNumber inputId="minmaxfraction" v-model="input3" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" />
+	<div class="addon rate" v-if="addon === 'rate'">
+	  <span class="text-gray-500">$1</span>
+	  <span class="text-2xl text-primary font-bold"> = </span>
+	</div>
+	<div class="addon" v-if="addon === 'text'" >
+		<ROCurrency type="currency" :icon="selectedCurrency" />
+	</div>
+	<InputNumber v-if="addon === 'rate'" v-model="input1" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" prefix="₦"/>
+    <InputNumber v-else inputId="minmaxfraction" v-model="input3" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" />
   </div>
 
   </div>
@@ -29,7 +37,9 @@ defineProps({
   currencies: Array,
   coins: Array,
   label: String,
-  type: String
+  type: String,
+  addon: String,
+  selectedCurrency: String
 })
 const selectedData = ref({
 	  id: 1,
@@ -39,9 +49,26 @@ const selectedData = ref({
 	  selected: false,
 	})
 const input3 = ref('')
+const input1 = ref('700')
 const selected = ref('')
 </script>
 
-<style>
-
+<style lang="scss">
+.custom-input {
+  .p-inputgroup {
+	.p-dropdown .p-dropdown-trigger{
+	  width: 1.5rem;
+	}
+	span.p-dropdown-label.p-inputtext{
+	  padding: 0 0;
+	}
+	.addon {
+	  &.rate {
+		width: 50% !important;
+		display: flex;
+		justify-content: space-between;
+	  }
+	}
+  }
+}
 </style>

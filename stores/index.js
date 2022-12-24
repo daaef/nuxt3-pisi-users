@@ -166,6 +166,27 @@ export const useStore = defineStore({
         selected: false,
       },
     ],
+    ng: {
+        id: 1,
+        coin: "Naira",
+        name: "NGN",
+        icon: "₦",
+        selected: false,
+      },
+    eu: {
+        id: 2,
+        coin: "Euros",
+        name: "EUR",
+        icon: "€",
+        selected: false,
+      },
+    us: {
+        id: 3,
+        coin: "Dollars",
+        name: "USD",
+        icon: "$",
+        selected: false,
+      }
   }),
   actions: {
     connect() {},

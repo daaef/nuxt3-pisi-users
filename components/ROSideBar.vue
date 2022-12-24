@@ -1,17 +1,66 @@
 <template>
   <div class="ro--sidebar">
-	<div class="logo--holder">
-	  <img src="/auth-logo.png" alt="Logo">
+	<div class="nav-top">
+	  <div class="logo--holder">
+		<img src="/auth-logo.png" alt="Logo">
+	  </div>
+	  <div class="user--info">
+		<div tabindex="0" class="collapse collapse-arrow ">
+		  <input type="checkbox" class="peer" />
+		  <div class="collapse-title pl-0">
+			<span class="text-lg font-medium">Matthew Ero</span>
+			<div class="text-gray-500">
+			  <i class="iconly-Location mr-1 text-xl icli" />
+			  <!--                  <el-icon><location /></el-icon>-->
+			  <span>Nigeria</span>
+			</div>
+		  </div>
+		  <div class="collapse-content">
+			<ul>
+			  <li>Hey</li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
 	</div>
-	<div class="user--info">
-	  <div tabindex="0" class="collapse collapse-arrow rounded-box">
-		<input type="checkbox" class="peer" />
-		<div class="collapse-title">
-		  <span class="text-lg font-medium">Focus me to see content</span>
-		</div>
-		<div class="collapse-content">
-		  <p>tabindex="0" attribute is necessary to make the div focusable</p>
-		</div>
+	<div class="nav-bottom">
+	  <ul class="mt-5">
+		<li class="page-nav">
+		  <a href="#">
+			<i class="iconly-Activity mr-2 text-xl icli" />
+			<span>Transactions</span>
+		  </a>
+		</li>
+	  </ul>
+	  <div class="rem--nav">
+	  	<ul class="mt-5">
+		<li class="page-nav active-link">
+		  <a href="#">
+          	<i class="iconly-Swap mr-2 text-xl icli" />
+          	<span>Buy</span>
+		  </a>
+		</li>
+		<li class="page-nav">
+		  <a href="#">
+			<i class="iconly-Time-Circle mr-2 text-xl icli" />
+			<span>History</span>
+		  </a>
+		</li>
+	  </ul>
+	  	<ul class="mt-5">
+		<li class="page-nav">
+		  <a href="#">
+          <i class="iconly-Info-Circle mr-2 text-xl icli" />
+          <span>Help Center</span>
+		  </a>
+		</li>
+		<li class="page-nav link-type">
+		  <a href="#">
+          <i class="iconly-Logout mr-2 text-xl icli" />
+          <span>Logout</span>
+		  </a>
+		</li>
+	  </ul>
 	  </div>
 	</div>
   </div>
@@ -29,9 +78,65 @@
 	  background: #e8e8f3;
 	  transition: .3s ease-in-out;
 	  translate: none;
+	  display: grid;
+	  grid-auto-rows: 143.5px 1fr;
 	  .logo--holder {
 		img {
 		  height: 35px;
+		}
+	  }
+	  .user--info {
+		padding-top: 35px;
+		.collapse-title {
+		  display: flex;
+		  flex-direction: column;
+		}
+	  }
+	  .nav-bottom {
+		display: grid;
+		grid-template-rows: 105px 1fr;
+		.page-nav {
+		  color: #3063E9;
+		  margin-bottom: 20px;
+		  padding: 15px;
+		  position: relative;
+		  overflow: hidden;
+		  cursor: pointer;
+		  a {
+			position: relative;
+			display: flex;
+			align-items: center;
+			i {
+			  font-size: 1.4rem;
+			}
+		  }
+		  &:before {
+			position: absolute;
+			content: '';
+			left: 0;
+			top: 0;
+			background: #3063E9;
+			width: 100%;
+			height: 100%;
+			border-radius: 8px 0px 0px 8px;
+			transition: .3s ease-in-out;
+			transform: translateX(100%);
+		  }
+		  &.active-link, &:hover:not(.link-type) {
+			color: #fafafa;
+			&:before {
+			  transform: none;
+			}
+		  }
+		  &.link-type {
+			padding-bottom: 0;
+			margin-bottom: 0;
+		  }
+		}
+		.rem--nav {
+		  display: flex;
+		  flex-direction: column;
+		  justify-content: space-between;
 		}
 	  }
 	}
