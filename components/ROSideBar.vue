@@ -35,10 +35,10 @@
 	  <div class="rem--nav">
 	  	<ul class="mt-5">
 		<li class="page-nav active-link">
-		  <a href="#">
+		  <nuxt-link to="/">
           	<i class="iconly-Swap mr-2 text-xl icli" />
           	<span>Buy</span>
-		  </a>
+		  </nuxt-link>
 		</li>
 		<li class="page-nav">
 		  <a href="#">
@@ -72,6 +72,7 @@
 
 <style lang="scss" scoped>
 	.ro--sidebar {
+      [§=]
 	  padding: 30px 0 30px 30px;
 	  height: 100vh;
 	  width: 270px;
