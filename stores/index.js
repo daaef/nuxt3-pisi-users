@@ -186,7 +186,81 @@ export const useStore = defineStore({
         name: "USD",
         icon: "$",
         selected: false,
-      }
+      },
+    history: [
+      {
+        key: 1,
+        id: "6728390-465322",
+        sentAmount: "765.00",
+        recieveAmount: "749.85",
+        sendCurrency: "eu",
+        recieveCurrency: "us",
+        date: "2022-10-13"
+      },
+      {
+        key: 2,
+        id: "6728390-465322",
+        sentAmount: "230.00",
+        recieveAmount: "63,634.92",
+        sendCurrency: "us",
+        recieveCurrency: "ng",
+        date: "2022-10-13"
+      },
+      {
+        key: 3,
+        id: "6728390-465322",
+        sentAmount: "230.00",
+        recieveAmount: "63,634.92",
+        sendCurrency: "us",
+        recieveCurrency: "ng",
+        date: "2022-10-13"
+      },
+      {
+        key: 4,
+        id: "6728390-465322",
+        sentAmount: "765.00",
+        recieveAmount: "749.85",
+        sendCurrency: "eu",
+        recieveCurrency: "us",
+        date: "2022-10-13"
+      },
+      {
+        key: 5,
+        id: "6728390-465322",
+        sentAmount: "765.00",
+        recieveAmount: "749.85",
+        sendCurrency: "eu",
+        recieveCurrency: "us",
+        date: "2022-10-13"
+      },
+      {
+        key: 6,
+        id: "6728390-465322",
+        sentAmount: "230.00",
+        recieveAmount: "63,634.92",
+        sendCurrency: "us",
+        recieveCurrency: "ng",
+        date: "2022-10-13"
+      },
+      {
+        key: 7,
+        id: "6728390-465322",
+        sentAmount: "765.00",
+        recieveAmount: "749.85",
+        sendCurrency: "eu",
+        recieveCurrency: "us",
+        date: "2022-10-13"
+      },
+      {
+        key: 8,
+        id: "6728390-465322",
+        sentAmount: "230.00",
+        recieveAmount: "63,634.92",
+        sendCurrency: "us",
+        recieveCurrency: "ng",
+        date: "2022-10-13"
+      },
+    ],
   }),
   actions: {
     connect() {},

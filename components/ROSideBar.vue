@@ -1,3 +1,4 @@
+
 <template>
   <div class="ro--sidebar">
 	<div class="nav-top">
@@ -34,17 +35,17 @@
 	  </ul>
 	  <div class="rem--nav">
 	  	<ul class="mt-5">
-		<li class="page-nav active-link">
-		  <nuxt-link to="/">
+		<li class="page-nav">
+		  <r-o-link to="/">
           	<i class="iconly-Swap mr-2 text-xl icli" />
           	<span>Buy</span>
-		  </nuxt-link>
+		  </r-o-link>
 		</li>
 		<li class="page-nav">
-		  <a href="#">
+		  <r-o-link to="/history">
 			<i class="iconly-Time-Circle mr-2 text-xl icli" />
 			<span>History</span>
-		  </a>
+		  </r-o-link>
 		</li>
 	  </ul>
 	  	<ul class="mt-5">
@@ -54,8 +55,8 @@
           <span>Help Center</span>
 		  </a>
 		</li>
-		<li class="page-nav link-type">
-		  <a href="#">
+		<li class="page-nav">
+		  <a href="#" class="link-type">
           <i class="iconly-Logout mr-2 text-xl icli" />
           <span>Logout</span>
 		  </a>
@@ -72,7 +73,6 @@
 
 <style lang="scss" scoped>
 	.ro--sidebar {
-      [§=]
 	  padding: 30px 0 30px 30px;
 	  height: 100vh;
 	  width: 270px;
@@ -97,41 +97,43 @@
 		display: grid;
 		grid-template-rows: 105px 1fr;
 		.page-nav {
-		  color: #3063E9;
-		  margin-bottom: 20px;
-		  padding: 15px;
-		  position: relative;
-		  overflow: hidden;
-		  cursor: pointer;
 		  a {
 			position: relative;
 			display: flex;
 			align-items: center;
+			color: #3063E9;
+			margin-bottom: 20px;
+			padding: 15px;
+			overflow: hidden;
+			cursor: pointer;
 			i {
 			  font-size: 1.4rem;
 			}
-		  }
-		  &:before {
-			position: absolute;
-			content: '';
-			left: 0;
-			top: 0;
-			background: #3063E9;
-			width: 100%;
-			height: 100%;
-			border-radius: 8px 0px 0px 8px;
-			transition: .3s ease-in-out;
-			transform: translateX(100%);
-		  }
-		  &.active-link, &:hover:not(.link-type) {
-			color: #fafafa;
-			&:before {
-			  transform: none;
+			& > *{
+			  position: relative;
 			}
-		  }
-		  &.link-type {
-			padding-bottom: 0;
-			margin-bottom: 0;
+			&:before {
+			  position: absolute;
+			  content: '';
+			  left: 0;
+			  top: 0;
+			  background: #3063E9;
+			  width: 100%;
+			  height: 100%;
+			  border-radius: 8px 0px 0px 8px;
+			  transition: .3s ease-in-out;
+			  transform: translateX(100%);
+			}
+			&.exact-active-link, &:hover:not(.link-type) {
+			  color: #fafafa;
+			  &:before {
+				transform: none;
+			  }
+			}
+			&.link-type {
+			  padding-bottom: 0;
+			  margin-bottom: 0;
+			}
 		  }
 		}
 		.rem--nav {

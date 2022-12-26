@@ -47,5 +47,30 @@ const display2 = ref(false);
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
+.p-datatable .p-datatable-tbody > tr.p-highlight {
+  position: relative;
+  padding-left: 5px;
+  color: #3063e9;
+  td {
+	position: relative;
+	z-index: 2;
+	background: #fafafa;
+	&:first-of-type {
+	  left: 5px;
+	  border-top-left-radius: 15px;
+	  border-bottom-left-radius: 15px;
+	}
+  }
+  &:after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	background: #3063e9;
+	height: calc(100% - 1.5px);
+	left: 0;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+  }
+}
 </style>

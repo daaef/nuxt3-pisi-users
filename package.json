@@ -16,6 +16,7 @@
     "@css-render/vue3-ssr": "^0.15.11",
     "@pinia/nuxt": "^0.4.6",
     "daisyui": "^2.43.2",
+    "dayjs": "^1.11.7",
     "primeicons": "^6.0.1",
     "primevue": "^3",
     "sass": "^1.56.2",
