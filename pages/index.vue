@@ -12,7 +12,6 @@ const display2 = ref(false);
     <Button class="primary" label="Create sell offer" @click.prevent="display2 = true" />
     <h4 class="header--title">Buy</h4>
     <LazyROStack />
-
 	<DataTable :value="store.payments" :paginator="true" :rows="10"
 			   v-model:selection="selectedCustomer2" selectionMode="single" dataKey="id"
 			   stateStorage="local" stateKey="dt-state-demo-local" responsiveLayout="scroll">
@@ -52,25 +51,29 @@ const display2 = ref(false);
   position: relative;
   padding-left: 5px;
   color: #3063e9;
+  border-radius: 15px;
   td {
 	position: relative;
 	z-index: 2;
-	background: #fafafa;
+	background: #E8E8F3;
 	&:first-of-type {
 	  left: 5px;
 	  border-top-left-radius: 15px;
 	  border-bottom-left-radius: 15px;
 	}
+	&:last-of-type {
+	  border-top-right-radius: 15px;
+	  border-bottom-right-radius: 15px;
+	}
   }
   &:after {
 	content: '';
 	position: absolute;
-	width: 100%;
+	width: calc(100% - 20px);
 	background: #3063e9;
 	height: calc(100% - 1.5px);
 	left: 0;
-	border-top-left-radius: 15px;
-	border-bottom-left-radius: 15px;
+	border-radius: 15px;
   }
 }
 </style>

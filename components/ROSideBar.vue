@@ -42,10 +42,10 @@
 		  </r-o-link>
 		</li>
 		<li class="page-nav">
-		  <r-o-link to="/history">
+		  <nuxt-link active-class="exact-active-link" to="/history">
 			<i class="iconly-Time-Circle mr-2 text-xl icli" />
 			<span>History</span>
-		  </r-o-link>
+		  </nuxt-link>
 		</li>
 	  </ul>
 	  	<ul class="mt-5">
