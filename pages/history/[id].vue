@@ -110,12 +110,12 @@ const router = useRouter()
 	  	<div class="history-share--download">
 		<a href="#" class="text-primary">
 		  <i class="iconly-Arrow-Down-Square icli"></i>
-		  Download
+		  <span>Download</span>
 		</a>
 		<span class="text-primary">|</span>
 		<a href="#" class="text-primary">
 		  <i class="iconly-Send icli"></i>
-		  Share
+		  <span>Share</span>
 		</a>
 	  </div>
 	  </div>
@@ -170,13 +170,17 @@ const router = useRouter()
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  & > span {
+	font-size: 1.4rem;
+  }
   a {
 	display: flex;
 	align-items: center;
   }
+
   i {
-	font-size: 1.4rem;
+	font-size: 2rem;
 	margin-right: 5px;
   }
 }

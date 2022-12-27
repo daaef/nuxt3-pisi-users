@@ -67,8 +67,6 @@ const rowClicked = (e)=> {
 		  No Data found.
 		</template>
 	  </DataTable>
-	  <RORequestOffer :dialog="display" @closeModal="display = false" />
-	  <ROMakeOffer :dialog="display2" @closeModal="display2 = false" />
 	</div>
 	<NuxtPage />
   </div>

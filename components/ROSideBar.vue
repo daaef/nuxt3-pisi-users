@@ -27,10 +27,10 @@
 	<div class="nav-bottom">
 	  <ul class="mt-5">
 		<li class="page-nav">
-		  <a href="#">
+		  <nuxt-link active-class="exact-active-link" to="/transactions">
 			<i class="iconly-Activity mr-2 text-xl icli" />
 			<span>Transactions</span>
-		  </a>
+		  </nuxt-link>
 		</li>
 	  </ul>
 	  <div class="rem--nav">
@@ -80,7 +80,7 @@
 	  transition: .3s ease-in-out;
 	  translate: none;
 	  display: grid;
-	  grid-auto-rows: 143.5px 1fr;
+	  grid-auto-rows: auto 1fr;
 	  .logo--holder {
 		img {
 		  height: 35px;
@@ -106,6 +106,7 @@
 			padding: 15px;
 			overflow: hidden;
 			cursor: pointer;
+			transition: .3s ease-in-out;
 			i {
 			  font-size: 1.4rem;
 			}
@@ -120,7 +121,7 @@
 			  background: #3063E9;
 			  width: 100%;
 			  height: 100%;
-			  border-radius: 8px 0px 0px 8px;
+			  border-radius: 8px 0 0 8px;
 			  transition: .3s ease-in-out;
 			  transform: translateX(100%);
 			}
