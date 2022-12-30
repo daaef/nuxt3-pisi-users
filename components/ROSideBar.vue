@@ -6,21 +6,15 @@
 		<img src="/auth-logo.png" alt="Logo">
 	  </div>
 	  <div class="user--info">
-		<div tabindex="0" class="collapse collapse-arrow ">
-		  <input type="checkbox" class="peer" />
-		  <div class="collapse-title pl-0">
+		<div tabindex="0" class="collapse collapse-arrow">
+		  <nuxt-link active-class="exact-active-link" to="/account" class="collapse-title pl-0">
 			<span class="text-lg font-medium">Matthew Ero</span>
 			<div class="text-gray-500">
 			  <i class="iconly-Location mr-1 text-xl icli" />
 			  <!--                  <el-icon><location /></el-icon>-->
 			  <span>Nigeria</span>
 			</div>
-		  </div>
-		  <div class="collapse-content">
-			<ul>
-			  <li>Hey</li>
-			</ul>
-		  </div>
+		  </nuxt-link>
 		</div>
 	  </div>
 	</div>
@@ -96,52 +90,92 @@
 	  .nav-bottom {
 		display: grid;
 		grid-template-rows: 105px 1fr;
-		.page-nav {
-		  a {
+	  }
+	  .page-nav {
+		a {
+		  position: relative;
+		  display: flex;
+		  align-items: center;
+		  color: #3063E9;
+		  margin-bottom: 20px;
+		  padding: 15px;
+		  overflow: hidden;
+		  cursor: pointer;
+		  transition: .3s ease-in-out;
+		  i {
+			font-size: 1.4rem;
+		  }
+		  & > *{
 			position: relative;
-			display: flex;
-			align-items: center;
-			color: #3063E9;
-			margin-bottom: 20px;
-			padding: 15px;
-			overflow: hidden;
-			cursor: pointer;
+		  }
+		  &:before {
+			position: absolute;
+			content: '';
+			left: 0;
+			top: 0;
+			background: #3063E9;
+			width: 100%;
+			height: 100%;
+			border-radius: 8px 0 0 8px;
 			transition: .3s ease-in-out;
-			i {
-			  font-size: 1.4rem;
-			}
-			& > *{
-			  position: relative;
-			}
+			transform: translateX(100%);
+		  }
+		  &.exact-active-link, &:hover:not(.link-type) {
+			color: #fafafa;
 			&:before {
-			  position: absolute;
-			  content: '';
-			  left: 0;
-			  top: 0;
-			  background: #3063E9;
-			  width: 100%;
-			  height: 100%;
-			  border-radius: 8px 0 0 8px;
-			  transition: .3s ease-in-out;
-			  transform: translateX(100%);
-			}
-			&.exact-active-link, &:hover:not(.link-type) {
-			  color: #fafafa;
-			  &:before {
-				transform: none;
-			  }
-			}
-			&.link-type {
-			  padding-bottom: 0;
-			  margin-bottom: 0;
+			  transform: none;
 			}
 		  }
+		  &.link-type {
+			padding-bottom: 0;
+			margin-bottom: 0;
+		  }
 		}
-		.rem--nav {
-		  display: flex;
-		  flex-direction: column;
-		  justify-content: space-between;
+	  }
+
+	  a.collapse-title {
+		position: relative;
+		cursor: pointer;
+		transition: .3s ease-in-out;
+		&.exact-active-link {
+		  .text-gray-500 {
+			color: #fafafa;
+		  }
 		}
+		i {
+		  font-size: 1.4rem;
+		}
+		& > *{
+		  position: relative;
+		}
+		&:before {
+		  position: absolute;
+		  content: '';
+		  left: 0;
+		  top: 0;
+		  background: #3063E9;
+		  width: 100%;
+		  height: 100%;
+		  border-radius: 8px 0 0 8px;
+		  transition: .3s ease-in-out;
+		  transform: translateX(100%);
+		}
+		&.exact-active-link, &:hover:not(.link-type) {
+		  color: #fafafa;
+		  padding-left: 10px;
+		  &:before {
+			transform: none;
+		  }
+		}
+		&.link-type {
+		  padding-bottom: 0;
+		  margin-bottom: 0;
+		}
+	  }
+	  .rem--nav {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	  }
 	}
 </style>
