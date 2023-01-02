@@ -21,6 +21,7 @@
     "primevue": "^3",
     "sass": "^1.56.2",
     "unplugin-auto-import": "^0.12.1",
-    "unplugin-vue-components": "^0.22.12"
+    "unplugin-vue-components": "^0.22.12",
+    "vue3-otp-input": "^0.3.6"
   }
 }

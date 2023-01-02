@@ -5146,6 +5146,11 @@ vue-router@^4.1.6:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
+vue3-otp-input@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/vue3-otp-input/-/vue3-otp-input-0.3.6.tgz#49c71be7083f78b7dce44663426b5cc66643f48a"
+  integrity sha512-08A/33P3dvk8DBQ6ACJ6ajNCNdkJL2Di5CVVLxcYK7+izM4KFMeWsFnZsx2fD0VfLE7t6jpi+cNgNU83nP7/TQ==
+
 vue@^3.2.45:
   version "3.2.45"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.45.tgz"

@@ -46,6 +46,6 @@ export default defineNuxtConfig({
     "primeicons/primeicons.css",
   ],
   build: {
-    transpile: ["primevue"], // fix dev error: Cannot find module 'vueuc'
+    transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'
   },
 });

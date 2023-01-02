@@ -70,6 +70,7 @@ const rowClicked = (e)=> {
 	</div>
 	<NuxtPage />
   </div>
+  <ROMakeOffer :dialog="display2" @closeModal="display2 = false" />
 </template>
 
 <style lang="scss">

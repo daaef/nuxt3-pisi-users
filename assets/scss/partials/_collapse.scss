@@ -1,0 +1,18 @@
+.collapse {
+  .collapse-content {
+    overflow: visible;
+    display: grid;
+    grid-gap: 10px;
+    .btn {
+      background: $secondary;
+      color: black;
+      text-align: left;
+      font-weight: normal;
+      height: 5rem;
+      span {
+        font-size: 1.1rem;
+      }
+      transform: none !important;
+    }
+  }
+}
