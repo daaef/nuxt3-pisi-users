@@ -1,12 +1,27 @@
 <script setup>
 import {useStore} from "~/stores";
-import ROVerifyEmail from "../components/ROVerifyEmail";
+import {confirm, error} from "../components/ROToastAndConfirmService";
 const store = useStore()
 const otpInput = ref(null)
 const openOtp = ref(false)
+const changeDetails = ref(false)
+const authenticator = ref(false)
 
 const clearInput = () => {
   otpInput.value.clearInput()
+}
+const confirmAuth = () => {
+  confirm({
+	message: 'Are you sure you want to proceed?',
+	header: 'Confirm password change',
+	icon: 'pi pi-exclamation-triangle',
+	accept: () => {
+	  authenticator.value = true
+	},
+	reject: () => {
+	  error('Cancelled', 'You have cancelled password change');
+	}
+  });
 }
 </script>
 
@@ -55,7 +70,7 @@ const clearInput = () => {
 		  </a>
 		</div>
 	  </div>
-	  <a href="#" class="border-b w-full border-base-300 bg-base-100">
+	  <a href="#" @click.prevent="confirmAuth()" class="border-b w-full border-base-300 bg-base-100">
 		<div class="collapse-title text-xl font-medium pl-0">
 		  <div class="flex">
 			<i class="iconly-More-Square text-primary icli"></i> Password
@@ -66,8 +81,7 @@ const clearInput = () => {
 		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
 		</div>
 	  </a>
-	  <div tabindex="0" class="collapse border-b w-full border-base-300 bg-base-100">
-		<input type="checkbox" class="peer" />
+	  <a tabindex="0" href="#" @click.prevent="changeDetails = true" class="collapse border-b w-full border-base-300 bg-base-100">
 		<div class="collapse-title text-xl font-medium pl-0">
 		  <div class="flex">
 			<i class="iconly-Plus text-primary icli"></i> Account details
@@ -77,12 +91,8 @@ const clearInput = () => {
 		  </div>
 		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
 		</div>
-		<div class="collapse-content">
-		  <p>tabindex="0" attribute is necessary to make the div focusable</p>
-		</div>
-	  </div>
-	  <div tabindex="0" class="collapse border-b w-full border-base-300 bg-base-100">
-		<input type="checkbox" class="peer" />
+	  </a>
+	  <a tabindex="0" href="#" class="collapse border-b w-full border-base-300 bg-base-100">
 		<div class="collapse-title text-xl font-medium pl-0">
 		  <div class="flex">
 			<i class="iconly-Wallet text-primary icli"></i> Connect Wallet
@@ -91,13 +101,23 @@ const clearInput = () => {
 			Connect your crypto wallet
 		  </div>
 		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
-		</div>
-		<div class="collapse-content">
-		  <p>tabindex="0" attribute is necessary to make the div focusable</p>
-		</div>
-	  </div>
+		</div> 
+	  </a>
 	</div>
 	<ROVerifyEmail :dialog="openOtp" @closeModal="openOtp = false" />
+	<Dialog v-model:visible="authenticator">
+	  <div
+		  class="pb-4 flex flex-col items-center justify-center text-center"
+	  >
+		<h3 class="text-2xl font-medium">Verify your password change</h3>
+		<div class="message mt-3">
+		  <p>
+			Click the link sent to <span class="text-primary">joe@gmail.com</span> to verify your password change.
+		  </p>
+		</div>
+	  </div>
+	</Dialog>
+	<ROChangeDetails :dialog="changeDetails" @closeModal="changeDetails= false" />
   </div>
 </template>
 <style lang="scss">

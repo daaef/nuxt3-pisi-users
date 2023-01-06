@@ -1,6 +1,7 @@
 <script setup>
 import {useStore} from "~/stores";
 import {useRouter} from "nuxt/app";
+import {info} from "../components/ROToastAndConfirmService";
 const store = useStore()
 const router = useRouter();
 const selectedHistory = ref();
@@ -10,13 +11,12 @@ const rowClicked = (e)=> {
   router.push(`/history/${e.data.key}`)
 }
 
-
 </script>
 
 <template>
   <div class="page-content history-content">
 	<div class="page--data">
-	  <Button class="primary" label="Create sell offer" @click.prevent="display2 = true" />
+	  <ROCreateSellOffer />
 	  <h4 class="header--title">History</h4>
 
 	  <DataTable @row-click="rowClicked" class="mt-7 history--table" :value="store.history" :paginator="true" :rows="7"

@@ -1,5 +1,6 @@
 <script setup>
 import {useStore} from "~/stores";
+import ROCreateSellOffer from "../components/ROCreateSellOffer";
 
 const store = useStore()
 const selectedCustomer2 = ref();
@@ -9,7 +10,7 @@ const display2 = ref(false);
 
 <template>
   <div class="page-content">
-    <Button class="primary" label="Create sell offer" @click.prevent="display2 = true" />
+	<ROCreateSellOffer />
     <h4 class="header--title">Buy</h4>
     <LazyROStack />
 	<DataTable :value="store.payments" :paginator="true" :rows="10"
@@ -42,7 +43,6 @@ const display2 = ref(false);
 	  </template>
 	</DataTable>
 	<RORequestOffer :dialog="display" @closeModal="display = false" />
-	<ROMakeOffer :dialog="display2" @closeModal="display2 = false" />
   </div>
 </template>
 

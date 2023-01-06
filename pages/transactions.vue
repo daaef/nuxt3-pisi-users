@@ -7,7 +7,7 @@ const display2 = ref('')
 
 <template>
   <div class="page-content">
-    <Button class="primary" label="Create sell offer" @click.prevent="display2 = true" />
+	<ROCreateSellOffer />
     <h4 class="header--title">Ongoing transactions</h4>
 	<div class="transaction--tabs tabs mt-10">
 	  <nuxt-link

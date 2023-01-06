@@ -143,6 +143,36 @@ export const useStore = defineStore({
         selected: false,
       },
     ],
+    banks: [
+      {
+        id: 1,
+        name: "Guaranty Bank",
+      },
+      {
+        id: 2,
+        name: "Access Bank"
+      },
+      {
+        id: 3,
+        name: "Wema Bank"
+      },
+      {
+        id: 4,
+        name: "First Bank Nigeria"
+      },
+      {
+        id: 5,
+        name: "United Bank of Africa"
+      },
+      {
+        id: 6,
+        name: "Union Bank"
+      },
+      {
+        id: 7,
+        name: "Kuda Bank"
+      },
+    ],
     currencies: [
       {
         id: 1,

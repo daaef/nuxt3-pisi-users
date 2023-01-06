@@ -44,25 +44,38 @@
 	  </ul>
 	  	<ul class="mt-5">
 		<li class="page-nav">
-		  <a href="#">
-          <i class="iconly-Info-Circle mr-2 text-xl icli" />
-          <span>Help Center</span>
-		  </a>
+		  <nuxt-link active-class="exact-active-link" to="/help">
+			<i class="iconly-Info-Circle mr-2 text-xl icli" />
+			<span>Help Center</span>
+		  </nuxt-link>
 		</li>
 		<li class="page-nav">
-		  <a href="#" class="link-type">
-          <i class="iconly-Logout mr-2 text-xl icli" />
-          <span>Logout</span>
+		  <a @click.prevent="logoutBtn = true" href="#" class="link-type">
+			<i class="iconly-Logout mr-2 text-xl icli" />
+			<span>Logout</span>
 		  </a>
 		</li>
 	  </ul>
 	  </div>
 	</div>
+	<Dialog v-model:visible="logoutBtn">
+	  <div
+		  class="pb-4 flex flex-col items-center justify-center text-center"
+	  >
+		<i class="iconly-Logout large-icon text-primary icbo"></i>
+		<div class="message">
+		  <h3 class="text-lg my-2">Are you sure you want to log out?</h3>
+		</div>
+	  </div>
+	  <template #footer>
+		<Button label="Log out" class="primary" />
+	  </template>
+	</Dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-
+	const logoutBtn = ref(false)
 </script>
 
 <style lang="scss" scoped>
@@ -163,6 +176,9 @@
 		&.exact-active-link, &:hover:not(.link-type) {
 		  color: #fafafa;
 		  padding-left: 10px;
+		  i, span {
+			color: #fafafa;
+		  }
 		  &:before {
 			transform: none;
 		  }
@@ -177,5 +193,9 @@
 		flex-direction: column;
 		justify-content: space-between;
 	  }
+	}
+	.large-icon {
+	  font-size: 5.5rem;
+	  transform: rotate(180deg);
 	}
 </style>

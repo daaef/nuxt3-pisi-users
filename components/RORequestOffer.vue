@@ -66,7 +66,7 @@
 	  <Button label="Close" class="secondary" autofocus iconPos="right" @click="mainDialog = false" />
 	</template>
   </Dialog>
-  <Dialog v-model:visible="offerDialog" >
+  <Dialog class="back--type" v-model:visible="offerDialog" >
 	<template #header>
 	  <a href="#" @click.prevent="openDialog($event, 'back')">
 		<i class="iconly-Arrow-Left text-xl icli" />

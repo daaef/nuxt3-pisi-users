@@ -2,6 +2,8 @@
     <main class="main">
       <ROSideBar />
       <slot />
+	  <ConfirmDialog />
+	  <Toast />
     </main>
 </template>
 

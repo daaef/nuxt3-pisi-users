@@ -43,3 +43,23 @@ header {
 .my-page-leave-to {
   opacity: 0;
 }
+
+.p-input-filled {
+  .p-inputtext {
+    background: #eeeeee;
+  }
+}
+.p-inputtext, textarea {
+  background: #eeeeee !important;
+  //border: none !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  &:focus {
+    background: transparent !important;
+  }
+
+}
+
+label {
+  margin-bottom: 10px;
+}
