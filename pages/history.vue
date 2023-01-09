@@ -22,7 +22,7 @@ const rowClicked = (e)=> {
 	  <DataTable @row-click="rowClicked" class="mt-7 history--table" :value="store.history" :paginator="true" :rows="7"
 				 v-model:selection="selectedHistory" selectionMode="single" dataKey="key"
 				 stateStorage="local" stateKey="dt-history" responsiveLayout="scroll">
-		<Column field="sentAmount" header="Sent" :sortable="true" style="width:33.3%">
+		<Column field="sentAmount" header="Sent" :sortable="true" style="min-width:204px">
 		  <template #body="slotProps">
 			<div class="sent-info flex items-center">
 			  <div class="mr-3">
@@ -37,7 +37,7 @@ const rowClicked = (e)=> {
 			</div>
 		  </template>
 		</Column>
-		<Column field="date" :sortable="true" style="width:33.3%">
+		<Column field="date" :sortable="true" style="min-width:204px">
 		  <template #header>
 			<img src="/exchange-primary.svg" alt="exchnage image">
 		  </template>
@@ -48,7 +48,7 @@ const rowClicked = (e)=> {
 		  </div>
 		</template>
 		</Column>
-		<Column field="recieveAmount" header="Received" :sortable="true" style="width:33.333%">
+		<Column field="recieveAmount" header="Received" :sortable="true" style="min-width:204px">
 		  <template #body="slotProps">
 			<div class="received-info flex justify-end items-center">
 			  <div class="amount-down text-right">
@@ -79,7 +79,6 @@ const rowClicked = (e)=> {
 	  .page--data {
 		min-width: calc(100% - 380px);
 		flex: 1;
-		transition: .3s ease-in-out;
 	  }
 	  .page-extension {
 		width: fit-content;

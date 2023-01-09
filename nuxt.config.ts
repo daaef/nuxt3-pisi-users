@@ -35,7 +35,20 @@ export default defineNuxtConfig({
       ],
     },
   },
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", '@nuxt-alt/auth', '@nuxt-alt/http', "@nuxt-alt/proxy", "@pinia/nuxt"],
+  proxy: {
+    enableProxy: true,
+    proxies: {
+      '/api': {
+        target: "https://redonion-server.herokuapp.com/api/v1/redonion",
+        changeOrigin: true,
+        rewrite: (path: string) => {
+          console.log('path is', path)
+          return path.replace(/^\/api/, '')
+        },
+      },
+    },
+  },
   css: [
     "~/assets/scss/style.scss",
     "~/assets/css/style.css",
@@ -48,4 +61,4 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'
   },
-});
+})

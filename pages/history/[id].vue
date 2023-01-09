@@ -1,4 +1,10 @@
 <script setup>
+definePageMeta({
+  pageTransition: {
+	name: 'page',
+	mode: 'out-in' // default
+  }
+})
 import {useStore} from "~/stores";
 import {useRouter} from "nuxt/app";
 const store = useStore()

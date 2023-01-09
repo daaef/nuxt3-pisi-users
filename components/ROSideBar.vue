@@ -1,4 +1,3 @@
-
 <template>
   <div class="ro--sidebar">
 	<div class="nav-top">
@@ -6,6 +5,9 @@
 		<img src="/auth-logo.png" alt="Logo">
 	  </div>
 	  <div class="user--info">
+		<nuxt-link to="/kyc" class="badge bg-error/20 border-base-300/0 py-2 rounded">
+		  <i class="iconly-Shield-Fail text-error icbo mr-2" /> <span class="text-black">Complete KYC</span>
+		</nuxt-link>
 		<div tabindex="0" class="collapse collapse-arrow">
 		  <nuxt-link active-class="exact-active-link" to="/account" class="collapse-title pl-0">
 			<span class="text-lg font-medium">Matthew Ero</span>
@@ -68,7 +70,7 @@
 		</div>
 	  </div>
 	  <template #footer>
-		<Button label="Log out" class="primary" />
+		<Button label="Log out" class="primary" @click.prevent="router.push('/auth/login')"/>
 	  </template>
 	</Dialog>
   </div>
@@ -76,6 +78,7 @@
 
 <script lang="ts" setup>
 	const logoutBtn = ref(false)
+	const router = useRouter()
 </script>
 
 <style lang="scss" scoped>
@@ -88,6 +91,9 @@
 	  translate: none;
 	  display: grid;
 	  grid-auto-rows: auto 1fr;
+	  &.open {
+		transform: none;
+	  }
 	  .logo--holder {
 		img {
 		  height: 35px;
