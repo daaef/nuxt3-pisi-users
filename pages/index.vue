@@ -47,33 +47,49 @@ const display2 = ref(false);
 </template>
 
 <style lang="scss">
-.p-datatable .p-datatable-tbody > tr.p-highlight {
-  position: relative;
-  padding-left: 5px;
-  color: #3063e9;
-  border-radius: 15px;
-  td {
-	position: relative;
-	z-index: 2;
-	background: #E8E8F3;
-	&:first-of-type {
-	  left: 5px;
-	  border-top-left-radius: 15px;
-	  border-bottom-left-radius: 15px;
+.p-datatable {
+  .p-datatable-tbody {
+	& > tr {
+	  position: relative;
+	  z-index: 2;
+	  &:after {
+		content: '';
+		z-index: 0;
+		height: 69.5px;
+	  }
+	  &.p-highlight {
+		position: relative;
+		padding-left: 5px;
+		color: #3063e9;
+		border-radius: 15px;
+
+		td {
+		  position: relative;
+		  z-index: 2;
+		  background: #E8E8F3;
+
+		  &:first-of-type {
+			left: 5px;
+			border-top-left-radius: 15px;
+			border-bottom-left-radius: 15px;
+		  }
+
+		  &:last-of-type {
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px;
+		  }
+		}
+
+		&:after {
+		  content: '';
+		  position: absolute;
+		  width: calc(100% - 20px);
+		  background: #3063e9;
+		  left: 0;
+		  border-radius: 15px;
+		}
+	  }
 	}
-	&:last-of-type {
-	  border-top-right-radius: 15px;
-	  border-bottom-right-radius: 15px;
-	}
-  }
-  &:after {
-	content: '';
-	position: absolute;
-	width: calc(100% - 20px);
-	background: #3063e9;
-	height: calc(100% - 1.5px);
-	left: 0;
-	border-radius: 15px;
   }
 }
 </style>

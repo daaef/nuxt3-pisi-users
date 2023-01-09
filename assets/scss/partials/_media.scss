@@ -6,7 +6,7 @@
   }
   .ro--sidebar {
     @media (max-width: 1024px) {
-      position: fixed;
+      position: absolute;
       top: 0;
       bottom: 0;
       left: 0;
@@ -81,6 +81,16 @@
           }
         }
       }
+    }
+  }
+}
+.auth--app--holder {
+  @media (max-width: 569px){
+    padding: 80px 0;
+    height: unset !important;
+    min-height: 100vh;
+    .main {
+      min-height: 0;
     }
   }
 }

@@ -38,12 +38,15 @@
 	.auth--app--holder {
 	  height: 100vh;
 	  width: 100%;
-	  overflow: hidden;
+	  overflow: auto;
 	  background-image: url('/auth-shape.png');
 	  background-repeat: no-repeat;
 	  background-attachment: fixed;
 	  background-size: cover;
 	  background-position: center center;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
 	  nav {
 		height: 60px;
 		display: flex;
@@ -52,10 +55,7 @@
 		top: 0;
 		width: 100%;
 		left: 0;
-	  }
-	  .main {
-		height: 100%;
-		overflow-y: auto;
+		z-index: 5;
 	  }
 	}
 </style>

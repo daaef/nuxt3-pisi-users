@@ -91,6 +91,7 @@
 	  translate: none;
 	  display: grid;
 	  grid-auto-rows: auto 1fr;
+	  overflow-y: auto;
 	  &.open {
 		transform: none;
 	  }
