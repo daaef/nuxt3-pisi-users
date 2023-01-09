@@ -56,6 +56,9 @@
     }
     @media (max-width: 569px) {
       .stack--container {
+        &:before {
+          transform: scale(0.95) translateY(15px);
+        }
         .main--stack {
           .exchange--inputs {
             .input--grid {
