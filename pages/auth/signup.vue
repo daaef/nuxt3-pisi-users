@@ -47,6 +47,19 @@
             />
           </div>
         </div>
+        <div class="w-full mt-4">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text text-lg">Phone Number</span>
+            </label>
+            <input
+              v-model="signup.phoneNumber"
+              type="number"
+              placeholder="23409063546780"
+              class="input bg-base-content/10 input-bordered w-full"
+            />
+          </div>
+        </div>
         <div class="w-full mt-3">
           <div class="form-control w-full">
             <label class="label">
@@ -106,20 +119,20 @@
           </div>
         </div>
         <div class="w-full mt-5">
-          <button
+<!--          <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click.prevent="$router.push('/kyc/')"
           >
             <span>Continue</span> <ic name="Arrow-Right" /></button
-          ><!--
+          >-->
           <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click.prevent="userSignup"
           >
             <span>Continue</span> <ic name="Arrow-Right" />
-          </button>-->
+          </button>
         </div>
         <div class="w-full mt-5">
           <p class="text-center">
@@ -130,9 +143,6 @@
         </div>
       </div>
     </div>
-    <v-snackbar :timeout="-1" :value="message" absolute left shaped top>
-      {{ notification }}
-    </v-snackbar>
   </div>
 </template>
 
@@ -154,6 +164,8 @@ export default {
         firstName: '',
         lastName: '',
         email: '',
+		otherNames: [],
+		countryId: 1,
         phoneNumber: '',
         password: ''
       }
@@ -162,7 +174,13 @@ export default {
   methods: {
     async userSignup() {
       this.loading = true
-      try {
+	  this.signup.phoneNumber = `${this.signup.phoneNumber}`
+	  this.notification = await useFetch('/api/auth/register', {
+		method: 'POST',
+		body: this.signup
+	  })
+	  this.loading = false
+      /*try {
         const response = await this.$auth.loginWith('local', {
           data: this.login
         })
@@ -181,7 +199,7 @@ export default {
       } catch (err) {
         console.log('We got an error folks', err)
         this.loading = false
-      }
+      }*/
     }
   }
 }

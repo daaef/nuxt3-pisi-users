@@ -34,20 +34,56 @@ export default defineNuxtConfig({
         },
       ],
     },
+  },  runtimeConfig: {
+    // The private keys which are only available within server-side
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      api_url: process.env.BASE_URL,
+    }
   },
-  modules: ["@nuxtjs/tailwindcss", '@nuxt-alt/auth', '@nuxt-alt/http', "@nuxt-alt/proxy", "@pinia/nuxt"],
+  modules: [
+      "@nuxtjs/tailwindcss",
+      '@nuxt-alt/auth',
+      '@nuxt-alt/http',
+      "@nuxt-alt/proxy",
+      "@pinia/nuxt"
+  ],
   proxy: {
     enableProxy: true,
     proxies: {
-      '/api': {
+      '/red': {
         target: "https://redonion-server.herokuapp.com/api/v1/redonion",
         changeOrigin: true,
         rewrite: (path: string) => {
           console.log('path is', path)
-          return path.replace(/^\/api/, '')
+          return path.replace(/^\/red/, '')
         },
       },
     },
+  },auth: {
+    strategies: {
+      local: {
+        user: {
+          property: 'data.user',
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: '/red/auth/sign-in', method: 'post' },
+          logout: false,
+          user: false
+        },
+        token: {
+          property: 'data.accessToken',
+          maxAge: 1800
+        }
+      }
+    },
+    redirect: {
+      login: '/auth/login',
+      logout: '/auth/login',
+      home: '/'
+    },
+    fullPathRedirect: true
   },
   css: [
     "~/assets/scss/style.scss",

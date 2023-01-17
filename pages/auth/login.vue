@@ -51,16 +51,16 @@
           <nuxt-link to="/auth/verify-email">Forgot password</nuxt-link>
         </div>
         <div class="w-full mt-5">
-          <!--          <button
+		  <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click.prevent="userLogin"
           >
             <span>Log in</span> <ic name="Arrow-Right" />
-          </button>-->
-          <nuxt-link class="w-full btn btn-primary flex items-center" to="/">
+          </button>
+<!--          <nuxt-link class="w-full btn btn-primary flex items-center" to="/">
             <span>Log in</span> <ic name="Arrow-Right" />
-          </nuxt-link>
+          </nuxt-link>-->
         </div>
         <div class="w-full mt-5">
           <p class="text-center">
@@ -83,6 +83,12 @@ definePageMeta({
 });
 export default {
   name: 'LoginView',
+  setup(){
+	const auth = useAuth()
+	return {
+	  auth
+	}
+  },
   data() {
     return {
       show: false,
@@ -96,32 +102,31 @@ export default {
     }
   },
   async mounted() {
-	console.log('calling fetch')
-	this.notification = await useFetch('/api/')
   },
   methods: {
     async userLogin() {
       this.loading = true
-      /*try {
+	  console.log('login data is', this.login)
+      try {
         const response = await this.$auth.loginWith('local', {
-          data: this.login
+          body: this.login
         })
         console.log('Response is', response.data)
         this.notification = response.data.data.msg
         this.message = true
-        /!*this.$auth.setUser(response.data.data.user)
+        this.$auth.setUser(response.data.data.user)
         this.$auth.setUserToken(response.data.data.accessToken).then(() =>
           this.$toast.success('User set!', {
             theme: 'bubble',
             position: 'top-right',
             duration: 1000
           })
-        )*!/
+        )
         this.loading = false
       } catch (err) {
         console.log('We got an error folks', err)
         this.loading = false
-      }*/
+      }
     }
   }
 }
