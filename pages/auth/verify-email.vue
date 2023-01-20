@@ -42,7 +42,8 @@
 
 <script>
 definePageMeta({
-  layout: 'authentication'
+  layout: 'authentication',
+  auth: 'guest'
 });
 export default {
   name: 'LoginView',

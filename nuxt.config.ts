@@ -59,18 +59,20 @@ export default defineNuxtConfig({
           return path.replace(/^\/red/, '')
         },
       },
-    },
-  },auth: {
+    }
+  },
+  auth: {
+    globalMiddleware: true,
     strategies: {
       local: {
         user: {
-          property: 'data.user',
-          autoFetch: false
+          property: '',
+          autoFetch: true
         },
         endpoints: {
           login: { url: '/red/auth/sign-in', method: 'post' },
           logout: false,
-          user: false
+          user:  { url: '/red/user', method: 'get' }
         },
         token: {
           property: 'data.accessToken',
@@ -81,9 +83,8 @@ export default defineNuxtConfig({
     redirect: {
       login: '/auth/login',
       logout: '/auth/login',
-      home: '/'
+      home: '/dashboard/'
     },
-    fullPathRedirect: true
   },
   css: [
     "~/assets/scss/style.scss",

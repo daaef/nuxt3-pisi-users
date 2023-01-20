@@ -14,7 +14,7 @@
       <template #option="slotProps">
         <div class="flex justify-between items-center w-full">
           <ROCurrency :icon="slotProps.option" :type="coins?.length ? '' : 'currency'"/>
-          <p class="ml-5 capitalize">{{slotProps.option.coin}}</p>
+          <p class="ml-5 capitalize">{{slotProps.option.network}}</p>
         </div>
       </template>
     </Dropdown>
@@ -42,12 +42,11 @@ defineProps({
   selectedCurrency: String
 })
 const selectedData = ref({
-	  id: 1,
-	  coin: "Naira",
-	  name: "NGN",
-	  icon: "₦",
-	  selected: false,
-	})
+  abbreviation:"ETH",
+  id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
+  name:"Ether",
+  network:"ETHEREUM"
+})
 const input3 = ref('')
 const input1 = ref('700')
 const selected = ref('')

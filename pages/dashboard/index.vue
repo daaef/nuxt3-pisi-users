@@ -1,15 +1,11 @@
 <script setup>
-definePageMeta({
-  layout: 'landing',
-  auth: 'false'
-});
 import {useStore} from "~/stores";
-import ROCreateSellOffer from "../components/ROCreateSellOffer";
 
 const store = useStore()
 const selectedCustomer2 = ref();
 const display = ref(false);
 const display2 = ref(false);
+const auth = useAuth()
 </script>
 
 <template>

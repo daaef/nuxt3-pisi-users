@@ -13,7 +13,17 @@
 </template>
 
 <script lang="ts" setup>
+import {useStore} from "~/stores";
+
+const store = useStore()
 const openNav =ref(false)
 const route = useRoute()
 watch(() => route.query, () => openNav.value = false)
+const auth = useAuth()
+
+onMounted(async ()=> {
+  await store.fetchCurrencies()
+  await store.fetchCountries()
+  await store.fetchBanks()
+})
 </script>

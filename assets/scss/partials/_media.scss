@@ -84,13 +84,3 @@
     }
   }
 }
-.auth--app--holder {
-  @media (max-width: 569px){
-    padding: 80px 0;
-    height: unset !important;
-    min-height: 100vh;
-    .main {
-      min-height: 0;
-    }
-  }
-}

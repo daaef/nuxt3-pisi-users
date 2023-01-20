@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-
 export const useStore = defineStore({
   id: "main",
   state: () => ({
@@ -146,7 +145,7 @@ export const useStore = defineStore({
     banks: [
       {
         id: 1,
-        name: "Guaranty Bank",
+        name: "Guaranty Trust Bank",
       },
       {
         id: 2,
@@ -196,6 +195,7 @@ export const useStore = defineStore({
         selected: false,
       },
     ],
+    countries: [],
     ng: {
         id: 1,
         coin: "Naira",
@@ -293,7 +293,44 @@ export const useStore = defineStore({
     ],
   }),
   actions: {
-    connect() {},
-    disconnect() {},
+    async fetchCurrencies() {
+
+      const config = useRuntimeConfig();
+      const auth = useAuth()
+      await $fetch(`${config.public.api_url}/user/get-crypto-currencies`, {
+        headers: { 'Authorization': auth.strategy.token.get() }
+      })
+          .then(res => {
+            console.log(res.data)
+            this.currencies = res.data.cryptoCurrencies
+          })
+    },
+    async fetchBanks() {
+
+      const config = useRuntimeConfig();
+      const auth = useAuth()
+      await $fetch(`${config.public.api_url}/user/get-banks`, {
+        headers: { 'Authorization': auth.strategy.token.get() }
+      })
+          .then(res => {
+            console.log(res.data)
+            this.banks = res.data.banks
+          })
+    },
+    async fetchCountries() {
+      const config = useRuntimeConfig();
+      await $fetch(`${config.public.api_url}/user/get-countries`)
+          .then(res => {
+            this.countries = res.data.countries
+          })
+    },
   },
+  getters: {
+    userCountry: (state) => {
+      const auth = useAuth()
+      return state?.countries?.find(country => {
+        return auth?.$state?.user?.countryId === country?.id
+      })
+    }
+  }
 });

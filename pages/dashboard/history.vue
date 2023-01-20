@@ -1,7 +1,7 @@
 <script setup>
 import {useStore} from "~/stores";
 import {useRouter} from "nuxt/app";
-import {info} from "../components/ROToastAndConfirmService";
+import {info} from "../../components/ROToastAndConfirmService";
 const store = useStore()
 const router = useRouter();
 const selectedHistory = ref();

@@ -1,6 +1,6 @@
 <script setup>
 import {useStore} from "~/stores";
-import {confirm, error} from "../components/ROToastAndConfirmService";
+import {confirm, error} from "../../components/ROToastAndConfirmService";
 const store = useStore()
 const otpInput = ref(null)
 const openOtp = ref(false)

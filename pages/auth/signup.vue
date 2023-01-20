@@ -60,6 +60,27 @@
             />
           </div>
         </div>
+        <div class="w-full mt-4">
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text text-lg">Other Names</span>
+            </label>
+            <input
+              v-model.trim="signup.otherNames"
+              type="text"
+              placeholder="Jane Catherine"
+              class="input bg-base-content/10 input-bordered w-full"
+            />
+          </div>
+        </div>
+        <div class="w-full mt-4">
+          <div class="form-control w-full basic">
+            <label class="label" for="country">
+              <span class="label-text text-lg">Country</span>
+            </label>
+			<Dropdown input-id="country" v-model="selCountry" :options="store.countries" optionLabel="name" placeholder="Select a Country" />
+		  </div>
+        </div>
         <div class="w-full mt-3">
           <div class="form-control w-full">
             <label class="label">
@@ -146,61 +167,72 @@
   </div>
 </template>
 
-<script>
-definePageMeta({
-  layout: 'authentication'
-});
-export default {
-  name: 'LoginView',
-  data() {
-    return {
-      show: false,
-      show1: false,
-      loading: false,
-      message: false,
-      notification: '',
-      password1: '',
-      signup: {
-        firstName: '',
-        lastName: '',
-        email: '',
-		otherNames: [],
+<script setup>
+  import {useFetch} from "nuxt/app";
+  import {error as errorPop} from "../../components/ROToastAndConfirmService";
+  import {useStore} from "~/stores";
+
+  definePageMeta({
+	layout: 'authentication',
+	auth: 'guest'
+  });
+
+  const router = useRouter()
+  const store = useStore()
+
+  const show = ref(false);
+  const show1 = ref(false);
+  const loading = ref(false);
+  const message = ref(false);
+  const countries = ref([]);
+  const selCountry = ref({});
+  const notification = ref('');
+  const password1 = ref('');
+  const signup = ref({
+		firstName: '',
+		lastName: '',
+		email: '',
+		otherNames:"",
 		countryId: 1,
-        phoneNumber: '',
-        password: ''
-      }
-    }
-  },
-  methods: {
-    async userSignup() {
-      this.loading = true
-	  this.signup.phoneNumber = `${this.signup.phoneNumber}`
-	  this.notification = await useFetch('/api/auth/register', {
-		method: 'POST',
-		body: this.signup
-	  })
-	  this.loading = false
-      /*try {
-        const response = await this.$auth.loginWith('local', {
-          data: this.login
-        })
-        console.log('Response is', response.data)
-        this.notification = response.data.data.msg
-        this.message = true
-        this.$auth.setUser(response.data.data.user)
-        this.$auth.setUserToken(response.data.data.accessToken).then(() =>
-          this.$toast.success('User set!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration: 1000
-          })
-        )
-        this.loading = false
-      } catch (err) {
-        console.log('We got an error folks', err)
-        this.loading = false
-      }*/
-    }
+		phoneNumber: '',
+		password: ''
+  })
+
+  watch(() => signup.value.otherNames, () => signup.value.otherNames = signup.value.otherNames.replace(/\s+/g, ' ').trim().trim())
+
+  onMounted(async ()=> {
+	// await useFetch('/api/get-countries')
+	// 	.then((res) => {
+	//   countries.value = res.data.value.countries
+	// })
+	await store.fetchCountries()
+	console.log('store is', store)
+  })
+
+  async function userSignup() {
+	loading.value = true
+	signup.value.phoneNumber = `${signup.value.phoneNumber}`
+	const formData = {...signup.value}
+	const {data, error} = await useFetch('/api/auth/register', {
+	  method: 'POST',
+	  body: formData
+	})
+	  console.log("doesn't see any error",data.value)
+	  if (data.value?.success) {
+		router.push('/auth/verify-email')
+	  }
+	  if (error.value?.statusCode === 500) {
+		console.log('theres, an error', error.value?.data)
+		errorPop('Error!', error.value?.data?.message)
+	  } else if (error.value?.statusCode === 400) {
+		console.log('theres, an error', error.value?.data.data.message)
+		error.value?.data.data.message.forEach(e => {
+		  errorPop('Error!', e)
+		})
+	  } else {
+		console.log('error might be good now', error.value?.data.data.msg)
+		errorPop('Error!',error.value?.data?.data?.msg)
+	  }
+	loading.value = false
   }
-}
 </script>

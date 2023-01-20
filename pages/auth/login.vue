@@ -79,7 +79,8 @@
 
 <script>
 definePageMeta({
-  layout: 'authentication'
+  layout: 'authentication',
+  auth: 'guest'
 });
 export default {
   name: 'LoginView',
@@ -107,21 +108,14 @@ export default {
     async userLogin() {
       this.loading = true
 	  console.log('login data is', this.login)
+	  const formData = {...this.login}
       try {
         const response = await this.$auth.loginWith('local', {
-          body: this.login
+          body: formData
         })
-        console.log('Response is', response.data)
-        this.notification = response.data.data.msg
+        console.log('Response is', response)
+        this.notification = response.msg
         this.message = true
-        this.$auth.setUser(response.data.data.user)
-        this.$auth.setUserToken(response.data.data.accessToken).then(() =>
-          this.$toast.success('User set!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration: 1000
-          })
-        )
         this.loading = false
       } catch (err) {
         console.log('We got an error folks', err)

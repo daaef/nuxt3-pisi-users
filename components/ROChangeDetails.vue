@@ -38,11 +38,11 @@
 
 	<div class="relative custom-input">
 	  <label for="accNum" class="block">Account number</label>
-	  <InputNumber inputId="accNum" class="w-full" v-model="accNum" mode="decimal" :useGrouping="false" />
+	  <InputText inputId="accNum" class="w-full" v-model="accNum" />
 	</div>
 	<div class="relative custom-input">
 	  <label for="accNum" class="block">Bank</label>
-	  <Dropdown class="w-full" v-model="bank" :options="store.banks" optionLabel="name" optionValue="name" placeholder="Select a Bank" />
+	  <Dropdown class="w-full" v-model="bank" :options="store.banks" optionLabel="name" optionValue="id" placeholder="Select a Bank" />
 	</div>
 	<template #footer>
 	  <Button label="Continue" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'finish')" />
@@ -66,12 +66,14 @@
 
 <script>
 import { useStore } from "~/stores";
+import { userStore } from "../stores/user";
 
 export default {
   name: 'ROChangeDetails',
   setup(){
 	const store = useStore()
-	return { store }
+	const userData = userStore()
+	return { store, userData }
   },
   props: {
 	dialog: {
@@ -109,8 +111,14 @@ export default {
 		this.offerDialog = false
 		this.mainDialog = true
 	  } else {
-		this.offerDialog = false
-		this.finDialog = true
+		const formData = {
+		  "bankId": this.bank,
+		  "number": this.accNum
+		}
+
+		this.userData.addBank(formData)
+		/*this.offerDialog = false
+		this.finDialog = true*/
 	  }
 	}
   }

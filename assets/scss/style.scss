@@ -11,3 +11,11 @@
 tr{
   position: relative;
 }
+
+.basic {
+  .p-dropdown {
+    .p-dropdown-label {
+      background: transparent;
+    }
+  }
+}

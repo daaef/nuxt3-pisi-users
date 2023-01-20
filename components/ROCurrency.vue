@@ -4,8 +4,8 @@
     {{ icon.name }}
   </span>
   <span v-else class="a-icon flex items-center">
-    <i :class="`cf cf-${icon.name?.toLowerCase()} mr-2`" />
-    {{ icon.name }}
+    <i :class="`cf cf-${icon.abbreviation?.toLowerCase()} mr-2`" />
+    {{ icon.abbreviation }}
   </span>
 </template>
 

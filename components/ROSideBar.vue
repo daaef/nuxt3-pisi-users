@@ -5,16 +5,16 @@
 		<img src="/auth-logo.png" alt="Logo">
 	  </div>
 	  <div class="user--info">
-		<nuxt-link to="/kyc" class="badge bg-error/20 border-base-300/0 py-2 rounded">
+		<nuxt-link to="/dashboard/kyc" class="badge bg-error/20 mb-5 border-base-300/0 py-2 rounded">
 		  <i class="iconly-Shield-Fail text-error icbo mr-2" /> <span class="text-black">Complete KYC</span>
 		</nuxt-link>
 		<div tabindex="0" class="collapse collapse-arrow">
-		  <nuxt-link active-class="exact-active-link" to="/account" class="collapse-title pl-0">
-			<span class="text-lg font-medium">Matthew Ero</span>
-			<div class="text-gray-500">
+		  <nuxt-link active-class="exact-active-link" to="/dashboard/account" class="collapse-title pl-0">
+			<span class="text-lg font-medium">{{ auth?.$state?.user?.firstName }} {{ auth?.$state?.user?.lastName }}</span>
+			<div class="text-gray-500 flex items-center">
 			  <i class="iconly-Location mr-1 text-xl icli" />
 			  <!--                  <el-icon><location /></el-icon>-->
-			  <span>Nigeria</span>
+			  <span>{{ store?.userCountry?.name }}</span>
 			</div>
 		  </nuxt-link>
 		</div>
@@ -23,7 +23,7 @@
 	<div class="nav-bottom">
 	  <ul class="mt-5">
 		<li class="page-nav">
-		  <nuxt-link active-class="exact-active-link" to="/transactions">
+		  <nuxt-link active-class="exact-active-link" to="/dashboard/transactions">
 			<i class="iconly-Activity mr-2 text-xl icli" />
 			<span>Transactions</span>
 		  </nuxt-link>
@@ -32,13 +32,13 @@
 	  <div class="rem--nav">
 	  	<ul class="mt-5">
 		<li class="page-nav">
-		  <r-o-link to="/">
+		  <r-o-link to="/dashboard/">
           	<i class="iconly-Swap mr-2 text-xl icli" />
           	<span>Buy</span>
 		  </r-o-link>
 		</li>
 		<li class="page-nav">
-		  <nuxt-link active-class="exact-active-link" to="/history">
+		  <nuxt-link active-class="exact-active-link" to="/dashboard/history">
 			<i class="iconly-Time-Circle mr-2 text-xl icli" />
 			<span>History</span>
 		  </nuxt-link>
@@ -46,7 +46,7 @@
 	  </ul>
 	  	<ul class="mt-5">
 		<li class="page-nav">
-		  <nuxt-link active-class="exact-active-link" to="/help">
+		  <nuxt-link active-class="exact-active-link" to="/dashboard/help">
 			<i class="iconly-Info-Circle mr-2 text-xl icli" />
 			<span>Help Center</span>
 		  </nuxt-link>
@@ -70,15 +70,19 @@
 		</div>
 	  </div>
 	  <template #footer>
-		<Button label="Log out" class="primary" @click.prevent="router.push('/auth/login')"/>
+		<Button label="Log out" class="primary" @click.prevent="auth.logout()"/>
 	  </template>
 	</Dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
+	import {useStore} from "~/stores";
+
 	const logoutBtn = ref(false)
 	const router = useRouter()
+	const auth = useAuth()
+	const store = useStore()
 </script>
 
 <style lang="scss" scoped>

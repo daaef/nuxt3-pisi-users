@@ -36,8 +36,12 @@
 
 <style lang="scss">
 	.auth--app--holder {
-	  height: 100vh;
-	  width: 100%;
+	  padding: 80px 0;
+	  height: unset !important;
+	  min-height: 100vh;
+	  .main {
+		min-height: 0;
+	  }
 	  overflow: auto;
 	  background-image: url('/auth-shape.png');
 	  background-repeat: no-repeat;
