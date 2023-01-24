@@ -1,7 +1,7 @@
 <template>
   <span class="a-icon flex items-center" v-if="type === 'currency'">
-    <span :class="`currency--circle ${icon.name?.toLowerCase()} mr-2 rounded-circle`">{{ icon.icon }}</span>
-    {{ icon.name }}
+    <span :class="`currency--circle ${currentIcon.name?.toLowerCase()} mr-2 rounded-circle`">{{ currentIcon.icon }}</span>
+    {{ currentIcon.name }}
   </span>
   <span v-else class="a-icon flex items-center">
     <i :class="`cf cf-${icon.abbreviation?.toLowerCase()} mr-2`" />
@@ -10,10 +10,17 @@
 </template>
 
 <script lang="ts" setup>
-  defineProps({
+  import {useStore} from "~/stores";
+
+  const props = defineProps({
     icon: Object,
     name: String,
     type: String
+  })
+  const store = useStore()
+  const currentIcon = computed(() => {
+	if (props?.icon?.icon) return props.icon
+	return store.countryCurr.find(country => country.name === props.icon.currencyCode)
   })
 </script>
 

@@ -3,80 +3,6 @@ export const userStore = defineStore({
   id: "user",
   state: () => ({
     loading: false,
-    history: [
-      {
-        key: 1,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 2,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
-        date: "2022-10-13"
-      },
-      {
-        key: 3,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
-        date: "2022-10-13"
-      },
-      {
-        key: 4,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 5,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 6,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
-        date: "2022-10-13"
-      },
-      {
-        key: 7,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 8,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
-        date: "2022-10-13"
-      },
-    ],
   }),
   actions: {
     async addBank(payload) {
@@ -92,6 +18,60 @@ export const userStore = defineStore({
             console.log(res.data)
             // this.currencies = res.data.cryptoCurrencies
           })
+    },
+    async sendOTP(payload) {
+      console.log('Sending OTP')
+      const config = useRuntimeConfig();
+      await $fetch(`${config.public.api_url}/auth/resend-otp/`, {
+        method: "POST",
+        body: payload
+      }).then(res => {
+        return Promise.resolve(res?.msg)
+        // this.currencies = res.data.cryptoCurrencies
+      }).catch(err => {
+        console.log('error gotten',err)
+        return Promise.reject(err)
+      })
+    },
+    async resetPassword(payload) {
+      console.log('Resetting Password')
+      const config = useRuntimeConfig();
+      await $fetch(`${config.public.api_url}/auth/init-password-reset`, {
+        method: "POST",
+        body: payload
+      }).then(res => {
+        return Promise.resolve(res?.msg)
+        // this.currencies = res.data.cryptoCurrencies
+      }).catch(err => {
+        console.log('error gotten',err)
+        return Promise.reject(err)
+      })
+    },
+    async changePassword(payload) {
+      console.log('Resetting Password')
+      const config = useRuntimeConfig();
+      await $fetch(`${config.public.api_url}/auth/complete-password-reset`, {
+        method: "POST",
+        body: payload
+      }).then(res => {
+        return Promise.resolve(res?.msg)
+        // this.currencies = res.data.cryptoCurrencies
+      }).catch(err => {
+        console.log('error gotten',err)
+        return Promise.reject(err)
+      })
+    },
+    async verifyMail(payload) {
+      console.log('Verify User')
+      const config = useRuntimeConfig();
+      await $fetch(`${config.public.api_url}/auth/verify-email/${payload}`).then(res => {
+          console.log(res)
+          return Promise.resolve(res?.data?.msg)
+          // this.currencies = res.data.cryptoCurrencies
+        }).catch(err => {
+          console.log('error gotten',err)
+        return Promise.reject(err)
+      })
     },
   }
 });

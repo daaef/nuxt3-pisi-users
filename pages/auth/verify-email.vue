@@ -7,82 +7,138 @@
         </h2>
         <p class="text-center mb-0">
           Input the verification code sent to <br />
-          <span class="text-primary">joe@gmail.com</span>
+          <span class="text-primary">{{ email }}</span>
         </p>
         <div class="w-full">
           <div class="form-control w-full">
-            <v-otp-input length="6"></v-otp-input>
+			<vue3-otp-input
+				ref="otpInput"
+				input-classes="otp-input"
+				separator=""
+				:num-inputs="6"
+				:should-auto-focus="true"
+				:is-input-num="true"
+				:conditionalClass="['one', 'two', 'three', 'four', 'five', 'six']"
+				:placeholder="['*', '*', '*', '*', '*', '*']"
+				@on-complete="handleOnComplete"
+				@on-change="handleOnChange"
+			/>
           </div>
         </div>
         <div class="w-full flex justify-between">
           <span class="text-primary">
-            <span class="countdown font-mono font-medium text-xl">
-              <span :style="{ '--value': 10 }"></span>:
-              <span :style="{ '--value': 24 }"></span>
+            <span class="font-mono font-medium text-xl">
+			  <client-only>
+				<countdown ref="countdown" :time="10 * 60 * 1000" v-slot="{ minutes, seconds }" @end="onCountdownEnd">
+              		<span>{{ minutes }}</span>:<span>{{ seconds }}</span>
+				</countdown>
+			  </client-only>
             </span>
           </span>
-          <a href="#" class="text-primary font-semibold"> Resend code </a>
+          <a href="#" @click.prevent="sendOTP" class="text-primary font-semibold" :class="{'pointer-events-none disabled': countdownSecs > 0}"> Resend code </a>
         </div>
-        <div class="w-full mt-5">
+        <div v-if="!login" class="w-full mt-5">
           <button
             class="w-full btn btn-primary flex items-center"
-            :class="loading ? 'loading' : ''"
-            @click.prevent="userLogin"
+			:class="loading ? 'loading' : ''"
+            @click.prevent="verifyUser"
+			:disabled="!complete"
           >
             <span>Verify OTP</span> <ic name="Arrow-Right" />
           </button>
         </div>
+        <div v-else class="w-full mt-5">
+          <nuxt-link
+			  to="/auth/login"
+            class="w-full btn btn-primary flex items-center"
+          >
+            <span>Login to your account</span> <ic name="Arrow-Right" />
+          </nuxt-link>
+        </div>
       </div>
     </div>
-    <v-snackbar :timeout="-1" :value="message" absolute left shaped top>
-      {{ notification }}
-    </v-snackbar>
   </div>
 </template>
 
 <script>
+import {userStore} from "~/stores/user";
+import {error, success} from "../../components/ROToastAndConfirmService";
+
 definePageMeta({
   layout: 'authentication',
   auth: 'guest'
 });
 export default {
-  name: 'LoginView',
+  setup() {
+	const route = useRoute()
+	const store = userStore()
+	const otpInput = ref(null)
+	const countdown = ref(null)
+	const otp = ref("")
+	const complete = ref(false)
+	const email = computed(()=> {
+	  return route.query.email
+	})
+	const handleOnComplete = (value) => {
+	  console.log('OTP completed: ', value);
+	  complete.value = true
+	};
+	const handleOnChange = (value) => {
+	  console.log('OTP changed: ', value);
+	  complete.value = false
+	  otp.value = value
+	};
+
+	const countdownSecs = computed(()=>countdown.value.totalSeconds)
+
+	const onCountdownEnd = (value) => {
+	  console.log('OTP completed: ', value);
+	};
+	return {route, handleOnComplete, otpInput, onCountdownEnd, complete, handleOnChange, email, otp, store, countdown, countdownSecs}
+  },
   data() {
     return {
       show: false,
       loading: false,
       message: false,
       notification: '',
-      login: {
-        email: '',
-        password: ''
-      }
+      login: false
     }
   },
   methods: {
-    async userLogin() {
+    async verifyUser() {
       this.loading = true
       try {
-        const response = await this.$auth.loginWith('local', {
-          data: this.login
-        })
-        console.log('Response is', response.data)
-        this.notification = response.data.data.msg
-        this.message = true
-        this.$auth.setUser(response.data.data.user)
-        this.$auth.setUserToken(response.data.data.accessToken).then(() =>
-          this.$toast.success('User set!', {
-            theme: 'bubble',
-            position: 'top-right',
-            duration: 1000
-          })
-        )
-        this.loading = false
+		await this.store.verifyMail(this.otp).then(res => console.log(res)).then(res => {
+		  this.login = true
+		  success('Successfully Activated!', res?.data?.msg)
+		  this.otpInput.clearInput()
+		  this.$router.push('/auth/login')
+		})
       } catch (err) {
-        console.log('We got an error folks', err)
+        console.log('We got an error folks', err.data.msg)
+		this.otpInput.clearInput()
+		error('Error!', err?.data?.msg)
         this.loading = false
       }
-    }
+    },
+    async sendOTP() {
+	  try {
+		await this.store.sendOTP({
+		  email:this.email
+		})
+			.then((res) => {
+			  console.log('res', res)
+			  success('Successfully Sent OTP!', res)
+			  this.otpInput.clearInput()
+			  countdown.value.restart()
+			})
+	  } catch (err) {
+		console.log('We got an error folks', err.data.msg)
+		this.otpInput.clearInput()
+		error('Error!', err?.data?.msg)
+	  }
+    },
   }
 }
 </script>

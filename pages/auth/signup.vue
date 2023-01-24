@@ -178,6 +178,7 @@
   });
 
   const router = useRouter()
+  const route = useRoute()
   const store = useStore()
 
   const show = ref(false);
@@ -219,9 +220,12 @@
 	})
 	  console.log("doesn't see any error",data.value)
 	  if (data.value?.success) {
-		router.push('/auth/verify-email')
+		router.push({
+		  path: '/auth/verify-email',
+		  query: { email: signup.value?.email },
+		})
 	  }
-	  if (error.value?.statusCode === 500) {
+	  else if (error.value?.statusCode === 500) {
 		console.log('theres, an error', error.value?.data)
 		errorPop('Error!', error.value?.data?.message)
 	  } else if (error.value?.statusCode === 400) {

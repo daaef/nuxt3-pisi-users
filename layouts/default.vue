@@ -23,6 +23,7 @@ const auth = useAuth()
 
 onMounted(async ()=> {
   await store.fetchCurrencies()
+  await store.fetchFiatCurrencies()
   await store.fetchCountries()
   await store.fetchBanks()
 })

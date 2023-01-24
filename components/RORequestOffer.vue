@@ -15,13 +15,20 @@
 	  </div>
 	  <div class="px-3 flex items-center justify-between w-full">
 		<div class="flex flex-none items-center">
-                <ROCurrency :icon="store.us" type="currency"/>
+			<ROCurrency
+			  :icon='{
+				abbreviation:"BTC",
+				id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
+				name:"Bitcoin",
+				network:"BITCOIN"
+			  }'
+			/>
 		</div>
 		<div>
 		  <img src="/transfer--arrows.png" alt="" />
 		</div>
 		<div class="flex flex-none items-center">
-		  <ROCurrency :icon="store.ng" type="currency"/>
+		  <ROCurrency :icon="store.countryCurr[0]" type="currency"/>
 		</div>
 	  </div>
 	  <div class="flex justify-between w-full">
@@ -38,12 +45,12 @@
 	>Input the amount you would like to buy</span
 	>
 
-	<div class="relative custom-input">
+<!--	<div class="relative custom-input">
 	  <ROInputWithAddon :selected-currency="store.us" label="Sell" :addon="'text'" />
 	</div>
 	<div class="relative custom-input">
 	  <ROInputWithAddon :selected-currency="store.ng" label="Buy" :addon="'text'" />
-	</div>
+	</div>-->
 
 	<div class="bottom--sect mt-3 bg-secondary p-3">
 	  <div class="flex justify-between w-full">
@@ -124,7 +131,13 @@ export default {
   name: 'RequestOffer',
   setup(){
 	const store = useStore()
-	return { store }
+	const selectedData = ref({
+	  abbreviation:"ETH",
+	  id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
+	  name:"Ether",
+	  network:"ETHEREUM"
+	})
+	return { store, selectedData }
   },
   props: {
 	dialog: {

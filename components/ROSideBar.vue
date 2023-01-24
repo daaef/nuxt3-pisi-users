@@ -5,9 +5,6 @@
 		<img src="/auth-logo.png" alt="Logo">
 	  </div>
 	  <div class="user--info">
-		<nuxt-link to="/dashboard/kyc" class="badge bg-error/20 mb-5 border-base-300/0 py-2 rounded">
-		  <i class="iconly-Shield-Fail text-error icbo mr-2" /> <span class="text-black">Complete KYC</span>
-		</nuxt-link>
 		<div tabindex="0" class="collapse collapse-arrow">
 		  <nuxt-link active-class="exact-active-link" to="/dashboard/account" class="collapse-title pl-0">
 			<span class="text-lg font-medium">{{ auth?.$state?.user?.firstName }} {{ auth?.$state?.user?.lastName }}</span>
@@ -41,6 +38,12 @@
 		  <nuxt-link active-class="exact-active-link" to="/dashboard/history">
 			<i class="iconly-Time-Circle mr-2 text-xl icli" />
 			<span>History</span>
+		  </nuxt-link>
+		</li>
+		<li class="page-nav">
+		  <nuxt-link active-class="exact-active-link" class="persist" to="/dashboard/kyc">
+			<i class="iconly-Shield-Fail text-error icli mr-2" />
+			<span class="text-error">Complete KYC</span>
 		  </nuxt-link>
 		</li>
 	  </ul>
@@ -143,6 +146,20 @@
 			border-radius: 8px 0 0 8px;
 			transition: .3s ease-in-out;
 			transform: translateX(100%);
+		  }
+		  &.persist {
+			&:before {
+			  position: absolute;
+			  content: '';
+			  left: 0;
+			  top: 0;
+			  background: rgba(230, 26, 26, 0.2);
+			  width: 100%;
+			  height: 100%;
+			  border-radius: 8px 0 0 8px;
+			  transition: .3s ease-in-out;
+			  transform: translateX(100%);
+			}
 		  }
 		  &.exact-active-link, &:hover:not(.link-type) {
 			color: #fafafa;

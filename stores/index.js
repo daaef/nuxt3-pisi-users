@@ -195,7 +195,30 @@ export const useStore = defineStore({
         selected: false,
       },
     ],
+    fiatCurrencies: [],
     countries: [],
+    countryCurr: [
+      {
+        id: 1,
+        coin: "Naira",
+        name: "NGN",
+        icon: "₦",
+        selected: false,
+      },
+      {
+        id: 2,
+        coin: "Euros",
+        name: "EUR",
+        icon: "€",
+        selected: false,
+      },
+      {
+        id: 3,
+        coin: "Dollars",
+        name: "USD",
+        icon: "$",
+        selected: false,
+      }],
     ng: {
         id: 1,
         coin: "Naira",
@@ -215,6 +238,27 @@ export const useStore = defineStore({
         coin: "Dollars",
         name: "USD",
         icon: "$",
+        selected: false,
+      },
+    eth: {
+        id: 1,
+        coin: "Ethereum",
+        name: "ETH",
+        icon: "eth",
+        selected: false,
+      },
+    trx: {
+        id: 2,
+        coin: "Tron",
+        name: "TRX",
+        icon: "trx",
+        selected: false,
+      },
+    matic: {
+        id: 3,
+        coin: "Polygon",
+        name: "MATIC",
+        icon: "matic",
         selected: false,
       },
     history: [
@@ -303,6 +347,18 @@ export const useStore = defineStore({
           .then(res => {
             console.log(res.data)
             this.currencies = res.data.cryptoCurrencies
+          })
+    },
+    async fetchFiatCurrencies() {
+
+      const config = useRuntimeConfig();
+      const auth = useAuth()
+      await $fetch(`${config.public.api_url}/user/get-currencies`, {
+        headers: { 'Authorization': auth.strategy.token.get() }
+      })
+          .then(res => {
+            console.log(res.data)
+            this.fiatCurrencies = res.data.currencies
           })
     },
     async fetchBanks() {

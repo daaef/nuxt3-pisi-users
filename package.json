@@ -13,6 +13,7 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
+    "@chenfengyuan/vue-countdown": "2",
     "@css-render/vue3-ssr": "^0.15.11",
     "@nuxt-alt/auth": "^2.1.9",
     "@nuxt-alt/http": "^1.5.7",
@@ -25,6 +26,7 @@
     "sass": "^1.56.2",
     "unplugin-auto-import": "^0.12.1",
     "unplugin-vue-components": "^0.22.12",
+    "vue": "3",
     "vue3-otp-input": "^0.3.6"
   }
 }

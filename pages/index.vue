@@ -1,7 +1,7 @@
 <script setup>
 definePageMeta({
   layout: 'landing',
-  auth: 'false'
+  auth: 'guest'
 });
 import {useStore} from "~/stores";
 import ROCreateSellOffer from "../components/ROCreateSellOffer";

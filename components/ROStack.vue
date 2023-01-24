@@ -5,7 +5,7 @@
 		<div class="input--grid">
           <ROInputWithAddon type="coin" label="From" :coins="store.currencies" />
 		  <img class="mx-3" src="/exchange.svg" alt="" />
-		  <ROCustomDropdown :coins="store.coins" label="To" />
+		  <ROCustomDropdown type="currency" :currencies="store.fiatCurrencies" label="To" />
 		  <Button class="primary" label="Search" icon="pi pi-search" />
 		</div>
       </div>

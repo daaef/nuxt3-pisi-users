@@ -11,14 +11,14 @@
           Welcome to Exchange! Let's get your profile set up
         </h2>
         <div class="w-full mt-2 kyc--panel-container">
-          <nuxt-link to="/kyc/identity" class="kyc--panel w-full active--panel">
+          <nuxt-link to="/dashboard/kyc/identity" class="kyc--panel w-full active--panel">
             <div class="number--text-container">
               <span class="number block">1</span>
               <span class="block ml-3 panel--title">Verify your identity</span>
             </div>
             <i class="iconly-Arrow-Right-2 text-white icli"></i>
           </nuxt-link>
-          <nuxt-link to="/kyc/addAccount" class="kyc--panel w-full active--panel">
+          <nuxt-link to="/dashboard/kyc/addAccount" class="kyc--panel w-full">
             <div class="number--text-container">
               <span class="number block">2</span>
               <span class="block ml-3 panel--title">Add account details</span>
