@@ -81,11 +81,13 @@
 
 <script lang="ts" setup>
 	import {useStore} from "~/stores";
+	import apiService from "~/services/api.service";
 
 	const logoutBtn = ref(false)
 	const router = useRouter()
 	const auth = useAuth()
 	const store = useStore()
+	onMounted(()=> console.log(apiService()))
 </script>
 
 <style lang="scss" scoped>

@@ -1,4 +1,8 @@
 import { defineStore } from "pinia";
+import {usePisiFetch} from "~/composables/pisiFetch";
+import {Handler} from "~/services/api.handle";
+
+const handler = new Handler()
 export const userStore = defineStore({
   id: "user",
   state: () => ({
@@ -7,13 +11,11 @@ export const userStore = defineStore({
   actions: {
     async addBank(payload) {
       console.log('adding bank')
-      const config = useRuntimeConfig();
-      const auth = useAuth()
-      await $fetch(`${config.public.api_url}/user/add-bank-account`, {
-        method: "POST",
-        headers: { 'Authorization': auth.strategy.token.get() },
-        body: payload
-      })
+      await handler
+          .handle(usePisiFetch().user.addBank, {
+              headers: { 'Authorization': useAuth().strategy.token.get() },
+              data: payload
+            })
           .then(res => {
             console.log(res.data)
             // this.currencies = res.data.cryptoCurrencies

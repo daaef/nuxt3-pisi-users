@@ -61,12 +61,18 @@ export default defineNuxtConfig({
       },
     }
   },
+  http: {
+    proxyHeaders: true,
+    headers: {
+      accept: 'application/json, text/plain, */*'
+    }
+  },
   auth: {
     globalMiddleware: true,
     strategies: {
       local: {
         user: {
-          property: '',
+          property: 'data.user',
           autoFetch: true
         },
         endpoints: {
@@ -83,7 +89,8 @@ export default defineNuxtConfig({
     redirect: {
       login: '/auth/login',
       logout: '/auth/login',
-      home: '/dashboard/'
+      home: '/dashboard/',
+      callback: '/auth/login'
     },
   },
   css: [

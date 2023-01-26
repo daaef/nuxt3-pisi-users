@@ -6,6 +6,7 @@ const store = useStore()
 const usrStore = userStore()
 const auth = useAuth()
 const otpInput = ref(null)
+const selCountry = ref(null)
 const openOtp = ref(false)
 const account = ref(false)
 const loading = ref(false)
@@ -268,7 +269,7 @@ const userData = ref({
 		</div>
 	  </div>
 	</Dialog>
-	<Dialog v-model:visible="account">
+<!--	<Dialog v-model:visible="account">
 	  <div
 		  class="pb-4 flex flex-col items-center justify-center text-center"
 	  >
@@ -355,13 +356,13 @@ const userData = ref({
 			  </div>
 			</div>
 			<div class="w-full mt-5">
-			  <!--          <button
+			  &lt;!&ndash;          <button
 						  class="w-full btn btn-primary flex items-center"
 						  :class="loading ? 'loading' : ''"
 						  @click.prevent="$router.push('/kyc/')"
 						>
 						  <span>Continue</span> <ic name="Arrow-Right" /></button
-						>-->
+						>&ndash;&gt;
 			  <button disabled
 				  class="w-full btn btn-primary flex items-center"
 				  :class="loading ? 'loading' : ''"
@@ -372,7 +373,7 @@ const userData = ref({
 			</div>
 		  </div>
 	  </div>
-	</Dialog>
+	</Dialog>-->
 	<ROChangeDetails :dialog="changeDetails" @closeModal="changeDetails= false" />
   </div>
 </template>

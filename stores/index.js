@@ -1,4 +1,10 @@
 import { defineStore } from "pinia";
+import apiService from "~/services/api.service";
+import {Handler} from "~/services/api.handle";
+import {usePisiFetch} from "~/composables/pisiFetch";
+
+
+const handler = new Handler()
 export const useStore = defineStore({
   id: "main",
   state: () => ({
@@ -337,55 +343,39 @@ export const useStore = defineStore({
     ],
   }),
   actions: {
-    async fetchCurrencies() {
-
-      const config = useRuntimeConfig();
-      const auth = useAuth()
-      await $fetch(`${config.public.api_url}/user/get-crypto-currencies`, {
-        headers: { 'Authorization': auth.strategy.token.get() }
-      })
+    async fetchCryptoCurrencies() {
+      await handler
+          .handle(usePisiFetch().util.getCryptoCurrencies, {headers: { 'Authorization': useAuth().strategy.token.get() }})
           .then(res => {
-            console.log(res.data)
-            this.currencies = res.data.cryptoCurrencies
+            console.log('currencies are', res)
+            this.currencies = res.cryptoCurrencies
           })
     },
     async fetchFiatCurrencies() {
-
-      const config = useRuntimeConfig();
-      const auth = useAuth()
-      await $fetch(`${config.public.api_url}/user/get-currencies`, {
-        headers: { 'Authorization': auth.strategy.token.get() }
-      })
+      await handler
+          .handle(usePisiFetch().util.getCurrencies, {headers: { 'Authorization': useAuth().strategy.token.get() }})
           .then(res => {
-            console.log(res.data)
-            this.fiatCurrencies = res.data.currencies
+            console.log('returned is',res)
+            this.fiatCurrencies = res.currencies
           })
     },
     async fetchBanks() {
-
-      const config = useRuntimeConfig();
-      const auth = useAuth()
-      await $fetch(`${config.public.api_url}/user/get-banks`, {
-        headers: { 'Authorization': auth.strategy.token.get() }
-      })
-          .then(res => {
-            console.log(res.data)
-            this.banks = res.data.banks
-          })
+      await handler
+          .handle(usePisiFetch().util.fetchBanks, {headers: { 'Authorization': useAuth().strategy.token.get() }})
+          .then(res => this.banks = res.banks)
     },
     async fetchCountries() {
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.api_url}/user/get-countries`)
+      await handler
+          .handle(usePisiFetch().util.getCountries)
           .then(res => {
-            this.countries = res.data.countries
+            this.countries = res.countries
           })
     },
   },
   getters: {
     userCountry: (state) => {
-      const auth = useAuth()
       return state?.countries?.find(country => {
-        return auth?.$state?.user?.countryId === country?.id
+        return useAuth()?.$state?.user?.countryId === country?.id
       })
     }
   }
