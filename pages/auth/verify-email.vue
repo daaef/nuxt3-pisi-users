@@ -44,7 +44,7 @@
             @click.prevent="verifyUser"
 			:disabled="!complete"
           >
-            <span>Verify OTP</span> <ic name="Arrow-Right" />
+            <span>Verify OTP</span> <i class="icli Arrow-Right" />
           </button>
         </div>
         <div v-else class="w-full mt-5">
@@ -89,7 +89,7 @@ export default {
 	  otp.value = value
 	};
 
-	const countdownSecs = computed(()=>countdown.value.totalSeconds)
+	const countdownSecs = computed(()=>countdown.value?.totalSeconds)
 
 	const onCountdownEnd = (value) => {
 	  console.log('OTP completed: ', value);

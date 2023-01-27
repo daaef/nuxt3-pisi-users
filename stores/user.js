@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import {usePisiFetch} from "~/composables/pisiFetch";
 import {Handler} from "~/services/api.handle";
+import {error, success} from "~/services/ROToastAndConfirmService";
 
 const handler = new Handler()
 export const userStore = defineStore({
@@ -17,8 +18,28 @@ export const userStore = defineStore({
               data: payload
             })
           .then(res => {
-            console.log(res.data)
+            console.log('returned for bank addition', res)
+            success(undefined, 'Successfully added Bank Account')
             // this.currencies = res.data.cryptoCurrencies
+          })
+    },
+    async register(payload) {
+      console.log('registering User')
+      await handler
+          .handle(usePisiFetch().auth.register, {
+              data: payload
+            })
+          .then(res => {
+            console.log('returned for Registration', res)
+            success(undefined, 'Successfully Registered User')
+            useRouter().push({
+              path: '/auth/verify-email',
+              query: { email: payload?.email },
+            })
+            // this.currencies = res.data.cryptoCurrencies
+          }).catch(e => {
+            console.log('error is', e)
+            error(undefined, e)
           })
     },
     async sendOTP(payload) {
