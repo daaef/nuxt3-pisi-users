@@ -150,7 +150,7 @@
           >-->
           <button
             class="w-full btn btn-primary flex items-center"
-            :class="loading ? 'loading' : ''"
+            :class="usrStore.loading ? 'loading' : ''"
             @click.prevent="userSignup"
           >
             <span>Continue</span> <ic name="Arrow-Right" />
@@ -172,6 +172,7 @@
   import {useFetch} from "nuxt/app";
   import {error as errorPop} from "../../components/ROToastAndConfirmService";
   import {useStore} from "~/stores";
+  import {userStore} from "../../stores/user";
 
   definePageMeta({
 	layout: 'authentication',
@@ -181,6 +182,7 @@
   const router = useRouter()
   const route = useRoute()
   const store = useStore()
+  const usrStore = userStore()
 
   const show = ref(false);
   const show1 = ref(false);
@@ -215,17 +217,7 @@
 	loading.value = true
 	signup.value.phoneNumber = `${signup.value.phoneNumber}`
 	const formData = {...signup.value}
-	const {data, error} = await useFetch('/api/auth/register', {
-	  method: 'POST',
-	  body: formData
-	})
-	  console.log("doesn't see any error",data.value)
-	  if (data.value?.success) {
-		router.push({
-		  path: '/auth/verify-email',
-		  query: { email: signup.value?.email },
-		})
-	  }
+	await usrStore?.register(formData)
 	loading.value = false
   }
 </script>

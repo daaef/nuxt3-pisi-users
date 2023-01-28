@@ -25,6 +25,7 @@ export const userStore = defineStore({
     },
     async register(payload) {
       console.log('registering User')
+      this.loading = true
       await handler
           .handle(usePisiFetch().auth.register, {
               data: payload
@@ -32,6 +33,8 @@ export const userStore = defineStore({
           .then(res => {
             console.log('returned for Registration', res)
             success(undefined, 'Successfully Registered User')
+
+            this.loading = false
             useRouter().push({
               path: '/auth/verify-email',
               query: { email: payload?.email },
@@ -40,6 +43,7 @@ export const userStore = defineStore({
           }).catch(e => {
             console.log('error is', e)
             error(undefined, e)
+            this.loading = false
           })
     },
     async sendOTP(payload) {

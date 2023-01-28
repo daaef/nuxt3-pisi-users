@@ -52,7 +52,7 @@
 			  to="/auth/login"
             class="w-full btn btn-primary flex items-center"
           >
-            <span>Login to your account</span> <ic name="Arrow-Right" />
+            <span>Login to your account</span> <i class="icli iconly-Arrow-Right" />
           </nuxt-link>
         </div>
       </div>

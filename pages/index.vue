@@ -3,97 +3,121 @@ definePageMeta({
   layout: 'landing',
   auth: 'guest'
 });
-import {useStore} from "~/stores";
-import ROCreateSellOffer from "../components/ROCreateSellOffer";
-
-const store = useStore()
-const selectedCustomer2 = ref();
-const display = ref(false);
-const display2 = ref(false);
 </script>
 
 <template>
-  <div class="page-content">
-	<ROCreateSellOffer />
-    <h4 class="header--title">Buy</h4>
-    <LazyROStack />
-	<DataTable :value="store.payments" :paginator="true" :rows="10"
-			   v-model:selection="selectedCustomer2" selectionMode="single" dataKey="id"
-			   stateStorage="local" stateKey="dt-state-demo-local" responsiveLayout="scroll">
-	  <Column field="amount" header="Price" :sortable="true" style="width:25%">
-		<template #body="slotProps">
-		  <div class="flex items-center">
-			<div class="curr-shape">
-			  <ROCurrencyShape :currency="slotProps.data.country" />
-			</div>
-			<div class="flex flex-col">
-			  <span class="text-sm font-bold">{{slotProps.data.country}}</span>
-			  <span class="font-bold">{{slotProps.data.amount}}</span>
-			</div>
-		  </div>
-		</template>
-	  </Column>
-	  <Column field="name" header="Sender" :sortable="true" style="width:25%">
-	  </Column>
-	  <Column field="rate" header="Rate" :sortable="true" style="width:25%">
-	  </Column>
-	  <Column field="payState" header="" :sortable="true" style="width:25%">
-		<template #body="slotProps">
-		  <Button @click.prevent="slotProps.data.payState === 'Request' ? (display = true) : ''" :class="`primary `" :label="slotProps.data.payState" />
-		</template>
-	  </Column>
-	  <template #empty>
-		No Data found.
-	  </template>
-	</DataTable>
-	<RORequestOffer :dialog="display" @closeModal="display = false" />
-  </div>
+  <section class="page-content landing">
+	<header>
+	  <nav class="px-7 flex w-full justify-between">
+		<nuxt-link class="flex items-center" to="/">
+		  <img src="/auth-logo.png" alt="" />
+		</nuxt-link>
+		<div class="flex items-center flex-grow-0">
+		  <nuxt-link
+			  v-if="$route.name !== 'auth-login'"
+			  class="flex flex-grow-0 items-center text-sm mr-4"
+			  to="/auth/login"
+		  >
+			Login
+		  </nuxt-link>
+		  <nuxt-link
+			  v-if="$route.name !== 'auth-signup'"
+			  to="/auth/signup"
+			  class="btn btn-primary flex-grow-0"
+		  >
+			<span class="text-white">Create Account</span>
+		  </nuxt-link>
+		</div>
+	  </nav>
+	  <h3 class="banner--title">
+		<span>Change</span>
+		<span class="currency-badge mx-3">
+		  <span class="flag">
+			  <i class="cf cf-btc" />
+		  </span>
+		  BTC
+		</span>
+		<span>easily for</span>
+		<span class="currency-badge ml-3">
+		  <span class="flag">
+			  <span class="fi fi-ng fis"></span>
+		  </span>
+		  NGN
+	  	</span>
+	  </h3>
+	</header>
+  </section>
 </template>
 
 <style lang="scss">
-.p-datatable {
-  .p-datatable-tbody {
-	& > tr {
-	  position: relative;
-	  z-index: 2;
-	  &:after {
-		content: '';
-		z-index: 0;
-		height: 69.5px;
-	  }
-	  &.p-highlight {
-		position: relative;
-		padding-left: 5px;
-		color: #3063e9;
-		border-radius: 15px;
-
-		td {
-		  position: relative;
-		  z-index: 2;
-		  background: #E8E8F3;
-
-		  &:first-of-type {
-			left: 5px;
-			border-top-left-radius: 15px;
-			border-bottom-left-radius: 15px;
-		  }
-
-		  &:last-of-type {
-			border-top-right-radius: 15px;
-			border-bottom-right-radius: 15px;
-		  }
-		}
-
-		&:after {
-		  content: '';
-		  position: absolute;
-		  width: calc(100% - 20px);
-		  background: #3063e9;
-		  left: 0;
-		  border-radius: 15px;
-		}
-	  }
-	}
-  }
-}
+ .landing {
+   background: #fafafa;
+   header {
+	 background-image: url("/landing/header.svg");
+	 height: 100vh;
+	 background-repeat: no-repeat;
+	 background-size: cover;
+	 background-position: bottom center;
+	 padding-top: 150px;
+	 display: flex;
+	 justify-content: center;
+	 align-items: flex-start;
+	 nav {
+	   position: fixed;
+	   top: 10px;
+	   @media (max-width: 400px){
+		 .btn {
+		   padding: 2px 8px;
+		   font-size: .75rem;
+		 }
+	   }
+	 }
+	 @media  (max-width: 1500px) {
+	   padding-top: 300px;
+	 }
+	 @media  (max-width: 620px) {
+	   padding-top: 120px;
+	 }
+	 .flag {
+	   display: flex;
+	   align-items: center;
+	   .fi {
+		 border-radius: 50%;
+		 height: 25px;
+		 width: 25px;
+	   }
+	 }
+	 .banner--title {
+	   display: flex;align-items: center;
+	   background: linear-gradient(180deg, #4B48DC 0%, #D048DC 100%), #FFFFFF;
+	   -webkit-background-clip: text;
+	   -webkit-text-fill-color: transparent;
+	   background-clip: text;
+	   text-fill-color: transparent;
+	   font-size: 3rem;
+	   font-weight: 500;
+	   @media  (max-width: 620px) {
+			flex-direction: column;
+	   }
+	   .cf {
+		 -webkit-background-clip: unset;
+		 background: none;
+	   }
+	 }
+	 .currency-badge {
+	   background: #E8E8F3;
+	   border-radius: 10px;
+	   padding: 7px;
+	   display: flex;
+	   align-items: center;
+	   -webkit-text-fill-color: #202020;
+	   color: #202020;
+	   font-size: 1rem;
+	   font-weight: 600;
+	   .flag {
+		 margin-right: 5px;
+	   }
+	 }
+   }
+ }
 </style>

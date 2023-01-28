@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="w-full flex justify-end">
-          <nuxt-link to="/auth/verify-email">Forgot password</nuxt-link>
+          <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
         </div>
         <div class="w-full mt-5">
 		  <button

@@ -20,11 +20,16 @@ export class Handler {
                     return reject(response.msg)
                 })
                 .catch((error) => {
-                    console.log('error handler',error)
-                    if (error.response.status !== 404) {
-                        return reject(error.response.data.error_message.error)
+                    console.dir(error)
+                    if (error?.response?.status === 403){
+                        console.log(error?.data?.msg)
+                        return reject(error?.data?.msg)
                     }
-                    return reject(error.response.data)
+                    else if (error?.response?.status !== 404) {
+                        console.log(error?.data?.message)
+                        return reject(error?.data?.message)
+                    }
+                    return reject(error?.data)
                 })
         })
     }
