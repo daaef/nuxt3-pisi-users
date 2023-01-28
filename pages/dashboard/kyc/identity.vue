@@ -107,7 +107,7 @@
 		title="We are now verifying your details"
 		message="We will send you an email and in-app notification once we’re done verifying your documents."
 		button-text="Continue to dashboard"
-		button-url="/kyc/"
+		button-url="/dashboard/kyc/"
 	></ROSuccessKyc>
   </div>
 

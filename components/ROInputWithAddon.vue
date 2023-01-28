@@ -2,7 +2,7 @@
   <div class="">
   <h4 class="font-bold">{{ label }}</h4>
   <div class="p-inputgroup mt-1">
-    <Dropdown v-if="!addon" class="addon" v-model="selectedData" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
+    <Dropdown v-if="!addon" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
       <template #value="slotProps">
         <div class="country-item country-item-value" v-if="slotProps.value">
           <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-defineProps({
+const props = defineProps({
   currencies: Array,
   coins: Array,
   label: String,
@@ -41,15 +41,9 @@ defineProps({
   addon: String,
   selectedCurrency: String
 })
-const selectedData = ref({
-  abbreviation:"ETH",
-  id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
-  name:"Ether",
-  network:"ETHEREUM"
-})
+const selected = ref(null)
 const input3 = ref('')
 const input1 = ref('700')
-const selected = ref('')
 </script>
 
 <style lang="scss">

@@ -8,7 +8,7 @@ const selectedHistory = ref();
 const display = ref(false);
 const display2 = ref(false);
 const rowClicked = (e)=> {
-  router.push(`/history/${e.data.key}`)
+  router.push(`/dashboard/history/${e.data.key}`)
 }
 
 </script>

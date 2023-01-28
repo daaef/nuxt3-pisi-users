@@ -12,13 +12,13 @@ const display2 = ref('')
 	<div class="transaction--tabs tabs mt-10">
 	  <nuxt-link
 		  :exact-active-class="'tab-active'"
-		  :to="`/transactions/`"
+		  :to="`/dashboard/transactions/`"
 		  class="tab tab-lifted"
 	  >
 		<i class="iconly-Upload icli mr-2"></i> <span>Sell</span></nuxt-link>
 	  <nuxt-link
 		  :exact-active-class="'tab-active'"
-		  :to="`/transactions/buy`"
+		  :to="`/dashboard/transactions/buy`"
 		  class="tab tab-lifted"
 	  ><i class="iconly-Download icli mr-2"></i>  Buy</nuxt-link>
 	</div>

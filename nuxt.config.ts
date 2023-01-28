@@ -1,5 +1,6 @@
 const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import {defineNuxtConfig} from "nuxt/config";
 
 export default defineNuxtConfig({
   app: {
@@ -34,7 +35,8 @@ export default defineNuxtConfig({
         },
       ],
     },
-  },  runtimeConfig: {
+  },
+  runtimeConfig: {
     // The private keys which are only available within server-side
     // Keys within public, will be also exposed to the client-side
     public: {
@@ -61,12 +63,18 @@ export default defineNuxtConfig({
       },
     }
   },
+  http: {
+    proxyHeaders: true,
+    headers: {
+      accept: 'application/json, text/plain, */*'
+    }
+  },
   auth: {
     globalMiddleware: true,
     strategies: {
       local: {
         user: {
-          property: '',
+          property: 'data.user',
           autoFetch: true
         },
         endpoints: {
@@ -83,7 +91,8 @@ export default defineNuxtConfig({
     redirect: {
       login: '/auth/login',
       logout: '/auth/login',
-      home: '/dashboard/'
+      home: '/dashboard/',
+      callback: '/auth/login'
     },
   },
   css: [

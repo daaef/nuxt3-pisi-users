@@ -5,7 +5,7 @@
 		<div class="input--grid">
           <ROInputWithAddon type="coin" label="From" :coins="store.currencies" />
 		  <img class="mx-3" src="/exchange.svg" alt="" />
-		  <ROCustomDropdown :coins="store.coins" label="To" />
+		  <ROCustomDropdown type="currency" :currencies="store.fiatCurrencies" label="To" />
 		  <Button class="primary" label="Search" icon="pi pi-search" />
 		</div>
       </div>
@@ -39,48 +39,6 @@ import {watchEffect} from "@vue/runtime-core";
 </script>
 
 <style lang="scss">
-  .cf.cf-btc {
-    color: #f2a900;
-  }
-  .cf {
-    height: 25px;
-    width: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.7rem;
-    border-radius: 50%;
-  }
-  .cf.cf-eth {
-    color: #323232;
-    background: #EDEFF1;
-    padding: 3px;
-    font-size: calc(1.5rem - 6px);
-  }
-  .cf.cf-trx {
-    color: #fafafa;
-    background: #EB0029;
-    padding: 3px;
-    font-size: calc(1.5rem - 6px);
-  }
-  .cf.cf-doge {
-    color: #fafafa;
-    background: #C2A633;
-    padding: 3px;
-    font-size: calc(1.5rem - 6px);
-  }
-  .cf.cf-matic {
-    color: #fafafa;
-    background: #7950DD;
-    padding: 3px;
-    font-size: calc(1.5rem - 6px);
-  }
-  .cf.cf-yfi {
-    color: #0657F9;
-  }
-  .cf.cf-usdt {
-    color: #22A079;
-  }
   .el-input-group--prepend .el-input-group__prepend .el-select .el-input .el-input__wrapper {
     box-shadow: none !important;
     background: #EEEEEE;

@@ -22,7 +22,8 @@ watch(() => route.query, () => openNav.value = false)
 const auth = useAuth()
 
 onMounted(async ()=> {
-  await store.fetchCurrencies()
+  await store.fetchCryptoCurrencies()
+  await store.fetchFiatCurrencies()
   await store.fetchCountries()
   await store.fetchBanks()
 })

@@ -47,6 +47,14 @@
             />
           </div>
         </div>
+		<div class="w-full mt-4">
+		  <div class="form-control w-full basic">
+			<label class="label" for="country">
+			  <span class="label-text text-lg">Country</span>
+			</label>
+			<Dropdown input-id="country" v-model="selCountry" :options="store.countries" optionLabel="name" placeholder="Select a Country" />
+		  </div>
+		</div>
         <div class="w-full mt-4">
           <div class="form-control w-full">
             <label class="label">
@@ -54,7 +62,8 @@
             </label>
             <input
               v-model="signup.phoneNumber"
-              type="number"
+              type="tel"
+			  :pattern="selCountry?.regex"
               placeholder="23409063546780"
               class="input bg-base-content/10 input-bordered w-full"
             />
@@ -72,14 +81,6 @@
               class="input bg-base-content/10 input-bordered w-full"
             />
           </div>
-        </div>
-        <div class="w-full mt-4">
-          <div class="form-control w-full basic">
-            <label class="label" for="country">
-              <span class="label-text text-lg">Country</span>
-            </label>
-			<Dropdown input-id="country" v-model="selCountry" :options="store.countries" optionLabel="name" placeholder="Select a Country" />
-		  </div>
         </div>
         <div class="w-full mt-3">
           <div class="form-control w-full">
@@ -149,7 +150,7 @@
           >-->
           <button
             class="w-full btn btn-primary flex items-center"
-            :class="loading ? 'loading' : ''"
+            :class="usrStore.loading ? 'loading' : ''"
             @click.prevent="userSignup"
           >
             <span>Continue</span> <ic name="Arrow-Right" />
@@ -171,6 +172,7 @@
   import {useFetch} from "nuxt/app";
   import {error as errorPop} from "../../components/ROToastAndConfirmService";
   import {useStore} from "~/stores";
+  import {userStore} from "../../stores/user";
 
   definePageMeta({
 	layout: 'authentication',
@@ -178,7 +180,9 @@
   });
 
   const router = useRouter()
+  const route = useRoute()
   const store = useStore()
+  const usrStore = userStore()
 
   const show = ref(false);
   const show1 = ref(false);
@@ -213,26 +217,7 @@
 	loading.value = true
 	signup.value.phoneNumber = `${signup.value.phoneNumber}`
 	const formData = {...signup.value}
-	const {data, error} = await useFetch('/api/auth/register', {
-	  method: 'POST',
-	  body: formData
-	})
-	  console.log("doesn't see any error",data.value)
-	  if (data.value?.success) {
-		router.push('/auth/verify-email')
-	  }
-	  if (error.value?.statusCode === 500) {
-		console.log('theres, an error', error.value?.data)
-		errorPop('Error!', error.value?.data?.message)
-	  } else if (error.value?.statusCode === 400) {
-		console.log('theres, an error', error.value?.data.data.message)
-		error.value?.data.data.message.forEach(e => {
-		  errorPop('Error!', e)
-		})
-	  } else {
-		console.log('error might be good now', error.value?.data.data.msg)
-		errorPop('Error!',error.value?.data?.data?.msg)
-	  }
+	await usrStore?.register(formData)
 	loading.value = false
   }
 </script>

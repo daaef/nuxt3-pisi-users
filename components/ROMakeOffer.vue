@@ -2,10 +2,10 @@
   <div class="dialogs">
   <Dialog header="Create sell offer" v-model:visible="mainDialog" >
 	<div class="relative custom-input">
-	  <ROInputWithAddon type="currency" :currencies="store.currencies" label="Sell" />
+	  <ROInputWithAddon type="coin" :coins="store.currencies" label="Sell" />
 	</div>
 	<div class="relative mt- custom-input">
-	  <ROInputWithAddon type="currency" :currencies="store.currencies" label="Buy" />
+	  <ROInputWithAddon type="coin" :coins="store.currencies" label="Buy" />
 	</div>
 
 	<div class="custom-input">
