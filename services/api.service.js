@@ -11,6 +11,7 @@ import supportService from "~/services/api/support.service";
 import utilService from "~/services/api/util.service";
 import userService from "~/services/api/user/user.service";
 import kycService from "~/services/api/user/kyc.service";
+import transactionService from "~/services/api/transaction.service";
 
 // header for Axios calls
 // Axios instance registered in nuxt.config is received here for api calls
@@ -30,6 +31,7 @@ export default () => {
         support: supportService($fetch, config),
         util: utilService($fetch, config),
         user: userService($fetch, config),
+        transaction: transactionService($fetch, config),
         kyc: kycService($fetch, config)
     });
 }

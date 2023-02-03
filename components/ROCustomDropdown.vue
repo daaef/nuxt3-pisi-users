@@ -1,7 +1,7 @@
 <template>
   <div class="custom-dropdown">
 	<h4 class="font-bold">{{ label }}</h4>
-  <Dropdown class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Currency">
+  <Dropdown v-if="!user" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Currency">
 	<template #value="slotProps">
 	  <div class="country-item country-item-value" v-if="slotProps.value">
 		<ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -17,17 +17,38 @@
 	  </div>
 	</template>
   </Dropdown>
+	<Dropdown v-else disabled class="addon" v-model="store[store?.userCountry?.code?.toLowerCase()]" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Currency">
+	  <template #value="slotProps">
+		<div class="country-item country-item-value" v-if="slotProps.value">
+		  <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
+		</div>
+		<span v-else>
+          {{slotProps.placeholder}}
+      </span>
+	  </template>
+	  <template #option="slotProps">
+		<div class="flex justify-between items-center w-full">
+		  <ROCurrency :icon="slotProps.option" :type="coins?.length ? '' : 'currency'"/>
+		  <p class="ml-5 capitalize">{{slotProps.option.network}}</p>
+		</div>
+	  </template>
+	</Dropdown>
   </div>
 </template>
 
 <script lang="ts" setup>
+import {useStore} from "~/stores";
+
 const props = defineProps({
   currencies: Array,
   coins: Array,
   label: String,
   type: String,
-  selected: Object
+  selected: Object,
+  user: Object
 })
+
+const store = useStore()
 
 const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)

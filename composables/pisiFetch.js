@@ -7,6 +7,7 @@ export const usePisiFetch = () => {
         support: apiService().support,
         util: apiService().util,
         user: apiService().user,
-        kyc: apiService().kyc
+        kyc: apiService().kyc,
+        transaction: apiService().transaction
     }
 }

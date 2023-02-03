@@ -1,4 +1,26 @@
 <script setup>
+// import { utils } from 'web3';
+
+// import { computed } from 'vue';
+
+
+const {
+  onConnect,
+  connected,
+  userAddress,
+  chainId,
+  networkId,
+  assets,
+  getAccountAssets,
+} = useWallet();
+
+const handleWalletConnect = async () => {
+  await onConnect();
+  if (connected) {
+	console.log('afterConnectdWallet', connected);
+  }
+};
+
 definePageMeta({
   layout: 'landing',
   auth: 'guest'
@@ -102,6 +124,11 @@ definePageMeta({
 	   .cf {
 		 -webkit-background-clip: unset;
 		 background: none;
+	   }
+
+	   .cf.cf-btc {
+		 color: #f2a900;
+		 -webkit-text-fill-color: #f2a900;
 	   }
 	 }
 	 .currency-badge {

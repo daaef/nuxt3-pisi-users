@@ -21,6 +21,15 @@ export const userStore = defineStore({
             console.log('returned for bank addition', res)
             success(undefined, 'Successfully added Bank Account')
             // this.currencies = res.data.cryptoCurrencies
+          }).catch(e => {
+              if (typeof e !== 'string'){
+                  e.forEach(err => {
+                      error(undefined, err)
+                  })
+              } else {
+                  error(undefined, e)
+              }
+              this.loading = false
           })
     },
     async register(payload) {
@@ -41,64 +50,99 @@ export const userStore = defineStore({
             })
             // this.currencies = res.data.cryptoCurrencies
           }).catch(e => {
-            console.log('error is', e)
-            error(undefined, e)
+              if (typeof e !== 'string'){
+                  e.forEach(err => {
+                      error(undefined, err)
+                  })
+              } else {
+                  error(undefined, e)
+              }
             this.loading = false
           })
     },
     async sendOTP(payload) {
-      console.log('Sending OTP')
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.api_url}/auth/resend-otp/`, {
-        method: "POST",
-        body: payload
-      }).then(res => {
-        return Promise.resolve(res?.msg)
-        // this.currencies = res.data.cryptoCurrencies
-      }).catch(err => {
-        console.log('error gotten',err)
-        return Promise.reject(err)
-      })
+        await handler
+        .handle(usePisiFetch().auth.resendOTP, {
+            data: payload
+        })
+        .then(res => {
+            success(undefined, 'Successfully Sent OTP')
+
+            this.loading = false
+            useRouter().push({
+                path: '/auth/login'
+            })
+            // this.currencies = res.data.cryptoCurrencies
+        }).catch(e => {
+            if (typeof e !== 'string'){
+                e.forEach(err => {
+                    error(undefined, err)
+                })
+            } else {
+                error(undefined, e)
+            }
+            this.loading = false
+        })
     },
+    async verifyMail(payload) {
+
+        console.log('Verify User')
+        await handler
+            .handle(usePisiFetch().auth.verifyEmail, {
+                data: payload
+            })
+            .then(res => {
+                success('Successfully Verified!', 'Now login to your account')
+
+                this.loading = false
+                useRouter().push({
+                    path: '/auth/login'
+                })
+                // this.currencies = res.data.cryptoCurrencies
+            }).catch(e => {
+                if (typeof e !== 'string'){
+                    e.forEach(err => {
+                        error(undefined, err)
+                    })
+                } else {
+                    error(undefined, e)
+                }
+                this.loading = false
+            })
+      },
     async resetPassword(payload) {
-      console.log('Resetting Password')
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.api_url}/auth/init-password-reset`, {
-        method: "POST",
-        body: payload
-      }).then(res => {
-        return Promise.resolve(res?.msg)
+        this.loading = true
+      await handler
+          .handle(usePisiFetch().auth.initPasswordReset, {
+              data: payload
+          }).then(() => {
+
+              this.loading = false
+        success(undefined, 'Check your mail for an otp')
+              useRouter().push({
+                  path: '/auth/complete-reset',
+                  query: { email: payload?.email },
+              })
         // this.currencies = res.data.cryptoCurrencies
       }).catch(err => {
-        console.log('error gotten',err)
-        return Promise.reject(err)
+              this.loading = false
+          error(undefined, err)
       })
     },
     async changePassword(payload) {
-      console.log('Resetting Password')
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.api_url}/auth/complete-password-reset`, {
-        method: "POST",
-        body: payload
-      }).then(res => {
-        return Promise.resolve(res?.msg)
-        // this.currencies = res.data.cryptoCurrencies
-      }).catch(err => {
-        console.log('error gotten',err)
-        return Promise.reject(err)
-      })
-    },
-    async verifyMail(payload) {
-      console.log('Verify User')
-      const config = useRuntimeConfig();
-      await $fetch(`${config.public.api_url}/auth/verify-email/${payload}`).then(res => {
-          console.log(res)
-          return Promise.resolve(res?.data?.msg)
-          // this.currencies = res.data.cryptoCurrencies
-        }).catch(err => {
-          console.log('error gotten',err)
-        return Promise.reject(err)
-      })
+        this.loading = true
+        await handler
+            .handle(usePisiFetch().auth.completePasswordReset, {
+                data: payload
+            }).then(() => {
+                this.loading = false
+                success(undefined, 'Password reset successfully!')
+                useRouter().push('/auth/login')
+                // this.currencies = res.data.cryptoCurrencies
+            }).catch(err => {
+                this.loading = false
+                error(undefined, err)
+            })
     },
   }
 });

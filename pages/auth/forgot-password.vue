@@ -45,9 +45,13 @@ definePageMeta({
 export default {
   setup() {
 	const email = ref('')
+	const store = userStore()
 
-	const getOTP = (e) => {
-	  console.log('OTP completed: ', e?.target?.value);
+	const getOTP = () => {
+	  console.log('OTP completed: ', email.value);
+	  store.resetPassword({
+		email: email.value
+	  })
 	};
 	return { email, getOTP }
   },

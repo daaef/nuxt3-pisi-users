@@ -2,14 +2,14 @@
   <div class="dialogs">
   <Dialog header="Create sell offer" v-model:visible="mainDialog" >
 	<div class="relative custom-input">
-	  <ROInputWithAddon type="coin" :coins="store.currencies" label="Sell" />
+	  <ROInputWithAddon type="coin" @change="handleCrypto" :coins="store.currencies" @input="handleSell" label="Sell" />
 	</div>
 	<div class="relative mt- custom-input">
-	  <ROInputWithAddon type="coin" :coins="store.currencies" label="Buy" />
+	  <ROInputWithAddon @change="handleCurrency" :input="true" type="currency" :inputValue="buy" :currencies="store.fiatCurrencies" label="Buy" />
 	</div>
 
 	<div class="custom-input">
-	  <RORateInput />
+	  <RORateInput @input="handleRate" :crypto="crypto" :currency="currency" />
 	</div>
 	<template #footer>
 	  <Button label="Make offer" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'offer')"/>
@@ -47,13 +47,16 @@
 
 <script>
 import { useStore } from "~/stores";
+import {useTransitionState} from "vue";
+import {transactionStore} from "../stores/transactions";
 
 
 export default {
   name: 'ROMakeOffer',
   setup(){
 	const store = useStore()
-	return { store }
+	const tranStore = transactionStore()
+	return { store, tranStore }
   },
   props: {
 	dialog: {
@@ -68,9 +71,25 @@ export default {
 	  offerDialog: false,
 	  mainDialog: false,
 	  finDialog: false,
-	  sell: '100000',
-	  buy: '230.56',
-	  otpValue: ''
+	  sell: null,
+	  rate: null,
+	  buy: null,
+	  selectedCurrency: null,
+	  selectedCrypto: null,
+	  otpValue: '',
+	  currency: 'NGN',
+	  crypto: 'eth'
+	}
+  },
+  computed: {
+	offerData() {
+	  return {
+		cryptoCurrencyId: this.selectedCrypto?.id,
+		amountInCrypto: this.sell,
+		tokenPricePerUnit: this.rate,
+		currencyId: this.selectedCurrency?.id,
+		provider: {}
+	  }
 	}
   },
   watch: {
@@ -84,10 +103,11 @@ export default {
 	}
   },
   methods: {
-	openDialog(_, type) {
+	async openDialog(_, type) {
 	  if (type === 'offer') {
+		console.log('sending', this.offerData)
+		await this.tranStore.createOffer(this.offerData)
 		this.mainDialog = false
-		this.offerDialog = true
 	  } else if (type === 'back') {
 		this.offerDialog = false
 		this.mainDialog = true
@@ -95,8 +115,32 @@ export default {
 		this.offerDialog = false
 		this.finDialog = true
 	  }
+	},
+	handleCrypto(e){
+	  this.selectedCrypto = e
+	  this.crypto = e.abbreviation
+	},
+	handleCurrency(e){
+	  this.selectedCurrency = e
+	  this.currency = e.currencyCode
+	},
+	handleRate(e){
+	  this.rate = e
+		if (e !== null && this.sell !== null){
+		  this.buy = e * this.sell
+		} else if(e === null || this.sell === null) {
+		  this.buy = null
+		}
+	},
+	handleSell(e){
+	  this.sell = e
+	  if (e !== null && this.sell !== null){
+		this.buy = e * this.rate
+	  } else if(e === null || this.sell === null) {
+		this.buy = null
+	  }
 	}
-  }
+  },
 }
 </script>
 

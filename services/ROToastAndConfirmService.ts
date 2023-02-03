@@ -1,7 +1,7 @@
 import {ToastSeverity} from 'primevue/api';
 import {useNuxtApp} from "#app";
 
-const lifeTime = 4000;
+const lifeTime = 5000;
 
 export function info(title: string = 'Hey there!', body: string = 'There should some info somewhere'): void {
     useNuxtApp().vueApp.config.globalProperties.$toast.add({severity: ToastSeverity.INFO, summary: title, detail: body, life: lifeTime});
