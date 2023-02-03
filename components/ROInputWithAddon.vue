@@ -2,7 +2,7 @@
   <div class="">
   <h4 class="font-bold">{{ label }}</h4>
   <div class="p-inputgroup mt-1">
-    <Dropdown v-if="!addon" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
+    <Dropdown v-if="!addon" @change="handleChange" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
       <template #value="slotProps">
         <div class="country-item country-item-value" v-if="slotProps.value">
           <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -19,31 +19,60 @@
       </template>
     </Dropdown>
 	<div class="addon rate" v-if="addon === 'rate'">
-	  <span class="text-gray-500">$1</span>
+	  <span class="flex items-center">
+		 <span class="font-bold">1</span> <i :class="`cf cf-${selCrypto?.toLowerCase()} ml-2`" /></span>
 	  <span class="text-2xl text-primary font-bold"> = </span>
 	</div>
 	<div class="addon" v-if="addon === 'text'" >
 		<ROCurrency type="currency" :icon="selectedCurrency" />
 	</div>
-	<InputNumber v-if="addon === 'rate'" v-model="input1" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" prefix="₦"/>
-    <InputNumber v-else inputId="minmaxfraction" v-model="input3" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" />
+	<InputNumber :disabled="input" @input="handleInput" v-if="addon === 'rate'" v-model="input1" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" :prefix="selCurrency"/>
+    <InputNumber :disabled="input" @input="handleInput" v-else inputId="minmaxfraction" v-model="input1" mode="decimal" :minFractionDigits="2" :maxFractionDigits="5" />
   </div>
-
   </div>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps({
-  currencies: Array,
-  coins: Array,
-  label: String,
-  type: String,
-  addon: String,
-  selectedCurrency: String
-})
-const selected = ref(null)
-const input3 = ref('')
-const input1 = ref('700')
+<script setup>
+import {watch} from "vue";
+
+	const emit = defineEmits([
+	  'input',
+	  'change'
+	])
+	const props = defineProps({
+	  currencies: Array,
+	  coins: Array,
+	  label: String,
+	  type: String,
+	  addon: String,
+	  selectedCurrency: String,
+	  input: Boolean,
+	  inputValue: String,
+	  currency: String,
+	  crypto: String
+	})
+
+	const selected = ref(null)
+	const input1 = ref(null)
+	const handleInput = (e) => {
+		emit('input', e.value)
+	}
+	const handleChange = (e) => {
+		emit('change', e.value)
+	}
+	const selCurrency = ref('₦')
+	const selCrypto = ref('eth')
+	watch(() => props.inputValue, () => input1.value = props.inputValue)
+	watch(() => props.currency, () => {
+	  if (props.currency === 'NGN'){
+		selCurrency.value = '₦'
+	  } else if(props.currency === 'EUR'){
+		selCurrency.value = '€'
+	  } else selCurrency.value = '$'
+	})
+	watch(() => props.crypto, () => {
+	  selCrypto.value = props.crypto
+	})
 </script>
 
 <style lang="scss">

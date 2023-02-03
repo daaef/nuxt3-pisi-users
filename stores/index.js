@@ -224,7 +224,8 @@ export const useStore = defineStore({
         name: "USD",
         icon: "$",
         selected: false,
-      }],
+      }
+      ],
     ng: {
         id: 1,
         coin: "Naira",

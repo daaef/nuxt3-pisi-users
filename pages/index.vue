@@ -1,4 +1,26 @@
 <script setup>
+// import { utils } from 'web3';
+
+// import { computed } from 'vue';
+
+
+const {
+  onConnect,
+  connected,
+  userAddress,
+  chainId,
+  networkId,
+  assets,
+  getAccountAssets,
+} = useWallet();
+
+const handleWalletConnect = async () => {
+  await onConnect();
+  if (connected) {
+	console.log('afterConnectdWallet', connected);
+  }
+};
+
 definePageMeta({
   layout: 'landing',
   auth: 'guest'
@@ -29,7 +51,7 @@ definePageMeta({
 		  </nuxt-link>
 		</div>
 	  </nav>
-	  <h3 class="banner--title">
+<!--	  <h3 class="banner&#45;&#45;title">
 		<span>Change</span>
 		<span class="currency-badge mx-3">
 		  <span class="flag">
@@ -44,7 +66,14 @@ definePageMeta({
 		  </span>
 		  NGN
 	  	</span>
-	  </h3>
+	  </h3>-->
+	  <p>
+		Address:
+		{{ userAddress }}
+	  </p>
+	  <p>balance:{{ assets }}</p>
+	  <p>networkId: {{ networkId }}</p>
+	  <p>chainId: {{ chainId }}</p>
 	</header>
   </section>
 </template>
@@ -102,6 +131,11 @@ definePageMeta({
 	   .cf {
 		 -webkit-background-clip: unset;
 		 background: none;
+	   }
+
+	   .cf.cf-btc {
+		 color: #f2a900;
+		 -webkit-text-fill-color: #f2a900;
 	   }
 	 }
 	 .currency-badge {

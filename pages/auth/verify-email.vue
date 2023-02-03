@@ -80,11 +80,9 @@ export default {
 	  return route.query.email
 	})
 	const handleOnComplete = (value) => {
-	  console.log('OTP completed: ', value);
 	  complete.value = true
 	};
 	const handleOnChange = (value) => {
-	  console.log('OTP changed: ', value);
 	  complete.value = false
 	  otp.value = value
 	};
@@ -107,20 +105,13 @@ export default {
   },
   methods: {
     async verifyUser() {
-      this.loading = true
-      try {
+      	this.loading = true
 		await this.store.verifyMail(this.otp).then(res => console.log(res)).then(res => {
 		  this.login = true
 		  success('Successfully Activated!', res?.data?.msg)
 		  this.otpInput.clearInput()
 		  this.$router.push('/auth/login')
 		})
-      } catch (err) {
-        console.log('We got an error folks', err.data.msg)
-		this.otpInput.clearInput()
-		error('Error!', err?.data?.msg)
-        this.loading = false
-      }
     },
     async sendOTP() {
 	  try {
@@ -128,7 +119,6 @@ export default {
 		  email:this.email
 		})
 			.then((res) => {
-			  console.log('res', res)
 			  success('Successfully Sent OTP!', res)
 			  this.otpInput.clearInput()
 			  countdown.value.restart()
