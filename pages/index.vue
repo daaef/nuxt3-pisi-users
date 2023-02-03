@@ -51,7 +51,7 @@ definePageMeta({
 		  </nuxt-link>
 		</div>
 	  </nav>
-<!--	  <h3 class="banner&#45;&#45;title">
+	  <h3 class="banner--title">
 		<span>Change</span>
 		<span class="currency-badge mx-3">
 		  <span class="flag">
@@ -66,14 +66,7 @@ definePageMeta({
 		  </span>
 		  NGN
 	  	</span>
-	  </h3>-->
-	  <p>
-		Address:
-		{{ userAddress }}
-	  </p>
-	  <p>balance:{{ assets }}</p>
-	  <p>networkId: {{ networkId }}</p>
-	  <p>chainId: {{ chainId }}</p>
+	  </h3>
 	</header>
   </section>
 </template>
