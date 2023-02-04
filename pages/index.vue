@@ -1,26 +1,28 @@
 <script setup>
-// import { utils } from 'web3';
+import { useOnboard } from '@web3-onboard/vue'
 
-// import { computed } from 'vue';
+import { ethers } from 'ethers'
 
+const { connectedWallet, alreadyConnectedWallets, connectingWallet, connectWallet, disconnectWallet } =
+	useOnboard()
 
-const {
-  onConnect,
-  connected,
-  userAddress,
-  chainId,
-  networkId,
-  assets,
-  getAccountAssets,
-} = useWallet();
+if (connectedWallet?.provider) {
+  const ethersProvider = new ethers.providers.Web3Provider(
+	  connectedWallet.provider,
+	  'any'
+  )
+  console.log(ethersProvider)
+}
 
-const handleWalletConnect = async () => {
-  await onConnect();
-  if (connected) {
-	console.log('afterConnectdWallet', connected);
+const onClickConnect = () => {
+  const { provider, label } = connectedWallet.value || {}
+  if (provider && label) {
+	disconnectWallet({ label })
+  } else {
+	connectWallet()
+	console.log(alreadyConnectedWallets)
   }
-};
-
+}
 definePageMeta({
   layout: 'landing',
   auth: 'guest'
@@ -67,6 +69,17 @@ definePageMeta({
 		  NGN
 	  	</span>
 	  </h3>
+	  <p>{{ alreadyConnectedWallets }}</p>
+	  <p>{{ connectedWallet?.accounts }}</p>
+	  <button @click="onClickConnect">
+		{{
+		  connectingWallet
+			  ? 'Connecting...'
+			  : connectedWallet
+				  ? 'Disconnect'
+				  : 'Connect'
+		}}
+	  </button>
 	</header>
   </section>
 </template>

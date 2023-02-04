@@ -1,7 +1,9 @@
 const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {defineNuxtConfig} from "nuxt/config";
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
+// @ts-ignore
 export default defineNuxtConfig({
   app: {
     head: {
@@ -106,5 +108,20 @@ export default defineNuxtConfig({
   ],
   build: {
     transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'
+  },
+  vite: {
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          global: "globalThis",
+        },
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true,
+          }),
+        ],
+      },
+    },
   },
 })
