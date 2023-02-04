@@ -42,6 +42,7 @@
 	  </div>
 	</div>
   </Dialog>
+	<Connect @connected="testProvider" />
   </div>
 </template>
 
@@ -49,10 +50,14 @@
 import { useStore } from "~/stores";
 import {useTransitionState} from "vue";
 import {transactionStore} from "../stores/transactions";
+import Connect from "./Connect";
+import {ethers} from "ethers";
+import {abi, contractAddress} from "../constants/abi";
 
 
 export default {
   name: 'ROMakeOffer',
+  components: {Connect},
   setup(){
 	const store = useStore()
 	const tranStore = transactionStore()
@@ -74,11 +79,14 @@ export default {
 	  sell: null,
 	  rate: null,
 	  buy: null,
+	  converted: '',
 	  selectedCurrency: null,
 	  selectedCrypto: null,
 	  otpValue: '',
 	  currency: 'NGN',
-	  crypto: 'eth'
+	  crypto: 'eth',
+	  provider: {},
+	  contract: null
 	}
   },
   computed: {
@@ -103,9 +111,16 @@ export default {
 	}
   },
   methods: {
+	createContract(){
+	  this.contract = new ethers.Contract(contractAddress, abi, this.provider )
+	},
+	testProvider(e){
+	  this.provider = e
+	  this.createContract()
+	  // this.converted = ethers.utils.parseUnits("23.2", 'tron')
+	},
 	async openDialog(_, type) {
 	  if (type === 'offer') {
-		console.log('sending', this.offerData)
 		await this.tranStore.createOffer(this.offerData)
 		this.mainDialog = false
 	  } else if (type === 'back') {

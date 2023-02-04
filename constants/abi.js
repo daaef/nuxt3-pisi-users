@@ -1,4 +1,4 @@
-export default [
+export const abi = [
     {
         "inputs": [
             {
@@ -108,3 +108,5 @@ export default [
         "type": "function"
     }
 ]
+
+export const contractAddress = "0xEd8607ae4f68466aAD21B5db56540Cc92141659E"

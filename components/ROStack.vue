@@ -19,7 +19,6 @@
 
 <script lang="ts" setup>
 import {useStore} from "~/stores";
-import {watchEffect} from "@vue/runtime-core";
 
   const store = useStore()
   const handleOpen = (key: string, keyPath: string[]) => {
