@@ -14,7 +14,12 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-countdown": "2",
+    "@coinbase/wallet-sdk": "^3.6.3",
     "@css-render/vue3-ssr": "^0.15.11",
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
+    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
+    "@gnosis.pm/safe-apps-provider": "^0.15.1",
+    "@gnosis.pm/safe-apps-sdk": "^7.8.0",
     "@nuxt-alt/auth": "^2.1.9",
     "@nuxt-alt/http": "^1.5.7",
     "@nuxt-alt/proxy": "^2.1.3",
@@ -22,15 +27,15 @@
     "@walletconnect/web3-provider": "^1.8.0",
     "daisyui": "^2.43.2",
     "dayjs": "^1.11.7",
-    "nuxt-web3.js": "^0.1.5",
+    "ethers": "^5.7.2",
     "primeicons": "^6.0.1",
     "primevue": "^3",
     "sass": "^1.56.2",
     "unplugin-auto-import": "^0.12.1",
     "unplugin-vue-components": "^0.22.12",
+    "vagmi": "^0.1.20",
     "vue": "3",
-    "vue3-otp-input": "^0.3.6",
-    "web3": "^1.8.2",
-    "web3modal": "^1.9.12"
+    "vue-dapp": "^0.7.2",
+    "vue3-otp-input": "^0.3.6"
   }
 }
