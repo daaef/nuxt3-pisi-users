@@ -1,7 +1,11 @@
+import NodeGlobalsPolyfillPlugin from "@esbuild-plugins/node-globals-polyfill";
+
 const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {defineNuxtConfig} from "nuxt/config";
+import NodeModulesPolyfillPlugin from "@esbuild-plugins/node-modules-polyfill";
 
+// @ts-ignore
 export default defineNuxtConfig({
   app: {
     head: {
@@ -41,6 +45,7 @@ export default defineNuxtConfig({
     // Keys within public, will be also exposed to the client-side
     public: {
       api_url: process.env.BASE_URL,
+      infura_id: process.env.INFURA_ID,
     }
   },
   modules: [
@@ -107,4 +112,18 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'
   },
+  vite: {
+    optimizeDeps: {
+      esbuildOptions: {
+        // // Enable esbuild polyfill plugins
+        plugins: [
+          NodeGlobalsPolyfillPlugin({
+            process: true,
+            buffer: true
+          }),
+          NodeModulesPolyfillPlugin()
+        ]
+      }
+    }
+  }
 })
