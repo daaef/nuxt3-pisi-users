@@ -3,6 +3,7 @@
 	<h3>Wallet Address: {{ address }}</h3>
 	<h3>Wallet Balance: {{ balance }}</h3>
 	<button @click="open">Connect Wallet</button>
+	<button @click="disconnect">Disconnect Wallet</button>
 	<ClientOnly>
 	  <vd-board :connectors="connectors" dark />
 
@@ -25,7 +26,7 @@ const emit = defineEmits([
   'connected'
 ])
 
-const { open } = useBoard();
+const { open,  } = useBoard();
 const config = useRuntimeConfig()
 const infuraId = config.public.infura_id;
 const { wallet, onDisconnect, onAccountsChanged, onChainChanged, disconnect } = useWallet()
@@ -56,8 +57,8 @@ const connectors = [
   new WalletConnectConnector({
 	qrcode: true,
 	rpc: {
-	  1: `https://mainnet.infura.io/v3/${infuraId}`,
-	  56: `https://rpc.ankr.com/bsc/f8ba49aadf77f1a5cfbaade4d07c455711c68587f9f21ec8e0c7b3eff776d02a`
+	  1: `https://rpc.ankr.com/near/f8ba49aadf77f1a5cfbaade4d07c455711c68587f9f21ec8e0c7b3eff776d02a`,
+	  56: `https://rpc.ankr.com/bsc_testnet_chapel/f8ba49aadf77f1a5cfbaade4d07c455711c68587f9f21ec8e0c7b3eff776d02a`
 	},
   }),
   new CoinbaseWalletConnector({

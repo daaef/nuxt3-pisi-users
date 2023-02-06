@@ -100,6 +100,9 @@ export default {
 	  }
 	}
   },
+  mounted(){
+
+  },
   watch: {
 	dialog(val) {
 	  this.mainDialog = this.dialog
