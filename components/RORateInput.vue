@@ -2,7 +2,7 @@
   <div class="rate--input">
 	<ROInputWithAddon :crypto="crypto" :currency="currency" @input="handleInput" :addon="'rate'" />
 	<span class="text-gray-400">
-	  Official rate: <span class="font-medium text-black">$1 = ₦433.72</span>
+	  Official rate: <span class="font-medium text-black">1 {{ crypto }} = {{ currency === 'USD' ? '$' : currency === 'EUR' ? '€' : '₦' }}{{ rateVal }}</span>
 	</span>
   </div>
 </template>
@@ -18,7 +18,8 @@
 	const props = defineProps({
 	  inputValue: String,
 	  crypto: String,
-	  currency: String
+	  currency: String,
+	  rateVal: String
 	})
 
 	const store = useStore()

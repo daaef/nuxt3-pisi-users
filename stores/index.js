@@ -48,7 +48,7 @@ export const useStore = defineStore({
       },
     ],
     payments: [
-      {
+      /*{
         id: 1,
         name: "Matthew Ero",
         amount: "₦72,347.50",
@@ -95,7 +95,7 @@ export const useStore = defineStore({
         rate: "$1 = ₦433.72",
         payState: "Request",
         country: "NGN",
-      },
+      },*/
     ],
     coins: [
       {
@@ -269,7 +269,7 @@ export const useStore = defineStore({
         selected: false,
       },
     history: [
-      {
+     /* {
         key: 1,
         id: "6728390-465322",
         sentAmount: "765.00",
@@ -340,7 +340,7 @@ export const useStore = defineStore({
         sendCurrency: "us",
         recieveCurrency: "ng",
         date: "2022-10-13"
-      },
+      },*/
     ],
   }),
   actions: {

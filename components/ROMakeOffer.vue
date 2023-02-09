@@ -9,7 +9,7 @@
 	</div>
 
 	<div class="custom-input">
-	  <RORateInput @input="handleRate" :crypto="crypto" :currency="currency" />
+	  <RORateInput @input="handleRate" :rateVal=currentRate :crypto="crypto" :currency="currency" />
 	</div>
 	<template #footer>
 	  <Button label="Make offer" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'offer')"/>
@@ -42,7 +42,7 @@
 	  </div>
 	</div>
   </Dialog>
-	<Connect @connected="testProvider" />
+	<Connect @connectedToStore="setStore" />
   </div>
 </template>
 
@@ -50,18 +50,18 @@
 import { useStore } from "~/stores";
 import {useTransitionState} from "vue";
 import {transactionStore} from "../stores/transactions";
-import Connect from "./Connect";
 import {ethers} from "ethers";
 import {abi, contractAddress} from "../constants/abi";
+import {useCryptoStore} from "../stores/crypto";
 
 
 export default {
   name: 'ROMakeOffer',
-  components: {Connect},
   setup(){
 	const store = useStore()
 	const tranStore = transactionStore()
-	return { store, tranStore }
+	const crypStore = useCryptoStore()
+	return { store, tranStore, crypStore }
   },
   props: {
 	dialog: {
@@ -86,7 +86,8 @@ export default {
 	  currency: 'NGN',
 	  crypto: 'eth',
 	  provider: {},
-	  contract: null
+	  contract: null,
+	  ourStore: {}
 	}
   },
   computed: {
@@ -98,10 +99,16 @@ export default {
 		currencyId: this.selectedCurrency?.id,
 		provider: {}
 	  }
+	},
+	valInWei(){
+	  return ethers.utils.parseEther(`${this.crypStore[`${this.crypto.toLowerCase()}`] * this.sell}`)
+	},
+	currentRate(){
+	  return this.crypStore[`${this.currency.toLowerCase()}`]
 	}
   },
   mounted(){
-
+	this.crypStore.eth2All()
   },
   watch: {
 	dialog(val) {
@@ -114,17 +121,27 @@ export default {
 	}
   },
   methods: {
-	createContract(){
-	  this.contract = new ethers.Contract(contractAddress, abi, this.provider )
+	/*createContract(){
+	  this.contract = new ethers.Contract(contractAddress, abi, prov )
 	},
 	testProvider(e){
 	  this.provider = e
-	  this.createContract()
+	  setTimeout(()=> {
+		this.createContract()
+	  }, 500)
 	  // this.converted = ethers.utils.parseUnits("23.2", 'tron')
+	},*/
+	setStore(e){
+	  this.ourStore = e
+	  console.log('store is', e)
 	},
 	async openDialog(_, type) {
 	  if (type === 'offer') {
-		await this.tranStore.createOffer(this.offerData)
+		console.log('crypto store is', this.crypStore.address)
+		// await this.tranStore.createOffer(this.offerData)
+		// const res = await this.crypStore.contract.deposit(this.valInWei)
+		// console.log(res)
+		// console.log(this.valInWei)
 		this.mainDialog = false
 	  } else if (type === 'back') {
 		this.offerDialog = false

@@ -25,4 +25,8 @@ export default ($fetch, config) => ({
             headers: payload.headers
         })
     },
+
+    getConversion({from, to1, to2, to3, to4, to5}) {
+        return $fetch.$get(`https://min-api.cryptocompare.com/data/price?fsym=${from}&tsyms=${to1},${to2},${to3},${to4},${to5}&api_key=5adf62687cf1d417cc32124a57d01b9a369eff2c6130b8ab3c58f190343cc0d0`)
+    }
 })
