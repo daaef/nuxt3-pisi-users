@@ -1,26 +1,4 @@
 <script setup>
-// import { utils } from 'web3';
-
-// import { computed } from 'vue';
-
-
-const {
-  onConnect,
-  connected,
-  userAddress,
-  chainId,
-  networkId,
-  assets,
-  getAccountAssets,
-} = useWallet();
-
-const handleWalletConnect = async () => {
-  await onConnect();
-  if (connected) {
-	console.log('afterConnectdWallet', connected);
-  }
-};
-
 definePageMeta({
   layout: 'landing',
   auth: 'guest'
@@ -30,14 +8,14 @@ definePageMeta({
 <template>
   <section class="page-content landing">
 	<header>
-	  <nav class="px-7 flex w-full justify-between">
+	  <nav class="flex justify-between w-full px-7">
 		<nuxt-link class="flex items-center" to="/">
 		  <img src="/auth-logo.png" alt="" />
 		</nuxt-link>
 		<div class="flex items-center flex-grow-0">
 		  <nuxt-link
 			  v-if="$route.name !== 'auth-login'"
-			  class="flex flex-grow-0 items-center text-sm mr-4"
+			  class="flex items-center flex-grow-0 mr-4 text-sm"
 			  to="/auth/login"
 		  >
 			Login
@@ -45,7 +23,7 @@ definePageMeta({
 		  <nuxt-link
 			  v-if="$route.name !== 'auth-signup'"
 			  to="/auth/signup"
-			  class="btn btn-primary flex-grow-0"
+			  class="flex-grow-0 btn btn-primary"
 		  >
 			<span class="text-white">Create Account</span>
 		  </nuxt-link>
@@ -53,14 +31,14 @@ definePageMeta({
 	  </nav>
 	  <h3 class="banner--title">
 		<span>Change</span>
-		<span class="currency-badge mx-3">
+		<span class="mx-3 currency-badge">
 		  <span class="flag">
 			  <i class="cf cf-btc" />
 		  </span>
 		  BTC
 		</span>
 		<span>easily for</span>
-		<span class="currency-badge ml-3">
+		<span class="ml-3 currency-badge">
 		  <span class="flag">
 			  <span class="fi fi-ng fis"></span>
 		  </span>
