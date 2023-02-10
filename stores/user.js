@@ -68,16 +68,15 @@ export const userStore = defineStore({
         .then(res => {
             success(undefined, 'Successfully Sent OTP')
 
-            this.loading = false
-            useRouter().push({
-                path: '/auth/login'
-            })
+            this.loading = false``
             // this.currencies = res.data.cryptoCurrencies
         }).catch(e => {
+            console.dir( e)
             if (typeof e !== 'string'){
-                e.forEach(err => {
+                console.log(e)
+                /*e.forEach(err => {
                     error(undefined, err)
-                })
+                })*/
             } else {
                 error(undefined, e)
             }
@@ -85,19 +84,20 @@ export const userStore = defineStore({
         })
     },
     async verifyMail(payload) {
-
-        console.log('Verify User')
+        console.log('Verify User code', payload)
         await handler
             .handle(usePisiFetch().auth.verifyEmail, {
                 data: payload
             })
             .then(res => {
+                console.log('Verify User code, got something', res)
                 success('Successfully Verified!', 'Now login to your account')
 
                 this.loading = false
                 useRouter().push({
                     path: '/auth/login'
                 })
+                return Promise.resolve(res)
                 // this.currencies = res.data.cryptoCurrencies
             }).catch(e => {
                 if (typeof e !== 'string'){

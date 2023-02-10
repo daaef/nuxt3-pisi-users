@@ -24,6 +24,7 @@
         <div class="w-full mt-5">
           <button
             class="w-full btn btn-primary flex items-center"
+			:class="store.loading ? 'loading' : ''"
             @click.prevent="getOTP"
           >
             <span>Get OTP</span> <i class="icli Arrow-Right" />
@@ -53,7 +54,7 @@ export default {
 		email: email.value
 	  })
 	};
-	return { email, getOTP }
+	return { email, getOTP, store }
   },
   data() {
     return {

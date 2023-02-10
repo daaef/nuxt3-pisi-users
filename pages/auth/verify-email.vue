@@ -29,7 +29,7 @@
           <span class="text-primary">
             <span class="font-mono font-medium text-xl">
 			  <client-only>
-				<countdown ref="countdown" :time="10 * 60 * 1000" v-slot="{ minutes, seconds }" @end="onCountdownEnd">
+				<countdown ref="countdown" :time="60 * 1000" v-slot="{ minutes, seconds }" @end="onCountdownEnd">
               		<span>{{ minutes }}</span>:<span>{{ seconds }}</span>
 				</countdown>
 			  </client-only>
@@ -83,6 +83,7 @@ export default {
 	  complete.value = true
 	};
 	const handleOnChange = (value) => {
+	  console.log(value)
 	  complete.value = false
 	  otp.value = value
 	};
@@ -108,9 +109,7 @@ export default {
       	this.loading = true
 		await this.store.verifyMail(this.otp).then(res => console.log(res)).then(res => {
 		  this.login = true
-		  success('Successfully Activated!', res?.data?.msg)
 		  this.otpInput.clearInput()
-		  this.$router.push('/auth/login')
 		})
     },
     async sendOTP() {
@@ -120,8 +119,8 @@ export default {
 		})
 			.then((res) => {
 			  success('Successfully Sent OTP!', res)
-			  this.otpInput.clearInput()
-			  countdown.value.restart()
+			  // this.otpInput.clearInput()
+			  // countdown.value.restart()
 			})
 	  } catch (err) {
 		console.log('We got an error folks', err.data.msg)

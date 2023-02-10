@@ -9,12 +9,13 @@ export default ($fetch, config) => ({
 
     //Verify Email with OTP
     verifyEmail(payload) {
-        return $fetch.$get(`${config.public.api_url}/auth/verify-email/${payload}`)
+        console.log('payload is', payload)
+        return $fetch.$get(`${config.public.api_url}/auth/verify-email/${payload.data}`)
     },
 
     //Verify OTP
     verifyOTP(payload) {
-        return $fetch.$get(`${config.public.api_url}/auth/verify-otp/${payload}`)
+        return $fetch.$get(`${config.public.api_url}/auth/verify-otp/${payload.data}`)
     },
 
     //Resend OTP

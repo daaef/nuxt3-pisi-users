@@ -1,37 +1,37 @@
 <template>
-  <div class="auth--view flex justify-center">
+  <div class="flex justify-center auth--view">
     <div class="card auth--card bg-base-100/40 backdrop-blur">
-      <div class="card-body items-center">
-        <h2 class="card-title text-center font-medium text-h5">
+      <div class="items-center card-body">
+        <h2 class="font-medium text-center card-title text-h5">
           Log in to get started
         </h2>
         <div class="w-full mt-4">
-          <div class="form-control w-full">
+          <div class="w-full form-control">
             <label class="label">
-              <span class="label-text text-lg">Email</span>
+              <span class="text-lg label-text">Email</span>
             </label>
             <input
               v-model="login.email"
               type="email"
               placeholder="joe@gmail.com"
-              class="input bg-base-content/10 input-bordered w-full"
+              class="w-full input bg-base-content/10 input-bordered"
             />
           </div>
         </div>
         <div class="w-full mt-3">
-          <div class="form-control w-full">
+          <div class="w-full form-control">
             <label class="label">
-              <span class="label-text text-lg">Password</span>
+              <span class="text-lg label-text">Password</span>
             </label>
             <div class="relative">
               <input
                 v-model="login.password"
                 :type="show ? 'text' : 'password'"
                 placeholder="**********"
-                class="input bg-base-content/10 input-bordered w-full"
+                class="w-full input bg-base-content/10 input-bordered"
               />
               <div
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
               >
                 <i
                   class="iconly-Show icbo text-primary"
@@ -47,18 +47,18 @@
             </div>
           </div>
         </div>
-        <div class="w-full flex justify-end">
+        <div class="flex justify-end w-full">
           <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
         </div>
         <div class="w-full mt-5">
 		  <button
-            class="w-full btn btn-primary flex items-center"
+            class="flex items-center w-full btn btn-primary"
             :class="loading ? 'loading' : ''"
             @click.prevent="userLogin"
           >
             <span>Log in</span> <ic name="Arrow-Right" />
           </button>
-<!--          <nuxt-link class="w-full btn btn-primary flex items-center" to="/">
+<!--          <nuxt-link class="flex items-center w-full btn btn-primary" to="/">
             <span>Log in</span> <ic name="Arrow-Right" />
           </nuxt-link>-->
         </div>
@@ -71,7 +71,7 @@
         </div>
       </div>
     </div>
-<!--    <v-snackbar :timeout="-1" :value="message" absolute left shaped top>
+    <!--    <v-snackbar :timeout="-1" :value="message" absolute left shaped top>
       {{ notification }}
     </v-snackbar>-->
   </div>

@@ -173,6 +173,7 @@
   import {error as errorPop} from "../../components/ROToastAndConfirmService";
   import {useStore} from "~/stores";
   import {userStore} from "../../stores/user";
+  import {computed} from "vue";
 
   definePageMeta({
 	layout: 'authentication',
@@ -203,7 +204,7 @@
   })
 
   watch(() => signup.value.otherNames, () => signup.value.otherNames = signup.value.otherNames.replace(/\s+/g, ' ').trim().trim())
-
+  const cid = computed(()=> selCountry.value.id)
   onMounted(async ()=> {
 	// await useFetch('/api/get-countries')
 	// 	.then((res) => {
@@ -216,6 +217,7 @@
   async function userSignup() {
 	loading.value = true
 	signup.value.phoneNumber = `${signup.value.phoneNumber}`
+	signup.value.countryId = cid.value
 	const formData = {...signup.value}
 	await usrStore?.register(formData)
 	loading.value = false
