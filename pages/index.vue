@@ -287,6 +287,12 @@ definePageMeta({
 		   padding: 2px 8px;
 		   font-size: .75rem;
 		 }
+		 img {
+		   height: 25px;
+		 }
+	   }
+	   .container {
+		 max-width: 90%;
 	   }
 	 }
 	 .landing--logo {
@@ -317,6 +323,19 @@ definePageMeta({
 		   font-size: 5rem;
 		 }
 	   }
+	   @media (max-width: 769px) {
+		 font-size: 3.2rem;
+		 width: 100%;
+		 span.larger-title {
+		   font-size: 4rem;
+		 }
+	   }
+	 }
+	 @media (max-width: 1024px) {
+		.landing--logo {
+		  width: 100%;
+		  object-fit: cover;
+		}
 	 }
 	 .currency-badge {
 	   background: #E8E8F3;
@@ -347,16 +366,24 @@ definePageMeta({
 	   display: grid;
 	   grid-template-columns: 1fr 1fr;
 	   grid-gap: 50px;
+	   overflow-x: hidden;
+	   img {
+		 max-width: 100%;
+	   }
 	 }
 	 .section--title {
 	   font-size: 2.5rem;
 	   font-weight: 500;
 	   color: #fafafa;
 	   margin-bottom: 20px;
+	   width: 100%;
+	   @media (max-width: 859px) {
+		 font-size: 1.7rem;
+	   }
 	 }
 
 	 .section {
-	   padding: 50px;
+	   padding: 50px 0;
 	   position: relative;
 	   .container {
 		 position: relative;
@@ -374,6 +401,17 @@ definePageMeta({
 		   bottom: 0;
 		   transform: translateY(10%);
 		   left: 10%;
+		 }
+	   }
+	 }
+	 #transactions {
+	   @media (max-width: 859px) {
+		 text-align: center;
+		 img {
+		   display: none;
+		 }
+		 img.mobile {
+		   display: block;
 		 }
 	   }
 	 }
@@ -409,6 +447,19 @@ definePageMeta({
 			  }
 			}
 		 }
+		 @media (max-width: 1024px) {
+		   text-align: center;
+		   grid-template-columns: auto;
+		   .img-content {
+			 display: none;
+		   }
+		   .steps-transaction {
+			 grid-gap: 50px;
+			 li {
+			   flex-direction: column;
+			 }
+		   }
+		 }
 	   }
 	 }
 	 #set-rates {
@@ -437,6 +488,9 @@ definePageMeta({
 		   @media (max-width: 1024px) {
 			 grid-template-columns: 1fr 1fr;
 		   }
+		   @media (max-width: 689px) {
+			 grid-template-columns: auto;
+		   }
 		 }
 	   }
 	 }
@@ -464,6 +518,9 @@ definePageMeta({
 	 }
 	 #xchange {
 	   .container {
+		 @media (max-width: 1024px) {
+		   text-align: center;
+		 }
 		 .xchange--grid {
 		   display: grid;
 		   grid-template-columns: .7fr .3fr;
@@ -570,6 +627,10 @@ definePageMeta({
 			display: grid;
 			grid-gap: 20px;
 			grid-template-columns: repeat(3, 0.9fr) 1.5fr auto;
+			ul {
+			  display: grid;
+			  grid-gap: 2.5px;
+			}
 			.social--grid {
 			  display: flex;
 			  a {
@@ -599,6 +660,21 @@ definePageMeta({
 				  height: 40px;
 				};
 			  }
+			}
+			@media (max-width: 1024px) {
+			  grid-template-columns: 1fr 1fr;
+			  & > div {
+				&:nth-child(4) {
+				  display: none;
+				}
+			  }
+			  .app-links {
+				grid-template-columns: max-content max-content;
+			  }
+			}
+			@media (max-width: 689px) {
+			  grid-template-columns: auto;
+			  grid-gap: 50px;
 			}
 		  }
 		  .sub--footer {
