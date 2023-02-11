@@ -55,6 +55,7 @@ definePageMeta({
 	  	<div class="container relative">
 		  <h3 class="section--title">P2P crypto transactions.</h3>
 		  <img class="w-full" src="/landing/trans-shape.png" alt="">
+		  <img class="w-full mobile" src="/landing/trans-shape-mobile.png" alt="">
 		  <p class="text-xl text-white my-8">Sign up now to find your best P2P match for free!</p>
 		  <nuxt-link
 			  to="/auth/signup"
@@ -433,6 +434,9 @@ definePageMeta({
 			   font-size: 3rem;
 			 }
 		   }
+		   @media (max-width: 1024px) {
+			 grid-template-columns: 1fr 1fr;
+		   }
 		 }
 	   }
 	 }
@@ -447,6 +451,14 @@ definePageMeta({
 		   img {
 			 width: 100%;
 		   }
+		   @media (max-width: 1024px) {
+			 br {
+			   display: none;
+			 }
+			 grid-template-columns: auto;
+			 justify-items: center;
+			 text-align: center;
+		   }
 		 }
 	   }
 	 }
@@ -458,6 +470,13 @@ definePageMeta({
 		   grid-gap: 80px;
 		   margin-top: 50px;
 		   align-items: center;
+
+		   @media (max-width: 1024px) {
+			 display: flex;
+			 flex-direction: column;
+			 justify-content: center;
+			 text-align: center;
+		   }
 		   img {
 			 width: 100%;
 		   }
@@ -470,7 +489,25 @@ definePageMeta({
 			   margin-top: 15px;
 			 }
 			 h3 {
-			   font-size: 3rem;
+			   font-size: 2.5rem;
+			 }
+			 @media (max-width: 1280px) {
+			   p {
+				 font-size: 1.4rem;
+			   }
+			   h3 {
+				 font-size: 1.8rem;
+			   }
+			 }
+			 @media (max-width: 1024px) {
+			   max-width: 100%;
+			   width: 100%;
+			   display: flex;
+			   flex-direction: column;
+			   align-items: center;
+			   img {
+				 width: 70%;
+			   }
 			 }
 			 .store-logos {
 			   display: grid;
@@ -509,6 +546,12 @@ definePageMeta({
 		   @media (max-width: 1024px) {
 			 br {
 			   display: none;
+			 }
+			 grid-template-columns: auto;
+			 justify-items: center;
+			 text-align: center;
+			 img {
+			   max-width: 80%;
 			 }
 		   }
 		   img {
@@ -574,4 +617,13 @@ definePageMeta({
 	 display: inline-block !important;
    }
  }
+ img.mobile {
+   display: none;
+ }
+ .container{
+   padding: 0 20px;
+ }
+ //@media (max-width: ) {
+ //
+ //}
 </style>
