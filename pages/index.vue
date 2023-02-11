@@ -40,7 +40,7 @@ definePageMeta({
 			  to="/auth/signup"
 			  class="flex-grow-0 btn btn-primary"
 		  >
-			<span class="text-white">Get Started fro free</span>
+			<span class="text-white">Get Started for free</span>
 		  </nuxt-link>
 		</div>
 	  	<img class="landing--logo" src="/landing/header.svg" alt="">
