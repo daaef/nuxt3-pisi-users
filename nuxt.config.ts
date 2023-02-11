@@ -7,8 +7,8 @@ export default defineNuxtConfig({
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      titleTemplate: "Exchange - %s",
-      title: "Welcome to our project",
+      titleTemplate: "RedOnion - %s",
+      title: "Buy, trade, exchange!",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
