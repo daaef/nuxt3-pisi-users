@@ -291,9 +291,6 @@ definePageMeta({
 		   height: 25px;
 		 }
 	   }
-	   .container {
-		 max-width: 90%;
-	   }
 	 }
 	 .landing--logo {
 	   height: 100vh;
@@ -400,7 +397,6 @@ definePageMeta({
 		   position: absolute;
 		   bottom: 0;
 		   transform: translateY(10%);
-		   left: 10%;
 		 }
 	   }
 	 }
