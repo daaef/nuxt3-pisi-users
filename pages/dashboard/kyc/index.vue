@@ -14,7 +14,7 @@
           <nuxt-link to="/dashboard/kyc/identity" class="kyc--panel w-full active--panel">
             <div class="number--text-container">
               <span class="number block">1</span>
-              <span class="block ml-3 panel--title">Verify your identity</span>
+              <span class="block ml-3 panel--title">Upload a Selfie</span>
             </div>
             <i class="iconly-Arrow-Right-2 text-white icli"></i>
           </nuxt-link>

@@ -1,0 +1,9 @@
+# CodeSync won't sync the files in the .syncignore. It follows same format as .gitignore.
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist

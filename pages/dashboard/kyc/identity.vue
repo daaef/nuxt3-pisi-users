@@ -11,94 +11,30 @@
         <a href="#" @click="() => $router.go(-1)">
           <i class="iconly-Arrow-Left icli"></i>
         </a>
+          <div class="camera--case">
+            <div class="camera--holder">
+              <camera autoplay>
+              </camera>
+            </div>
+              <a href="#" @click.prevent="snapshot" class="cam--container">
+                  <i class="iconly-Camera icli"></i>
+              </a>
+          </div>
         <h2 class="card-title w-full justify-center font-medium text-h5">
-          Required Identification
+          Image Upload
         </h2>
-        <p class="text-center">
+        <p class="text-center w-full">
           Please ensure you selected the right ID type that matches the ID you
           intend to upload
         </p>
-        <div class="w-full">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Country</span>
-            </label>
-            <select
-              v-model="selectedCountry"
-              class="select bg-base-content/10 input-bordered w-full"
-            >
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Nigeria</option>
-              <option>Marge</option>
-              <option>Bart</option>
-              <option>Lisa</option>
-              <option>Maggie</option>
-            </select>
-          </div>
-        </div>
-        <div class="w-full">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Select ID</span>
-            </label>
-            <select
-              v-model="selectedId"
-              class="select bg-base-content/10 input-bordered w-full"
-            >
-              <option disabled selected></option>
-              <option>NIN ID</option>
-              <option>NIN Slip</option>
-              <option>Voter's Card</option>
-              <option>Passport</option>
-              <option>Driver's Licence</option>
-            </select>
-          </div>
-        </div>
-
-        <div v-if="showFileUpload" class="w-full m-1 mt-2">
-          {{ selectedId }}
-          <!-- example ID image  -->
-          <div class="flex justify-center my-5 p-5 bg-base-content/10 rounded">
-            <img src="/nin.png" alt="" />
-          </div>
-
-          <div class="w-full">
-            <div class="form-control w-full">
-              <input
-                type="file"
-                class="input bg-base-content/10 input-bordered w-full"
-              />
-
-              <button
-                class="w-full btn btn-secondary my-3 flex items-center"
-                :class="loading ? 'loading' : ''"
-              >
-                <span class="text-primary text-base">Upload ID</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
         <div class="w-full mt-5">
           <button
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
             @click="simulate"
           >
-            <span>Start Verification</span> <ic name="Arrow-Right" />
+            <span>Upload Selfie</span> <i class="icli iconly-Arrow-Right" />
           </button>
-        </div>
-        <div class="w-full mt-5">
-          <p class="text-center">
-            By clicking continue, you agree to Exchange's
-            <a href="#">Terms of Service</a> and
-            <a href="#">Privacy Policy.</a>
-          </p>
         </div>
       </div>
     </div>
@@ -113,9 +49,21 @@
 
 </template>
 
-<script>
+<script lang="ts">
+import Camera from "simple-vue-camera";
 export default {
   name: 'KycHome',
+    setup(){
+        const camera = ref<InstanceType<typeof Camera>>();
+        const snapshot = async () => {
+            const blob = await camera.value?.snapshot();
+
+            // To show the screenshot with an image tag, create a url
+            const url = URL.createObjectURL(blob);
+        }
+
+        return { snapshot, camera }
+    },
   data() {
     return {
       attrs: {
@@ -150,9 +98,41 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 input[type='file'] {
   line-height: 42px;
+}
+
+.camera--case {
+  .iconly-Camera {
+    font-size: 3rem;
+    transition: .3s ease-in-out;
+    &:hover {
+      font-size: 3.4rem;
+    }
+    &:active {
+      font-size: 3.1rem;
+    }
+  }
+  .cam--container {
+    height: 80px;
+  }
+}
+
+.camera--case {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.camera--holder {
+    width: 500px;
+    height: auto;
+    max-height: 500px;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 0 auto 20px;
 }
 
 input[type='file']:active {

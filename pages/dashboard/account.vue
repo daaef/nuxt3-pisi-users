@@ -175,7 +175,7 @@ const userData = ref({
 			Connect your crypto wallet
 		  </div>
 		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
-		</div> 
+		</div>
 	  </a>
 	</div>
 	<ROVerifyEmail :dialog="openOtp" @closeModal="openOtp = false" />

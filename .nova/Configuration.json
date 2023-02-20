@@ -1,3 +1,12 @@
 {
-  "prettier.module.path" : "\/Users\/aef\/.nvm\/versions\/node\/v16.18.1\/bin"
+  "prettier.default-config.arrowParens" : "always",
+  "prettier.default-config.bracketSpacing" : "Enable",
+  "prettier.default-config.jsxBracketSameLine" : "Enable",
+  "prettier.default-config.semi" : "Enable",
+  "prettier.default-config.useTabs" : "Enable",
+  "prettier.default-config.vueIndentScriptAndStyle" : "Enable",
+  "prettier.format-on-save" : "Enable",
+  "prettier.format-on-save.ignore-remote" : "Enable",
+  "prettier.format-on-save.ignore-without-config" : "Enable",
+  "prettier.module.path" : "\/Users\/aef\/.nvm\/versions\/node\/v16.19.0\/lib\/node_modules\/prettier"
 }

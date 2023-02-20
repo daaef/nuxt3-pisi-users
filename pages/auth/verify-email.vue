@@ -44,7 +44,7 @@
             @click.prevent="verifyUser"
 			:disabled="!complete"
           >
-            <span>Verify OTP</span> <i class="icli Arrow-Right" />
+            <span>Verify OTP</span> <i class="icli iconly-Arrow-Right" />
           </button>
         </div>
         <div v-else class="w-full mt-5">
