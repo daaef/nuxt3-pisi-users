@@ -6,4 +6,18 @@ export default ($fetch, config) => ({
             body: payload.data
         })
     },
+    //Get Offers
+    fetchOffers(payload) {
+        return $fetch.$post(`${config.public.api_url}/transaction/get-offers`, {
+            headers: payload.headers,
+            body: payload.data
+        })
+    },
+    //Respond to Offer
+    respondToOffer(payload) {
+        return $fetch.$post(`${config.public.api_url}/transaction/get-offers`, {
+            headers: payload.headers,
+            body: payload.data
+        })
+    },
 })

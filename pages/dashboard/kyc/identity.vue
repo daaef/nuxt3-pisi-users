@@ -1,68 +1,88 @@
 <template>
   <div class="kyc--view flex justify-center">
-    <div v-if="!successfull" class="auth--card bg-base-100/40 backdrop-blur">
-      <div v-if="loading" class="loader-component">
-        <v-skeleton-loader
-          v-bind="attrs"
-          type="table-heading, list-item-two-line, image, table-tfoot"
-        ></v-skeleton-loader>
-      </div>
-      <div v-else class="card-body items-start">
+    <div class="auth--card bg-base-100/40 backdrop-blur">
+      <div class="card-body items-start">
         <a href="#" @click="() => $router.go(-1)">
           <i class="iconly-Arrow-Left icli"></i>
         </a>
           <div class="camera--case">
             <div class="camera--holder">
-              <camera autoplay>
+              <camera v-if="!(imgSrc.length)" autoplay ref="camera">
               </camera>
+                <div v-if="imgSrc.length" class="img--preview">
+                    <img :src="imgSrc" alt="">
+                </div>
             </div>
-              <a href="#" @click.prevent="snapshot" class="cam--container">
+              <a v-if="!(imgSrc.length)" href="#" @click.prevent="snapshot" class="cam--container">
                   <i class="iconly-Camera icli"></i>
+              </a>
+              <a v-if="imgSrc.length" href="#" @click.prevent="imgSrc = ''" class="cam--container">
+                  <i class="iconly-Close-Square icli"></i>
               </a>
           </div>
         <h2 class="card-title w-full justify-center font-medium text-h5">
           Image Upload
         </h2>
         <p class="text-center w-full">
-          Please ensure you selected the right ID type that matches the ID you
-          intend to upload
+          Please ensure you take a clear selfie to ensure a succesful validation.
         </p>
         <div class="w-full mt-5">
-          <button
+          <a
+                  href="#"
+                  ref="uploadBtn"
             class="w-full btn btn-primary flex items-center"
             :class="loading ? 'loading' : ''"
-            @click="simulate"
+            @click="uploadSelfie"
           >
             <span>Upload Selfie</span> <i class="icli iconly-Arrow-Right" />
-          </button>
+          </a>
         </div>
       </div>
     </div>
-	<ROSuccessKyc
-		v-else
+<!--	<ROSuccessKyc
 		title="We are now verifying your details"
 		message="We will send you an email and in-app notification once we’re done verifying your documents."
 		button-text="Continue to dashboard"
 		button-url="/dashboard/kyc/"
-	></ROSuccessKyc>
+	></ROSuccessKyc>-->
   </div>
 
 </template>
 
 <script lang="ts">
 import Camera from "simple-vue-camera";
+import {kycStore} from "~/stores/kyc";
+
 export default {
   name: 'KycHome',
     setup(){
+        const store = kycStore()
         const camera = ref<InstanceType<typeof Camera>>();
-        const snapshot = async () => {
-            const blob = await camera.value?.snapshot();
+        const imgSrc = ref('')
+        const image:any = ref(null)
+        const imageFile:any = ref(null)
 
+        const blobToFile = (theBlob: Blob, fileName:string): File => {
+            return new File(
+                [theBlob as any], // cast as any
+                fileName,
+                {
+                    lastModified: new Date().getTime(),
+                    type: theBlob.type
+                }
+            )
+        }
+        const snapshot = async () => {
+            const blob:any = await camera.value?.snapshot();
+            image.value = blob
             // To show the screenshot with an image tag, create a url
-            const url = URL.createObjectURL(blob);
+            imgSrc.value = URL.createObjectURL(blob)
+            imageFile.value = blobToFile(image.value, "selfie.png")
         }
 
-        return { snapshot, camera }
+        // const selfieBtn =
+
+        return { snapshot, camera, imgSrc, image, store, imageFile }
     },
   data() {
     return {
@@ -75,8 +95,7 @@ export default {
       loading: false,
       message: false,
       notification: '',
-      successfull: false,
-
+      successful: false,
       selectedId: '',
       selectedCountry: ''
     }
@@ -88,13 +107,13 @@ export default {
     }
   },
   methods: {
-    simulate() {
-      this.loading = true
-      setTimeout(() => {
-        this.successfull = true
-        this.loading = false
-      }, 2000)
-    }
+      async uploadSelfie() {
+          this.loading = true
+          const formData = new FormData()
+          formData.append("selfie", this.imageFile, 'selfie.png')
+          await this.store.uploadSelfie(formData)
+          this.loading = false
+      }
   }
 }
 </script>
@@ -104,7 +123,7 @@ input[type='file'] {
 }
 
 .camera--case {
-  .iconly-Camera {
+  .icli {
     font-size: 3rem;
     transition: .3s ease-in-out;
     &:hover {
@@ -112,6 +131,12 @@ input[type='file'] {
     }
     &:active {
       font-size: 3.1rem;
+    }
+    &.iconly-Close-Square {
+      color: red;
+    }
+    &.iconly-Camera {
+      color: darkblue;
     }
   }
   .cam--container {

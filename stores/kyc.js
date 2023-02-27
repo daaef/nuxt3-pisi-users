@@ -11,16 +11,21 @@ export const kycStore = defineStore({
   }),
   actions: {
     async uploadSelfie(payload) {
-      console.log('uploading selfie')
+        this.loading = true
+      console.log('uploading selfie', payload)
       await handler
           .handle(usePisiFetch().kyc.uploadSelfie, {
-              headers: { 'Authorization': useAuth().strategy.token.get() },
+              headers: {
+                  'Authorization': useAuth().strategy.token.get(),
+                  'Content-Type': 'multipart/form-data'
+              },
               data: payload
             })
           .then(res => {
             console.log('returned for bank addition', res)
             success(undefined, 'Successfully uploaded Selfie')
             // this.currencies = res.data.cryptoCurrencies
+              this.loading = false
           }).catch(e => {
               if (typeof e !== 'string'){
                   e.forEach(err => {

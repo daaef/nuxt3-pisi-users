@@ -9,6 +9,7 @@ export default ($fetch, config) => ({
 
     //Upload Selfie
     uploadSelfie(payload) {
+        console.log('uploading selfie', payload.data)
         return $fetch.$post(`${config.public.api_url}/user/upload-selfie`, {
             headers: payload.headers,
             body: payload.data

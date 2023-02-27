@@ -1,3 +1,5 @@
+const formKitTailwind = require('@formkit/themes/tailwindcss');
+
 
 module.exports = {
     daisyui: {
@@ -17,7 +19,7 @@ module.exports = {
             },
         ],
     },
-    plugins: [require('daisyui')],
+    plugins: [require('daisyui'), formKitTailwind],
     theme: {
         container: {
             center: true,

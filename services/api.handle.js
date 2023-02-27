@@ -7,6 +7,7 @@
 export class Handler {
     // Method created to handle every api call pass to it as a function
     handle(fn, payload) {
+        console.log('passed data to handler is', payload)
         // if resolved, data is returned and if rejected and error message is returned
         return new Promise((resolve, reject) => {
             fn(payload)

@@ -6,78 +6,75 @@
           Log in to get started
         </h2>
         <div class="w-full mt-4">
-          <div class="w-full form-control">
-            <label class="label">
-              <span class="text-lg label-text">Email</span>
-            </label>
-            <input
-              v-model="login.email"
-              type="email"
-              placeholder="joe@gmail.com"
-              class="w-full input bg-base-content/10 input-bordered"
-            />
-          </div>
-        </div>
-        <div class="w-full mt-3">
-          <div class="w-full form-control">
-            <label class="label">
-              <span class="text-lg label-text">Password</span>
-            </label>
-            <div class="relative">
-              <input
-                v-model="login.password"
-                :type="show ? 'text' : 'password'"
-                placeholder="**********"
-                class="w-full input bg-base-content/10 input-bordered"
-              />
-              <div
-                class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5"
-              >
-                <i
-                  class="iconly-Show icbo text-primary"
-                  :class="{ hidden: show, block: !show }"
-                  @click="show = !show"
-                ></i>
-                <i
-                  class="iconly-Hide icbo text-primary"
-                  :class="{ block: show, hidden: !show }"
-                  @click="show = !show"
-                ></i>
-              </div>
+            <FormKit
+                    type="form"
+                    :actions="false"
+                    @submit="userLogin"
+            >
+                <FormKit
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="jon@snow.guard"
+                    validation="required|email"
+                    validation-visibility="live"
+                >
+                    <template #suffix="{ value, state }">
+                        <div class="loader" v-if="state.validating" />
+                        <div class="done" v-if="value && state.complete" />
+                    </template>
+                </FormKit>
+                <div class="relative">
+                  <FormKit
+                      :type="show ? 'text' : 'password'"
+                      name="password"
+                      label="Password"
+                      placeholder="Enter password"
+                      validation="required"
+                      validation-visibility="live"
+                      />
+                  <div
+                          class="absolute pass-eye inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                  >
+                      <i
+                              class="iconly-Show icbo text-primary"
+                              :class="{ hidden: show, block: !show }"
+                              @click="show = !show"
+                      ></i>
+                      <i
+                              class="iconly-Hide icbo text-primary"
+                              :class="{ block: show, hidden: !show }"
+                              @click="show = !show"
+                      ></i>
+                  </div>
+                </div>
+                <div class="flex justify-end w-full my-1">
+                    <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
+                </div>
+                <FormKit
+                    type="submit"
+                    label="Log in"
+                    :input-class="loading ? 'loading' : ''"
+                    />
+            </FormKit>
+            <div class="w-full mt-5">
+                <div class="w-full mt-5">
+                  <p class="text-center">
+                    By clicking continue, you agree to Exchange's
+                    <a href="#">Terms of Service</a> and
+                    <a href="#">Privacy Policy.</a>
+                  </p>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="flex justify-end w-full">
-          <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
-        </div>
-        <div class="w-full mt-5">
-		  <button
-            class="flex items-center w-full btn btn-primary"
-            :class="loading ? 'loading' : ''"
-            @click.prevent="userLogin"
-          >
-            <span>Log in</span> <ic name="Arrow-Right" />
-          </button>
-<!--          <nuxt-link class="flex items-center w-full btn btn-primary" to="/">
-            <span>Log in</span> <ic name="Arrow-Right" />
-          </nuxt-link>-->
-        </div>
-        <div class="w-full mt-5">
-          <p class="text-center">
-            By clicking continue, you agree to Exchange's
-            <a href="#">Terms of Service</a> and
-            <a href="#">Privacy Policy.</a>
-          </p>
         </div>
       </div>
     </div>
-    <!--    <v-snackbar :timeout="-1" :value="message" absolute left shaped top>
-      {{ notification }}
-    </v-snackbar>-->
   </div>
 </template>
 
 <script>
+import {error, success} from "~/services/ROToastAndConfirmService";
+
 definePageMeta({
   layout: 'authentication',
   auth: 'guest'
@@ -105,23 +102,26 @@ export default {
   async mounted() {
   },
   methods: {
-    async userLogin() {
+    async userLogin(e) {
       this.loading = true
-	  console.log('login data is', this.login)
-	  const formData = {...this.login}
-      try {
-        const response = await this.$auth.loginWith('local', {
-          body: formData
+	  console.log('login data is', e)
+        await this.$auth.loginWith('local', {
+          body: e
         })
-        console.log('Response is', response)
-        this.notification = response.msg
-        this.message = true
-        this.loading = false
-      } catch (err) {
-        console.log('We got an error folks', err)
-        this.loading = false
-      }
+            .then(res => {
+                this.loading = false
+                // this.currencies = res.data.cryptoCurrencies
+            }).catch(e => {
+                error('Login Failed!', e?.data?.msg)
+                this.loading = false
+            })
     }
   }
 }
 </script>
+<style>
+  .pass-eye {
+      top: 47px;
+      height: 42px;
+  }
+</style>

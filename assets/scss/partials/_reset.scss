@@ -106,3 +106,63 @@ label {
 .cf.cf-usdt {
   color: #22A079;
 }
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader {
+  animation: spin .5s infinite linear;
+  width: 1em;
+  height: 1em;
+  border-radius: 1em;
+  border: 2px solid var(--fk-color-primary);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  margin-right: .5em;
+}
+.done {
+  width: .5em;
+  height: 1em;
+  border: 3px solid limegreen;
+  border-top-width: 0;
+  border-left-width: 0;
+  margin-right: .75em;
+  margin-bottom: .2em;
+  transform: rotate(45deg);
+  position: absolute;
+  right: 0;
+}
+#__nuxt {
+  .formkit-wrapper, .formkit-fieldset {
+    max-width: 100%;
+    position: relative;
+  }
+  .formkit-inner {
+    width: 100%;
+  }
+
+  .custom--prime {
+    .formkit-inner {
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+
+  .formkit-outer {
+    padding-bottom: 0;
+  }
+
+  .label {
+    margin-bottom: 10px;
+    display: flex;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}

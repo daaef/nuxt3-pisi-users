@@ -2,6 +2,7 @@ const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import {defineNuxtConfig} from "nuxt/config";
 
+
 export default defineNuxtConfig({
   app: {
     head: {
@@ -48,8 +49,21 @@ export default defineNuxtConfig({
       '@nuxt-alt/auth',
       '@nuxt-alt/http',
       "@nuxt-alt/proxy",
-      "@pinia/nuxt"
+      "@pinia/nuxt",
+      '@formkit/nuxt',
+      '@sfxcode/nuxt-primevue'
   ],
+  // @ts-ignore
+  primevue: {
+    config: {
+      ripple: true,
+      inputStyle: "filled"
+    },
+    components: {
+      // include: [...defaultPrimeVueComponents(true, true)],
+      force: ['DataTable', 'Column', 'Button',{name:'Message', global:true}],
+    }
+  },
   proxy: {
     enableProxy: true,
     proxies: {
@@ -103,6 +117,8 @@ export default defineNuxtConfig({
     "primevue/resources/themes/lara-light-indigo/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
+    '@sfxcode/formkit-primevue/dist/sass/formkit-prime-inputs.scss',
+    '@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss'
   ],
   build: {
     transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'

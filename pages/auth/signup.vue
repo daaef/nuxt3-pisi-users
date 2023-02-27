@@ -8,154 +8,146 @@
         <h2 class="card-title w-full justify-center font-medium text-h5">
           Create an account to get started
         </h2>
-        <div class="w-full mt-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">First name</span>
-            </label>
-            <input
-              v-model="signup.firstName"
-              type="text"
-              placeholder="Jon"
-              class="input bg-base-content/10 input-bordered w-full"
-            />
-          </div>
-        </div>
-        <div class="w-full mt-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Last name</span>
-            </label>
-            <input
-              v-model="signup.lastName"
-              type="text"
-              placeholder="Snow"
-              class="input bg-base-content/10 input-bordered w-full"
-            />
-          </div>
-        </div>
-        <div class="w-full mt-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Email</span>
-            </label>
-            <input
-              v-model="signup.email"
-              type="email"
-              placeholder="joe@gmail.com"
-              class="input bg-base-content/10 input-bordered w-full"
-            />
-          </div>
-        </div>
-		<div class="w-full mt-4">
-		  <div class="form-control w-full basic">
-			<label class="label" for="country">
-			  <span class="label-text text-lg">Country</span>
-			</label>
-			<Dropdown input-id="country" v-model="selCountry" :options="store.countries" optionLabel="name" placeholder="Select a Country" />
-		  </div>
-		</div>
-        <div class="w-full mt-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Phone Number</span>
-            </label>
-            <input
-              v-model="signup.phoneNumber"
-              type="tel"
-			  :pattern="selCountry?.regex"
-              placeholder="23409063546780"
-              class="input bg-base-content/10 input-bordered w-full"
-            />
-          </div>
-        </div>
-        <div class="w-full mt-4">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Other Names</span>
-            </label>
-            <input
-              v-model.trim="signup.otherNames"
-              type="text"
-              placeholder="Jane Catherine"
-              class="input bg-base-content/10 input-bordered w-full"
-            />
-          </div>
-        </div>
-        <div class="w-full mt-3">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Password</span>
-            </label>
-            <div class="relative">
-              <input
-                v-model="signup.password"
-                :type="show ? 'text' : 'password'"
-                placeholder="**********"
-                class="input bg-base-content/10 input-bordered w-full"
-              />
-              <div
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+          <div class="mt-4 w-full">
+              <FormKit
+                      type="form"
+                      :actions="false"
+                      @submit="register"
               >
-                <i
-                  class="iconly-Show icbo text-primary"
-                  :class="{ hidden: show, block: !show }"
-                  @click="show = !show"
-                ></i>
-                <i
-                  class="iconly-Hide icbo text-primary"
-                  :class="{ block: show, hidden: !show }"
-                  @click="show = !show"
-                ></i>
-              </div>
-            </div>
+                  <FormKit
+                          label="First name"
+                          name="firstName"
+                          type="text"
+                          placeholder="Jon"
+                          validation="required"
+                          validation-visibility="live"
+                  >
+                      <template #suffix="{ value, state }">
+                          <div class="loader" v-if="state.validating" />
+                          <div class="done" v-if="value && state.complete" />
+                      </template>
+                  </FormKit>
+                  <FormKit
+                          label="Last name"
+                          name="lastName"
+                          type="text"
+                          placeholder="Snow"
+                          validation="required"
+                          validation-visibility="live"
+                  >
+                      <template #suffix="{ value, state }">
+                          <div class="loader" v-if="state.validating" />
+                          <div class="done" v-if="value && state.complete" />
+                      </template>
+                  </FormKit>
+                  <FormKit
+                          label="Other names"
+                          name="otherNames"
+                          type="text"
+                          placeholder="Snow Leopard"
+                          validation="required"
+                          validation-visibility="live"
+                  >
+                      <template #suffix="{ value, state }">
+                          <div class="loader" v-if="state.validating" />
+                          <div class="done" v-if="value && state.complete" />
+                      </template>
+                  </FormKit>
+                  <FormKit
+                          label="Email"
+                          name="email"
+                          type="email"
+                          placeholder="jon@snow.guard"
+                          validation="required|email"
+                          validation-visibility="live"
+                  >
+                      <template #suffix="{ value, state }">
+                          <div class="loader" v-if="state.validating" />
+                          <div class="done" v-if="value && state.complete" />
+                      </template>
+                  </FormKit>
+                  <FormKit
+                          outer-class='custom--prime'
+                          :type="rodrop"
+                          label="Country"
+                          id="country"
+                          name="countryId"
+                          v-model="selCountry"
+                          :options="store?.countries"
+                          optionLabel="name"
+                          optionValue="id"
+                          placeholder="Select a Country"
+                          validation="required"
+                  />
+                  <FormKit
+                          type="tel"
+                          name="phoneNumber"
+                          label="Phone number"
+                          placeholder="xxx-xxx-xxxx"
+                          validation="length:9,20"
+                          validation-messages="number is too short"
+                          validation-visibility="live"
+                  />
+<!--                  :validation="`matches:/${setCountry?.regex}/`"
+                  :validation-messages="{
+                  matches: 'Phone number must be in the format xxx-xxx-xxxx',
+                  }"-->
+                  <div class="relative">
+                      <FormKit
+                              :type="show ? 'text' : 'password'"
+                              name="password"
+                              label="Password"
+                              placeholder="Enter password"
+                              validation="required"
+                              validation-visibility="live"
+                      />
+                      <div
+                              class="absolute pass-eye right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                          <i
+                                  class="iconly-Show icbo text-primary"
+                                  :class="{ hidden: show, block: !show }"
+                                  @click="show = !show"
+                          ></i>
+                          <i
+                                  class="iconly-Hide icbo text-primary"
+                                  :class="{ block: show, hidden: !show }"
+                                  @click="show = !show"
+                          ></i>
+                      </div>
+                  </div>
+                  <div class="relative">
+                      <FormKit
+                              :type="show1 ? 'text' : 'password'"
+                              name="password_confirm"
+                              label="Confirm Password"
+                              placeholder="Confirm password"
+                              validation="required|confirm"
+                              validation-visibility="live"
+                              validation-label="Password confirmation"
+                      />
+                      <div
+                              class="absolute pass-eye right-0 pr-3 flex items-center text-sm leading-5"
+                      >
+                          <i
+                                  class="iconly-Show icbo text-primary"
+                                  :class="{ hidden: show1, block: !show1 }"
+                                  @click="show1 = !show1"
+                          ></i>
+                          <i
+                                  class="iconly-Hide icbo text-primary"
+                                  :class="{ block: show1, hidden: !show1 }"
+                                  @click="show1 = !show1"
+                          ></i>
+                      </div>
+                  </div>
+                  <FormKit
+                          type="submit"
+                          label="Continue"
+                          :input-class="usrStore.loading ? 'loading' : ''"
+                  />
+              </FormKit>
           </div>
-        </div>
-        <div class="w-full mt-3">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text text-lg">Confirm Password</span>
-            </label>
-            <div class="relative">
-              <input
-                v-model="password1"
-                :type="show1 ? 'text' : 'password'"
-                placeholder="**********"
-                class="input bg-base-content/10 input-bordered w-full"
-              />
-              <div
-                class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-              >
-                <i
-                  class="iconly-Show icbo text-primary"
-                  :class="{ hidden: show1, block: !show1 }"
-                  @click="show1 = !show1"
-                ></i>
-                <i
-                  class="iconly-Hide icbo text-primary"
-                  :class="{ block: show1, hidden: !show1 }"
-                  @click="show1 = !show1"
-                ></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="w-full mt-5">
-<!--          <button
-            class="w-full btn btn-primary flex items-center"
-            :class="loading ? 'loading' : ''"
-            @click.prevent="$router.push('/kyc/')"
-          >
-            <span>Continue</span> <ic name="Arrow-Right" /></button
-          >-->
-          <button
-            class="w-full btn btn-primary flex items-center"
-            :class="usrStore.loading ? 'loading' : ''"
-            @click.prevent="userSignup"
-          >
-            <span>Continue</span> <ic name="Arrow-Right" />
-          </button>
-        </div>
         <div class="w-full mt-5">
           <p class="text-center">
             By clicking continue, you agree to Exchange's
@@ -172,25 +164,33 @@
   import {useFetch} from "nuxt/app";
   import {error as errorPop} from "../../components/ROToastAndConfirmService";
   import {useStore} from "~/stores";
-  import {userStore} from "../../stores/user";
-  import {computed} from "vue";
+  import {userStore} from "~/stores/user";
+  import {computed, reactive, ref, watch} from "vue";
+  import {createInput} from '@formkit/vue'
+  import ROPrimeDropdown from "~/components/ROPrimeDropdown.vue";
 
   definePageMeta({
 	layout: 'authentication',
 	auth: 'guest'
   });
 
+  let schema = reactive(
+      [],
+  )
+
   const router = useRouter()
   const route = useRoute()
   const store = useStore()
   const usrStore = userStore()
+
+  const rodrop =createInput(ROPrimeDropdown)
 
   const show = ref(false);
   const show1 = ref(false);
   const loading = ref(false);
   const message = ref(false);
   const countries = ref([]);
-  const selCountry = ref({});
+  const selCountry = ref(2);
   const notification = ref('');
   const password1 = ref('');
   const signup = ref({
@@ -204,22 +204,42 @@
   })
 
   watch(() => signup.value.otherNames, () => signup.value.otherNames = signup.value.otherNames.replace(/\s+/g, ' ').trim().trim())
-  const cid = computed(()=> selCountry.value.id)
+  const options = computed(()=> {
+      return store.countries.map(country => {
+          return {
+              label: country?.name,
+              value: country?.id,
+              validation: country?.regex
+          }
+      })
+  })
+  const setCountry = computed(()=> {
+      return store.countries.find(country => {
+          return country.id === selCountry.value
+      })
+  })
   onMounted(async ()=> {
-	// await useFetch('/api/get-countries')
-	// 	.then((res) => {
-	//   countries.value = res.data.value.countries
-	// })
+      schema = [
+          {
+              $formkit: 'primeDropdown',
+              name: 'country',
+              label: 'Select Country',
+              options: options.value,
+              help: 'Cookie notice frequency ?',
+              attrs: {
+                  '@select': '$setCountry'
+              }
+          },
+      ]
 	await store.fetchCountries()
 	console.log('store is', store)
   })
 
-  async function userSignup() {
-	loading.value = true
-	signup.value.phoneNumber = `${signup.value.phoneNumber}`
-	signup.value.countryId = cid.value
-	const formData = {...signup.value}
-	await usrStore?.register(formData)
-	loading.value = false
+  async function register(e) {
+    loading.value = true
+    e.phoneNumber = `${e.phoneNumber}`
+    e.otherNames = e.otherNames.replace(/\s+/g, ' ').trim().trim()
+    await usrStore?.register(e)
+    loading.value = false
   }
 </script>
