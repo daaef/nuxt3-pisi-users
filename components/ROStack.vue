@@ -3,10 +3,17 @@
     <div class="main--stack">
       <div class="exchange--inputs">
 		<div class="input--grid">
-          <ROInputWithAddon type="coin" label="From" :coins="store.currencies" />
+        <div class="form-control">
+          <ROInputWithAddon @change="handleSelect" @input="handleInput" type="coin" label="From" :coins="store.currencies" />
+          <label class="label helpers-bottom" v-if="v$?.$errors?.length">
+              <span v-for="(error, i) in v$?.$errors" :key="i" class="label-text-alt formkit-message">
+                  {{ error?.$property }}: {{ error?.$message }}
+              </span>
+          </label>
+        </div>
 		  <img class="mx-3" src="/exchange.svg" alt="" />
 		  <ROCustomDropdown type="currency" :user="true" :currencies="store.fiatCurrencies" label="To" />
-		  <Button class="primary" label="Search" icon="pi pi-search" />
+		  <Button class="primary" label="Search" icon="pi pi-search" @click.prevent="getOffers" />
 		</div>
       </div>
       <div class="rates-text flex text-sm">
@@ -19,9 +26,14 @@
 
 <script lang="ts" setup>
 import {useStore} from "~/stores";
-import {watchEffect} from "@vue/runtime-core";
+import { required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+import {reactive} from "vue";
+import {transactionStore } from "~/stores/transactions";
+import {awaitExpression} from "@babel/types";
 
-  const store = useStore()
+const store = useStore()
+const transaction = transactionStore()
   const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath)
   }
@@ -32,10 +44,33 @@ import {watchEffect} from "@vue/runtime-core";
     console.log(e, 'e is')
     focusedMode.value = true
   }
-  const myForm = ref({})
-  const input3 = ref('')
   const focusedMode = ref(false)
-  const selected = ref('')
+  const cryptoData = reactive({
+      cryptoCurrencyId: '',
+      amount: ''
+  })
+
+  const rules = {
+      cryptoCurrencyId: { required },
+      amount: { required },
+  };
+
+  const v$ = useVuelidate(rules, cryptoData);
+  const handleSelect = (e: any) => {
+      cryptoData.cryptoCurrencyId = e?.id
+      v$.value.$validate();
+  }
+  const handleInput = (e: any) => {
+      cryptoData.amount = e
+      v$.value.$validate();
+  }
+
+  const getOffers = async () => {
+      await v$.value.$validate();
+      if (!v$.value?.$invalid) {
+          await transaction.getOffers(cryptoData)
+      }
+  }
 </script>
 
 <style lang="scss">
@@ -90,6 +125,16 @@ import {watchEffect} from "@vue/runtime-core";
 	  margin-top: 23px;
 	  margin-left: 10px;
 	}
+    .form-control {
+      position: relative;
+      .helpers-bottom {
+        position: absolute;
+        bottom: 0;
+        transform: translateY(calc(100%));
+        margin-bottom: 0;
+        width: 100%;
+      }
+    }
   }
   .exchange--inputs {
 	margin-bottom: 15px;

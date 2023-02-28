@@ -17,8 +17,10 @@ export const kycStore = defineStore({
           .handle(usePisiFetch().kyc.uploadSelfie, {
               headers: {
                   'Authorization': useAuth().strategy.token.get(),
-                  'Content-Type': 'multipart/form-data'
-              },
+                  'Content-Type': 'multipart/form-data',
+                  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+                  'Access-Control-Allow-Headers': 'Content-Type, Origin, Authorization'
+    },
               data: payload
             })
           .then(res => {

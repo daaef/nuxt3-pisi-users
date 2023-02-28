@@ -138,7 +138,7 @@ label {
   position: absolute;
   right: 0;
 }
-#__nuxt {
+body {
   .formkit-wrapper, .formkit-fieldset {
     max-width: 100%;
     position: relative;
@@ -157,6 +157,7 @@ label {
 
   .formkit-outer {
     padding-bottom: 0;
+    width: unset;
   }
 
   .label {
@@ -164,5 +165,23 @@ label {
     display: flex;
     font-size: 1.125rem;
     font-weight: 500;
+  }
+  .p-button:focus {
+    box-shadow: none;
+  }
+  .p-dialog {
+    .p-dialog-content{
+      padding-top: 10px;
+    }
+    &.danger {
+      .p-dialog-header {
+        background: rgba(229, 25, 25, 0.42);
+        color: #fafafa;
+        backdrop-filter: blur(25px);
+        .p-dialog-header-icon {
+          background: #fafafa;
+        }
+      }
+    }
   }
 }

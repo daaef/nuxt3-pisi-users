@@ -19,10 +19,10 @@
                     validation="required|email"
                     validation-visibility="live"
                 >
-                    <template #suffix="{ value, state }">
-                        <div class="loader" v-if="state.validating" />
-                        <div class="done" v-if="value && state.complete" />
-                    </template>
+                  <template #suffix="{ value, state }">
+                      <div class="loader" v-if="state.validating" />
+                      <div class="done" v-if="value && state.complete" />
+                  </template>
                 </FormKit>
                 <div class="relative">
                   <FormKit
@@ -34,7 +34,7 @@
                       validation-visibility="live"
                       />
                   <div
-                          class="absolute pass-eye inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+                          class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 pass-eye"
                   >
                       <i
                               class="iconly-Show icbo text-primary"

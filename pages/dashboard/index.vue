@@ -1,11 +1,21 @@
 <script setup>
 import {useStore} from "~/stores";
+import {transactionStore} from "~/stores/transactions";
+import {useUtils} from "~/composables/utils";
 
 const store = useStore()
-const selectedCustomer2 = ref();
+const transStore = transactionStore()
+
+const offers = computed(() => transStore.offers)
+const selectedOffer = ref(null);
 const display = ref(false);
 const display2 = ref(false);
 const auth = useAuth()
+const utils = useUtils()
+const openOffer = (e) => {
+	selectedOffer.value = e
+	display.value = true
+}
 </script>
 
 <template>
@@ -13,36 +23,45 @@ const auth = useAuth()
 	<ROCreateSellOffer />
     <h4 class="header--title">Buy</h4>
     <LazyROStack />
-	<DataTable :value="store.payments" :paginator="true" :rows="10"
-			   v-model:selection="selectedCustomer2" selectionMode="single" dataKey="id"
+	<DataTable :loading="transStore.loading" :value="transStore.offers" :paginator="true" :rows="10"
+			   v-model:selection="selectedOffer" selectionMode="single" dataKey="id"
 			   stateStorage="local" stateKey="dt-state-demo-local" responsiveLayout="scroll">
-	  <Column field="amount" header="Price" :sortable="true" style="width:25%">
+	  <Column field="amountInCrypto" header="Price" :sortable="true" style="width:25%">
 		<template #body="slotProps">
 		  <div class="flex items-center">
 			<div class="curr-shape">
-			  <ROCurrencyShape :currency="slotProps.data.country" />
+			  <ROCryptoShape :currency="utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId)" />
 			</div>
 			<div class="flex flex-col">
-			  <span class="text-sm font-bold">{{slotProps.data.country}}</span>
-			  <span class="font-bold">{{slotProps.data.amount}}</span>
+			  <span class="text-sm font-bold">{{utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId).blockchain}}</span>
+			  <span class="font-bold">{{slotProps?.data?.amountInCrypto}}</span>
 			</div>
 		  </div>
 		</template>
 	  </Column>
-	  <Column field="name" header="Sender" :sortable="true" style="width:25%">
+	  <Column field="createdBy" header="Sender" :sortable="true" style="width:25%">
+			<template #body="slotProps">
+				{{ slotProps?.data?.createdBy?.firstName }}	{{ slotProps?.data?.createdBy?.lastName }}
+			</template>
 	  </Column>
-	  <Column field="rate" header="Rate" :sortable="true" style="width:25%">
+	  <Column field="feeAmount" header="Rate" :sortable="true" style="width:25%">
+			<template #body="slotProps">
+				1 {{ utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId).abbreviation }} =	{{ slotProps?.data?.tokenPricePerUnit }} {{
+					utils?.getCurrency(slotProps?.data?.currencyId).currencyCode }}
+			</template>
 	  </Column>
-	  <Column field="payState" header="" :sortable="true" style="width:25%">
+	  <Column field="status" header="" :sortable="true" style="width:25%" />
+	  <Column field="status" header="" :sortable="true" style="width:25%">
 		<template #body="slotProps">
-		  <Button @click.prevent="slotProps.data.payState === 'Request' ? (display = true) : ''" :class="`primary `" :label="slotProps.data.payState" />
+		  <Button @click.prevent="openOffer(slotProps?.data)" class="primary"
+							label="Request" />
 		</template>
 	  </Column>
 	  <template #empty>
 		No Data found.
 	  </template>
 	</DataTable>
-	<RORequestOffer :dialog="display" @closeModal="display = false" />
+	<RORequestOffer :dialog="display" :offer="selectedOffer" @closeModal="display = false" />
   </div>
 </template>
 

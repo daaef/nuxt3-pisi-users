@@ -23,8 +23,8 @@ export class Handler {
                 .catch((error) => {
                     console.dir(error)
                     if (error?.response?.status === 403){
-                        console.log(error?.data?.msg)
-                        return reject(error?.data?.msg)
+                        console.log((error?.data?.message || error?.data?.msg))
+                        return reject((error?.data?.message || error?.data?.msg))
                     }
                     else if (error?.response?.status !== 404) {
                         console.log(error?.data?.message)

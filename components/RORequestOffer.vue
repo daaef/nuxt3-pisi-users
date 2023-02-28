@@ -16,89 +16,92 @@
 	  <div class="px-3 flex items-center justify-between w-full">
 		<div class="flex flex-none items-center">
 			<ROCurrency
-			  :icon='{
-				abbreviation:"BTC",
-				id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
-				name:"Bitcoin",
-				network:"BITCOIN"
-			  }'
+			  :icon='cryptoCurrency'
 			/>
 		</div>
 		<div>
 		  <img src="/transfer--arrows.png" alt="" />
 		</div>
 		<div class="flex flex-none items-center">
-		  <ROCurrency :icon="store.countryCurr[0]" type="currency"/>
+		  <ROCurrency :icon="currency" type="currency"/>
 		</div>
 	  </div>
 	  <div class="flex justify-between w-full">
-		<span class="text-primary">$230.00</span>
-		<span class="text-success">₦63,634.92.00</span>
+		<span class="text-primary">{{ amount }} {{ cryptoCurrency?.abbreviation }}</span>
+		<span class="text-success">{{currency?.icon}}{{ payable }}</span>
 	  </div>
-	  <hr />
+<!--	  <hr />
 	  <div class="flex text-gray-500 justify-between w-full">
 		<span>Official rate</span>
 		<span class="font-medium">$1 = ₦433.72</span>
-	  </div>
+	  </div>-->
 	</div>
 	<span class="text-center w-full"
 	>Input the amount you would like to buy</span
 	>
+		<FormKit
+				ref="purchaseForm"
+				type="form"
+				:actions="false"
+				@submit="openDialog($event, 'offer')"
+		>
+			<FormKit
+					type="text"
+					v-model="amount"
+					name="location"
+					label="Amount"
+					help="How much you want to purchase"
+					validation="required|number"
+			/>
+			<FormKit
+					v-model="walletAddress"
+					type="text"
+					name="duration"
+					label="Wallet Address"
+					help="Where you'd like to receive the amount."
+					validation="required"
+			/>
 
-<!--	<div class="relative custom-input">
-	  <ROInputWithAddon :selected-currency="store.us" label="Sell" :addon="'text'" />
-	</div>
-	<div class="relative custom-input">
-	  <ROInputWithAddon :selected-currency="store.ng" label="Buy" :addon="'text'" />
-	</div>-->
-
-	<div class="bottom--sect mt-3 bg-secondary p-3">
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Account name: </span>
-		<span class="text-black font-medium text-lg"> John Joe </span>
-	  </div>
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Account number: </span>
-		<span class="text-primary font-medium text-lg"> 123456789 </span>
-	  </div>
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Bank: </span>
-		<span class="text-black font-medium text-lg">
-                First Bank of Nigeria
-              </span>
-	  </div>
-	</div>
+		</FormKit>
 	<template #footer>
-	  <Button label="Continue" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'offer')"/>
+	  <Button label="Purchase" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right"
+						@click="purchaseForm?.node?.submit"/>
 	  <Button label="Close" class="secondary" autofocus iconPos="right" @click="mainDialog = false" />
 	</template>
   </Dialog>
-  <Dialog class="back--type" v-model:visible="offerDialog" >
+  <Dialog class="back--type" :class="{ danger: !useAuth()?.$state?.user?.identityIsVerified}"
+					v-model:visible="offerDialog" >
 	<template #header>
 	  <a href="#" @click.prevent="openDialog($event, 'back')">
 		<i class="iconly-Arrow-Left text-xl icli" />
 	  </a>
+
+		<p v-if="!useAuth()?.$state?.user?.identityIsVerified" class="text-white px-3">
+			<span class="font-bold">NB:</span> You need to have your KYC verified for this step!.
+		</p>
 	</template>
 	<div class="top--sect bg-secondary p-3">
 	  <div class="flex justify-between w-full">
 		<span class="text-black"> Amount payable </span>
-		<span class="text-primary text-lg"> $200 </span>
+		<span class="text-primary text-lg"> {{currency?.icon}}{{ payable }} </span>
 	  </div>
 	</div>
 
-	<div class="bottom--sect bg-secondary p-3">
+	<div v-for="account in offer?.createdBy?.bankAccounts" class="bottom--sect bg-secondary p-3">
 	  <div class="flex justify-between w-full">
 		<span class="text-gray-500"> Account name: </span>
-		<span class="text-black font-medium text-lg"> John Joe </span>
+		<span class="text-black font-medium text-lg">
+			{{ offer?.createdBy?.firstName }} {{ offer?.createdBy?.lastName }}
+		</span>
 	  </div>
 	  <div class="flex justify-between w-full">
 		<span class="text-gray-500"> Account number: </span>
-		<span class="text-primary font-medium text-lg"> 123456789 </span>
+		<span class="text-primary font-medium text-lg"> {{ account?.number }} </span>
 	  </div>
 	  <div class="flex justify-between w-full">
 		<span class="text-gray-500"> Bank: </span>
 		<span class="text-black font-medium text-lg">
-                First Bank of Nigeria
+                {{ account?.bankName }}
               </span>
 	  </div>
 	</div>
@@ -126,27 +129,50 @@
 
 <script>
 import { useStore } from "~/stores";
+import {useUtils} from "~/composables/utils";
+import {watch} from "vue";
+import {error} from "~/services/ROToastAndConfirmService";
+import {transactionStore} from "~/stores/transactions";
 
 export default {
-  name: 'RequestOffer',
-  setup(){
-	const store = useStore()
-	const selectedData = ref({
-	  abbreviation:"ETH",
-	  id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
-	  name:"Ether",
-	  network:"ETHEREUM"
-	})
-	return { store, selectedData }
-  },
-  props: {
-	dialog: {
-	  type: Boolean,
-	  default() {
-		return false
-	  }
-	}
-  },
+  	name: 'RequestOffer',
+		props: {
+		dialog: {
+			type: Boolean,
+			default() {
+				return false
+			}
+		},
+		offer: {
+			type: Object,
+			default() {
+				return {}
+			}
+		}
+	},
+		setup(props){
+				const store = useStore()
+				const purchaseForm = ref(null)
+				const amount = ref(0)
+	  		const walletAddress = ref('')
+				const selectedData = ref({
+					abbreviation:"ETH",
+					id:"8e6cd915-0afc-410e-a220-93132e64d7b9",
+					name:"Ether",
+					network:"ETHEREUM"
+				})
+				const currency = computed(()=> {
+					const main = useUtils()?.getCurrency(props?.offer.currencyId)
+					return store.countryCurr.find(count => {
+						return count.name === main.currencyCode
+					})
+				})
+
+			const payable = computed(() => props?.offer?.tokenPricePerUnit * amount.value)
+
+			const cryptoCurrency = computed(()=> useUtils()?.getCryptoCurrency(props?.offer?.cryptoCurrencyId))
+				return { store, selectedData, purchaseForm, currency, cryptoCurrency, amount, walletAddress, payable }
+  	},
   data() {
 	return {
 	  offerDialog: false,
@@ -167,18 +193,30 @@ export default {
 	}
   },
   methods: {
-	openDialog(_, type) {
-	  if (type === 'offer') {
-		this.mainDialog = false
-		this.offerDialog = true
-	  } else if (type === 'back') {
-		this.offerDialog = false
-		this.mainDialog = true
-	  } else {
-		this.offerDialog = false
-		this.finDialog = true
-	  }
-	}
+		useUtils,
+			async openDialog(_, type) {
+				if (type === 'offer') {
+					this.mainDialog = false
+					this.offerDialog = true
+				} else if (type === 'back') {
+					this.offerDialog = false
+					this.mainDialog = true
+				} else {
+						try {
+							await transactionStore().respondToOffer({
+								amountInCrypto: this.amount,
+								buyerWalletAddress: this.walletAddress,
+								offerId: this.offer.id
+							}).then(res => {
+								this.offerDialog = false
+								this.finDialog = true
+							})
+						} catch (e) {
+
+						}
+						/*error('Cannot perform action!', 'Your KYC verification is not completed!')*/
+					}
+			}
   }
 }
 </script>
