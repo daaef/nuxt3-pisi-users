@@ -27,17 +27,17 @@ const openOffer = (e) => {
 			   v-model:selection="selectedOffer" selectionMode="single" dataKey="id"
 			   stateStorage="local" stateKey="dt-state-demo-local" responsiveLayout="scroll">
 	  <Column field="amountInCrypto" header="Price" :sortable="true" style="width:25%">
-		<template #body="slotProps">
-		  <div class="flex items-center">
-			<div class="curr-shape">
-			  <ROCryptoShape :currency="utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId)" />
-			</div>
-			<div class="flex flex-col">
-			  <span class="text-sm font-bold">{{utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId).blockchain}}</span>
-			  <span class="font-bold">{{slotProps?.data?.amountInCrypto}}</span>
-			</div>
-		  </div>
-		</template>
+			<template #body="slotProps">
+				<div class="flex items-center">
+				<div class="curr-shape">
+					<ROCryptoShape :currency="utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId)" />
+				</div>
+				<div class="flex flex-col">
+					<span class="text-sm font-bold">{{utils?.getCryptoCurrency(slotProps?.data?.cryptoCurrencyId).blockchain}}</span>
+					<span class="font-bold">{{slotProps?.data?.amountInCrypto}}</span>
+				</div>
+				</div>
+			</template>
 	  </Column>
 	  <Column field="createdBy" header="Sender" :sortable="true" style="width:25%">
 			<template #body="slotProps">
@@ -52,13 +52,13 @@ const openOffer = (e) => {
 	  </Column>
 	  <Column field="status" header="" :sortable="true" style="width:25%" />
 	  <Column field="status" header="" :sortable="true" style="width:25%">
-		<template #body="slotProps">
-		  <Button @click.prevent="openOffer(slotProps?.data)" class="primary"
-							label="Request" />
-		</template>
+			<template #body="slotProps">
+				<Button @click.prevent="openOffer(slotProps?.data)" class="primary"
+								label="Request" />
+			</template>
 	  </Column>
 	  <template #empty>
-		No Data found.
+			No Offers found. Try searching
 	  </template>
 	</DataTable>
 	<RORequestOffer :dialog="display" :offer="selectedOffer" @closeModal="display = false" />

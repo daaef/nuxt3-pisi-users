@@ -46,8 +46,8 @@
 				@submit="openDialog($event, 'offer')"
 		>
 			<FormKit
-					type="text"
-					v-model="amount"
+					type="number"
+					v-model.number="amount"
 					name="location"
 					label="Amount"
 					help="How much you want to purchase"
@@ -60,6 +60,7 @@
 					label="Wallet Address"
 					help="Where you'd like to receive the amount."
 					validation="required"
+					validation-visibility="live"
 			/>
 
 		</FormKit>
