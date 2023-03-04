@@ -14,6 +14,12 @@ export const useUtils = () => {
             })
             return curr
         },
+        getCurrentCurrency: (name) => {
+            const curr = useStore()?.countryCurr?.find(currency => {
+                return currency.name === name
+            })
+            return curr
+        },
         getCurrency: (id) => {
             const curr = useStore()?.fiatCurrencies?.find(currency => {
                 return currency.id === id

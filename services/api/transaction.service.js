@@ -56,7 +56,7 @@ export default ($fetch, config) => ({
     },
     // Get My Transactions
     getMyTransactions(payload) {
-        return $fetch.$post(`${config.public.api_url}/transaction/my-offers`, {
+        return $fetch.$post(`${config.public.api_url}/transaction/my-transactions`, {
             headers: payload.headers,
             body: payload.data
         })

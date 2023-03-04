@@ -226,21 +226,21 @@ export const useStore = defineStore({
         selected: false,
       }
       ],
-    ng: {
+    ngn: {
         id: 1,
         coin: "Naira",
         name: "NGN",
         icon: "₦",
         selected: false,
       },
-    eu: {
+    eur: {
         id: 2,
         coin: "Euros",
         name: "EUR",
         icon: "€",
         selected: false,
       },
-    us: {
+    usd: {
         id: 3,
         coin: "Dollars",
         name: "USD",

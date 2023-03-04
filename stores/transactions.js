@@ -8,7 +8,9 @@ export const transactionStore = defineStore({
   id: "transaction",
   state: () => ({
     loading: false,
-    offers: []
+    offers: [],
+    buy: [],
+    sell: []
   }),
   actions: {
     async createOffer(payload) {
@@ -60,6 +62,51 @@ export const transactionStore = defineStore({
             })
           .then(res => {
             // this.currencies = res.data.cryptoCurrencies
+              return Promise.resolve('success')
+          }).catch(e => {
+              console.log('error!', e)
+              if (typeof e !== 'string'){
+                  e.forEach(err => {
+                      error(undefined, err)
+                  })
+              } else {
+                  error(undefined, e)
+              }
+              this.loading = false
+              return Promise.reject('error')
+          })
+    },
+    async fetchBuy(payload) {
+      await handler
+          .handle(usePisiFetch().transaction.getMyTransactions, {
+              headers: { 'Authorization': useAuth().strategy.token.get() },
+              data: payload
+            })
+          .then(res => {
+            // this.currencies = res.data.cryptoCurrencies
+              this.buy = res?.offers
+          }).catch(e => {
+              console.log('error!', e)
+              if (typeof e !== 'string'){
+                  e.forEach(err => {
+                      error(undefined, err)
+                  })
+              } else {
+                  error(undefined, e)
+              }
+              this.loading = false
+              return Promise.reject('error')
+          })
+    },
+    async fetchSale(payload) {
+      await handler
+          .handle(usePisiFetch().transaction.getMyOffer, {
+              headers: { 'Authorization': useAuth().strategy.token.get() },
+              data: payload
+            })
+          .then(res => {
+            // this.currencies = res.data.cryptoCurrencies
+              this.sell = res?.offers
               return Promise.resolve('success')
           }).catch(e => {
               console.log('error!', e)
