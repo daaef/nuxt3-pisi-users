@@ -17,7 +17,7 @@
 	  </div>
 	</template>
   </Dropdown>
-	<Dropdown v-else disabled class="addon" v-model="store[store?.userCountry?.code?.toLowerCase()]" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Currency">
+	<Dropdown v-else disabled class="addon" v-model="store[store?.userCountry?.currencyCode?.toLowerCase()]" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="true" placeholder="Select a Currency">
 	  <template #value="slotProps">
 		<div class="country-item country-item-value" v-if="slotProps.value">
 		  <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -45,7 +45,7 @@ const props = defineProps({
   label: String,
   type: String,
   selected: Object,
-  user: Object
+  user: Boolean
 })
 
 const store = useStore()

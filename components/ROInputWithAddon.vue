@@ -2,7 +2,7 @@
   <div class="">
     <h4 class="font-bold">{{ label }}</h4>
     <div class="p-inputgroup mt-1">
-      <Dropdown v-if="!addon" @change="handleChange" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
+      <Dropdown v-if="!addon" :disabled="drop" @change="handleChange" class="addon" v-model="selected" :options="type === 'currency' ? currencies : coins" optionLabel="name" :filter="coins?.length" placeholder="Select a Currency">
         <template #value="slotProps">
           <div class="country-item country-item-value" v-if="slotProps.value">
             <ROCurrency :icon="slotProps.value" :type="coins?.length ? '' : 'currency'"/>
@@ -47,12 +47,13 @@ import {watch} from "vue";
 	  addon: String,
 	  selectedCurrency: String,
 	  input: Boolean,
+	  drop: Boolean,
 	  inputValue: String,
 	  currency: String,
 	  crypto: String
 	})
 
-	const selected = ref(null)
+	const selected = ref( props?.drop ? useAuth()?.$state?.user?.country?.currency : null)
 	const input1 = ref(null)
 	const handleInput = (e) => {
 		emit('input', e.value)

@@ -88,7 +88,10 @@ export default {
 
 <style lang="scss">
 .kyc--view {
-  width: 100%;
+  width: calc(100% - 270px);
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
   .kyc--panel-container {
 	display: grid;
 	grid-gap: 15px;

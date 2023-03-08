@@ -204,27 +204,30 @@ export const useStore = defineStore({
     fiatCurrencies: [],
     countries: [],
     countryCurr: [
-      {
-        id: 1,
-        coin: "Naira",
-        name: "NGN",
-        icon: "₦",
-        selected: false,
-      },
-      {
-        id: 2,
-        coin: "Euros",
-        name: "EUR",
-        icon: "€",
-        selected: false,
-      },
-      {
-        id: 3,
-        coin: "Dollars",
-        name: "USD",
-        icon: "$",
-        selected: false,
-      }
+        {
+          id: 1,
+          coin: "Naira",
+          name: "NGN",
+          country: "NG",
+          icon: "₦",
+          selected: false,
+        },
+        {
+          id: 2,
+          coin: "Euros",
+          name: "EUR",
+          country: "EU",
+          icon: "€",
+          selected: false,
+        },
+        {
+          id: 3,
+          coin: "Dollars",
+          country: "US",
+          name: "USD",
+          icon: "$",
+          selected: false,
+        }
       ],
     ngn: {
         id: 1,
@@ -274,8 +277,8 @@ export const useStore = defineStore({
         id: "6728390-465322",
         sentAmount: "765.00",
         recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
+        sendCurrency: "eur",
+        recieveCurrency: "usd",
         date: "2022-10-13"
       },
       {
@@ -283,8 +286,8 @@ export const useStore = defineStore({
         id: "6728390-465322",
         sentAmount: "230.00",
         recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
+        sendCurrency: "usd",
+        recieveCurrency: "ngn",
         date: "2022-10-13"
       },
       {
@@ -292,8 +295,8 @@ export const useStore = defineStore({
         id: "6728390-465322",
         sentAmount: "230.00",
         recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
+        sendCurrency: "usd",
+        recieveCurrency: "ngn",
         date: "2022-10-13"
       },
       {
@@ -301,44 +304,8 @@ export const useStore = defineStore({
         id: "6728390-465322",
         sentAmount: "765.00",
         recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 5,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 6,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
-        date: "2022-10-13"
-      },
-      {
-        key: 7,
-        id: "6728390-465322",
-        sentAmount: "765.00",
-        recieveAmount: "749.85",
-        sendCurrency: "eu",
-        recieveCurrency: "us",
-        date: "2022-10-13"
-      },
-      {
-        key: 8,
-        id: "6728390-465322",
-        sentAmount: "230.00",
-        recieveAmount: "63,634.92",
-        sendCurrency: "us",
-        recieveCurrency: "ng",
+        sendCurrency: "eur",
+        recieveCurrency: "usd",
         date: "2022-10-13"
       },
     ],
@@ -375,9 +342,7 @@ export const useStore = defineStore({
   },
   getters: {
     userCountry: (state) => {
-      return state?.countries?.find(country => {
-        return useAuth()?.$state?.user?.countryId === country?.id
-      })
+      return useAuth()?.$state?.user?.country?.currency
     }
   }
 });

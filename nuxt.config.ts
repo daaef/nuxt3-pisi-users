@@ -51,7 +51,8 @@ export default defineNuxtConfig({
       "@nuxt-alt/proxy",
       "@pinia/nuxt",
       '@formkit/nuxt',
-      '@sfxcode/nuxt-primevue'
+      '@sfxcode/nuxt-primevue',
+      '@vueuse/nuxt'
   ],
   // @ts-ignore
   primevue: {

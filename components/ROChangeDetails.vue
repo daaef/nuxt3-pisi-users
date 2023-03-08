@@ -2,7 +2,7 @@
   <div class="dialogs">
   <Dialog v-model:visible="mainDialog" >
 	  <div class="flex text-2xl font-medium text-center justify-center w-full">
-		Change account details
+			Change account details
 	  </div>
 
 	<div class="bottom--sect bg-secondary p-3">
@@ -42,7 +42,7 @@
 	</div>
 	<div class="relative custom-input">
 	  <label for="accNum" class="block">Bank</label>
-	  <Dropdown class="w-full" v-model="bank" :options="store.banks" optionLabel="name" optionValue="id" placeholder="Select a Bank" />
+	  <Dropdown class="w-full" v-model="bank" :options="store.banks" optionLabel="name" optionValue="name" placeholder="Select a Bank" />
 	</div>
 	<template #footer>
 	  <Button label="Continue" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'finish')" />
@@ -71,56 +71,57 @@ import { userStore } from "../stores/user";
 export default {
   name: 'ROChangeDetails',
   setup(){
-	const store = useStore()
-	const userData = userStore()
-	return { store, userData }
+		const store = useStore()
+		const userData = userStore()
+		return { store, userData }
   },
   props: {
-	dialog: {
-	  type: Boolean,
-	  default() {
-		return false
-	  }
-	}
+		dialog: {
+			type: Boolean,
+			default() {
+			return false
+			}
+		}
   },
   data() {
-	return {
-	  offerDialog: false,
-	  mainDialog: false,
-	  finDialog: false,
-	  bank: '',
-	  accNum: '',
-	}
+		return {
+			offerDialog: false,
+			mainDialog: false,
+			finDialog: false,
+			bank: '',
+			accNum: '',
+		}
   },
   watch: {
-	dialog(val) {
-	  this.mainDialog = this.dialog
-	},
-	mainDialog(val) {
-	  if (val === false) {
-		this.$emit('closeModal')
-	  }
-	}
+		dialog(val) {
+			this.mainDialog = this.dialog
+		},
+		mainDialog(val) {
+			if (val === false) {
+			this.$emit('closeModal')
+			}
+		}
   },
   methods: {
-	openDialog(_, type) {
-	  if (type === 'offer') {
-		this.mainDialog = false
-		this.offerDialog = true
-	  } else if (type === 'back') {
-		this.offerDialog = false
-		this.mainDialog = true
-	  } else {
-		const formData = {
-		  "bankId": this.bank,
-		  "number": this.accNum
-		}
+	async openDialog(_, type) {
+			if (type === 'offer') {
+			this.mainDialog = false
+			this.offerDialog = true
+			} else if (type === 'back') {
+			this.offerDialog = false
+			this.mainDialog = true
+			} else {
+			const formData = {
+				"bankName": this.bank,
+				"number": this.accNum
+			}
 
-		this.userData.addBank(formData)
-		/*this.offerDialog = false
-		this.finDialog = true*/
-	  }
-	}
+			await this.userData.addBank(formData)
+			await this.$auth.fetchUser()
+			/*this.offerDialog = false
+			this.finDialog = true*/
+			}
+		}
   }
 }
 </script>

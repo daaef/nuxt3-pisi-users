@@ -95,6 +95,10 @@ const userData = ref({
   countryId: auth?.$state?.user?.countryId,
   phoneNumber: auth?.$state?.user?.phoneNumber,
 })
+
+onMounted(()=> {
+	store.fetchBanks()
+})
 </script>
 
 <template>
@@ -166,17 +170,19 @@ const userData = ref({
 		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
 		</div>
 	  </a>
-	  <a tabindex="0" href="#" class="collapse border-b w-full border-base-300 bg-base-100">
-		<div class="collapse-title text-xl font-medium pl-0">
-		  <div class="flex">
-			<i class="iconly-Wallet text-primary icli"></i> Connect Wallet
-		  </div>
-		  <div class="flex text-gray-400 text-sm">
-			Connect your crypto wallet
-		  </div>
-		  <i class="iconly-Arrow-Right-2 icli text-primary"></i>
-		</div>
-	  </a>
+		<!--
+			<a tabindex="0" href="#" class="collapse border-b w-full border-base-300 bg-base-100">
+				<div class="collapse-title text-xl font-medium pl-0">
+					<div class="flex">
+					<i class="iconly-Wallet text-primary icli"></i> Connect Wallet
+					</div>
+					<div class="flex text-gray-400 text-sm">
+					Connect your crypto wallet
+					</div>
+					<i class="iconly-Arrow-Right-2 icli text-primary"></i>
+				</div>
+			</a>
+	  -->
 	</div>
 	<ROVerifyEmail :dialog="openOtp" @closeModal="openOtp = false" />
 	<Dialog v-model:visible="authenticator">

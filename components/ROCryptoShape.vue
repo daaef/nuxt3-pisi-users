@@ -1,5 +1,5 @@
 <template>
-	<img class="crypto-shape" :src="currency?.imgUri" alt="Crypto logo">
+	<i :class="`crypto-shape cf cf-${currency?.abbreviation?.toLowerCase()}`"/>
 </template>
 
 <script lang="ts" setup>
@@ -14,5 +14,7 @@
 	  min-width: 45px;
 	  height: 45px;
 	  min-height: 45px;
+		margin-right: 5px;
+		font-size: 2rem;
 	}
 </style>

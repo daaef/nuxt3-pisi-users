@@ -1,11 +1,11 @@
 <template>
   <span class="a-icon flex items-center" v-if="type === 'currency'">
-    <span :class="`currency--circle ${currentIcon.name?.toLowerCase()} mr-2 rounded-circle`">{{ currentIcon.icon }}</span>
-    {{ currentIcon.name }}
+    <span :class="`currency--circle ${currentIcon?.name?.toLowerCase()} mr-2 rounded-circle`">{{ currentIcon?.icon }}</span>
+    {{ currentIcon?.name }}
   </span>
   <span v-else class="a-icon flex items-center">
-    <i :class="`cf cf-${icon.abbreviation?.toLowerCase()} mr-2`" />
-    {{ icon.abbreviation }}
+    <i :class="`cf cf-${icon?.abbreviation?.toLowerCase()} mr-2`" />
+    {{ icon?.abbreviation }}
   </span>
 </template>
 
@@ -19,8 +19,8 @@
   })
   const store = useStore()
   const currentIcon = computed(() => {
-	if (props?.icon?.icon) return props.icon
-	return store.countryCurr.find(country => country.name === props.icon.currencyCode)
+	  if (props?.icon?.icon) return props?.icon
+	  return store?.countryCurr?.find(country => country?.name === props?.icon?.currencyCode)
   })
 </script>
 

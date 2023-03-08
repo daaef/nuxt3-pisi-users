@@ -11,7 +11,7 @@
 			<div class="text-gray-500 flex items-center">
 			  <i class="iconly-Location mr-1 text-xl icli" />
 			  <!--                  <el-icon><location /></el-icon>-->
-			  <span>{{ store?.userCountry?.name }}</span>
+			  <span>{{ useUtils()?.getCountry(useAuth()?.$state?.user?.countryId)?.name }}</span>
 			</div>
 		  </nuxt-link>
 		</div>
@@ -82,6 +82,8 @@
 <script lang="ts" setup>
 	import {useStore} from "~/stores";
 	import apiService from "~/services/api.service";
+	import {useUtils} from "../composables/utils";
+	import {useAuth} from "../.nuxt/imports";
 
 	const logoutBtn = ref(false)
 	const router = useRouter()

@@ -67,4 +67,10 @@ export default ($fetch, config) => ({
             headers: payload.headers,
         })
     },
+    // Get Fees
+    getFees(payload) {
+        return $fetch.$get(`${config.public.api_url}/user/get-fees`, {
+            headers: payload.headers,
+        })
+    },
 })
