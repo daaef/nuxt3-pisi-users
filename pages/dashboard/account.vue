@@ -105,7 +105,7 @@ onMounted(()=> {
   <div class="page-content account--page">
 	<div class="flex justify-between items-end">
 		<h4 class="header--title">My account</h4>
-	  	<div class="badge bg-error/20 border-base-300/0 py-2 rounded">
+		<div v-if="!useAuth()?.$state?.user?.identityIsVerified" class="badge bg-error/20 border-base-300/0 py-2 rounded">
 		  <nuxt-link active-class="exact-active-link" class="persist flex items-center" to="/dashboard/kyc">
 		  	<i class="iconly-Shield-Fail text-error icbo mr-2" /> <span class="text-black">KYC not verified</span>
 		  </nuxt-link>

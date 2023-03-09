@@ -40,7 +40,7 @@
 			<span>History</span>
 		  </nuxt-link>
 		</li>
-		<li class="page-nav">
+		<li v-if="!useAuth()?.$state?.user?.identityIsVerified" class="page-nav">
 		  <nuxt-link active-class="exact-active-link" class="persist" to="/dashboard/kyc">
 			<i class="iconly-Shield-Fail text-error icli mr-2" />
 			<span class="text-error">Complete KYC</span>

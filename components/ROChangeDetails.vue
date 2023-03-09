@@ -5,26 +5,28 @@
 			Change account details
 	  </div>
 
-	<div class="bottom--sect bg-secondary p-3">
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Account name: </span>
-		<span class="text-black font-medium text-lg"> John Joe </span>
-	  </div>
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Account number: </span>
-		<span class="text-primary font-medium text-lg"> 123456789 </span>
-	  </div>
-	  <div class="flex justify-between w-full">
-		<span class="text-gray-500"> Bank: </span>
-		<span class="text-black font-medium text-lg">
-                First Bank of Nigeria
-              </span>
-	  </div>
-	</div>
+		<div class="bottom--sect bg-secondary p-3">
+			<div class="flex justify-between w-full">
+				<span class="text-gray-500"> Account name: </span>
+				<span class="text-black font-medium text-lg">
+					{{ useAuth()?.$state?.user?.firstName }} {{ useAuth()?.$state?.user?.lastName }}
+				</span>
+			</div>
+			<div class="flex justify-between w-full">
+				<span class="text-gray-500"> Account number: </span>
+				<span class="text-primary font-medium text-lg"> {{ useAuth()?.$state?.user?.bankAccount?.number ?? 'No Account Number' }} </span>
+			</div>
+			<div class="flex justify-between w-full">
+				<span class="text-gray-500"> Bank: </span>
+				<span class="text-black font-medium text-lg">
+					{{ useAuth()?.$state?.user?.bankAccount?.bankName ?? 'No Bank Name' }}
+				</span>
+			</div>
+		</div>
 
-	<template #footer>
-	  <Button label="Continue" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'offer')"/>
-	</template>
+		<template #footer>
+			<Button label="Continue" icon="iconly-Arrow-Right text-xl icli" class="primary" iconPos="right" @click="openDialog($event, 'offer')"/>
+		</template>
   </Dialog>
   <Dialog v-model:visible="offerDialog" class="back--type">
 	<template #header>
