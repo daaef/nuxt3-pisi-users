@@ -8,7 +8,18 @@
   opacity: 0;
   transform: translateX(100%);
 }
-tr{
+
+.view-enter-active,
+.view-leave-active {
+  transition: all 0.4s;
+}
+.view-enter-from,
+.view-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+tr {
   position: relative;
 }
 

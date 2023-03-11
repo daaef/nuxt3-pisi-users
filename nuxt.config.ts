@@ -1,7 +1,6 @@
 const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {defineNuxtConfig} from "nuxt/config";
-
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   app: {
@@ -36,78 +35,84 @@ export default defineNuxtConfig({
         },
       ],
     },
+    pageTransition: { name: "page", mode: "out-in" },
   },
   runtimeConfig: {
     // The private keys which are only available within server-side
     // Keys within public, will be also exposed to the client-side
     public: {
       api_url: process.env.BASE_URL,
-    }
+    },
   },
   modules: [
-      "@nuxtjs/tailwindcss",
-      '@nuxt-alt/auth',
-      '@nuxt-alt/http',
-      "@nuxt-alt/proxy",
-      "@pinia/nuxt",
-      '@formkit/nuxt',
-      '@sfxcode/nuxt-primevue',
-      '@vueuse/nuxt'
+    "@nuxtjs/tailwindcss",
+    "@nuxt-alt/auth",
+    "@nuxt-alt/http",
+    "@nuxt-alt/proxy",
+    "@pinia/nuxt",
+    "@formkit/nuxt",
+    "@sfxcode/nuxt-primevue",
+    "@vueuse/nuxt",
   ],
   // @ts-ignore
   primevue: {
     config: {
       ripple: true,
-      inputStyle: "filled"
+      inputStyle: "filled",
     },
     components: {
       // include: [...defaultPrimeVueComponents(true, true)],
-      force: ['DataTable', 'Column', 'Button',{name:'Message', global:true}],
-    }
+      force: [
+        "DataTable",
+        "Column",
+        "Button",
+        { name: "Message", global: true },
+      ],
+    },
   },
   proxy: {
     enableProxy: true,
     proxies: {
-      '/red': {
+      "/red": {
         target: "https://redonion-server.herokuapp.com/api/v1/redonion",
         changeOrigin: true,
         rewrite: (path: string) => {
-          console.log('path is', path)
-          return path.replace(/^\/red/, '')
+          console.log("path is", path);
+          return path.replace(/^\/red/, "");
         },
       },
-    }
+    },
   },
   http: {
     proxyHeaders: true,
     headers: {
-      accept: 'application/json, text/plain, */*'
-    }
+      accept: "application/json, text/plain, */*",
+    },
   },
   auth: {
     globalMiddleware: true,
     strategies: {
       local: {
         user: {
-          property: 'data.user',
-          autoFetch: true
+          property: "data.user",
+          autoFetch: true,
         },
         endpoints: {
-          login: { url: '/red/auth/sign-in', method: 'post' },
+          login: { url: "/red/auth/sign-in", method: "post" },
           logout: false,
-          user:  { url: '/red/user', method: 'get' }
+          user: { url: "/red/user", method: "get" },
         },
         token: {
-          property: 'data.accessToken',
-          maxAge: 1800
-        }
-      }
+          property: "data.accessToken",
+          maxAge: 1800,
+        },
+      },
     },
     redirect: {
-      login: '/auth/login',
-      logout: '/auth/login',
-      home: '/dashboard/',
-      callback: '/auth/login'
+      login: "/auth/login",
+      logout: "/auth/login",
+      home: "/dashboard/",
+      callback: "/auth/login",
     },
   },
   css: [
@@ -118,10 +123,10 @@ export default defineNuxtConfig({
     "primevue/resources/themes/lara-light-indigo/theme.css",
     "primevue/resources/primevue.css",
     "primeicons/primeicons.css",
-    '@sfxcode/formkit-primevue/dist/sass/formkit-prime-inputs.scss',
-    '@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss'
+    "@sfxcode/formkit-primevue/dist/sass/formkit-prime-inputs.scss",
+    "@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss",
   ],
   build: {
     transpile: ["primevue", "vue3-otp-input"], // fix dev error: Cannot find module 'vueuc'
   },
-})
+});
