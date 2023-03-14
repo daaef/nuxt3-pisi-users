@@ -5,6 +5,7 @@ import {generateClasses} from "@formkit/themes";
 
 // @ts-ignore
 function scrollToErrors(node) {
+    console.log('formkit node is', node)
     if (node.props.type === 'form') {
 // @ts-ignore
         function scrollTo(node) {
@@ -36,7 +37,12 @@ function scrollToErrors(node) {
     }
     return false
 }
-
+function defaultToEmptyString(node) {
+    console.log('formkit node is', node)
+    if (node.value === undefined) {
+        node.input('', false)
+    }
+}
 const config: DefaultConfigOptions = {
     inputs: primeInputs,
     config: {
@@ -49,6 +55,9 @@ const config: DefaultConfigOptions = {
                 label: 'label text-lg',
             },
             text: {
+                input: 'bg-base-content/10 input-bordered',
+            },
+            select: {
                 input: 'bg-base-content/10 input-bordered',
             },
             number: {
@@ -68,7 +77,7 @@ const config: DefaultConfigOptions = {
             }
         }),
     },
-    plugins: [scrollToErrors]
+    plugins: [defaultToEmptyString]
 }
 
 export default config

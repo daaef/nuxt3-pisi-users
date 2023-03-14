@@ -8,6 +8,7 @@ export const userStore = defineStore({
   id: "user",
   state: () => ({
     loading: false,
+    twoFA: null
   }),
   actions: {
     async addBank(payload) {
@@ -138,6 +139,20 @@ export const userStore = defineStore({
                 this.loading = false
                 success(undefined, 'Password reset successfully!')
                 useRouter().push('/auth/login')
+                // this.currencies = res.data.cryptoCurrencies
+            }).catch(err => {
+                this.loading = false
+                error(undefined, err)
+            })
+    },
+    async enable2FA(payload) {
+        await handler
+            .handle(usePisiFetch().auth.enable2fa, {
+                headers: { 'Authorization': useAuth().strategy.token.get() },
+                data: payload
+            }).then((res) => {
+                this.loading = false
+                this.twoFA = res
                 // this.currencies = res.data.cryptoCurrencies
             }).catch(err => {
                 this.loading = false

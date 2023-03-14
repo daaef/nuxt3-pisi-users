@@ -1,15 +1,15 @@
 <script setup>
 import {useStore} from "~/stores";
 import {useRouter} from "nuxt/app";
-import {info} from "../../components/ROToastAndConfirmService";
+
 const store = useStore()
 const router = useRouter();
-const selectedHistory = ref();
-const display = ref(false);
 const display2 = ref(false);
+/*const selectedHistory = ref();
+const display = ref(false);
 const rowClicked = (e)=> {
   router.push(`/dashboard/history/${e.data.key}`)
-}
+}*/
 
 </script>
 
@@ -18,8 +18,8 @@ const rowClicked = (e)=> {
 	<div class="page--data">
 	  <ROCreateSellOffer />
 	  <h4 class="header--title">History</h4>
-
-	  <DataTable @row-click="rowClicked" class="mt-7 history--table" :value="store.history" :paginator="true" :rows="7"
+<!--
+	  <DataTable @row-click="rowClicked" class="mt-7 history&#45;&#45;table" :value="store.history" :paginator="true" :rows="7"
 				 v-model:selection="selectedHistory" selectionMode="single" dataKey="key"
 				 stateStorage="local" stateKey="dt-history" responsiveLayout="scroll">
 		<Column field="sentAmount" header="Sent" :sortable="true" style="min-width:204px">
@@ -29,7 +29,7 @@ const rowClicked = (e)=> {
 				<i class="iconly-Arrow-Up icli text-primary"></i>
 			  </div>
 			  <div class="amount-up">
-				<div class="currency--holder">
+				<div class="currency&#45;&#45;holder">
 				  <ROCurrency type="currency" :icon="store[slotProps.data.sendCurrency]" />
 				</div>
 				<div class="cost mt-1">{{ store[slotProps.data.sendCurrency].icon }}{{ slotProps.data.sentAmount }}</div>
@@ -52,7 +52,7 @@ const rowClicked = (e)=> {
 		  <template #body="slotProps">
 			<div class="received-info flex justify-end items-center">
 			  <div class="amount-down text-right">
-				<div class="currency--holder">
+				<div class="currency&#45;&#45;holder">
 				  <ROCurrency type="currency" :icon="store[slotProps.data.recieveCurrency]" />
 				</div>
 				<div class="cost mt-1">{{ store[slotProps.data.recieveCurrency].icon }}{{ slotProps.data.recieveAmount }}</div>
@@ -66,7 +66,7 @@ const rowClicked = (e)=> {
 		<template #empty>
 		  No Data found.
 		</template>
-	  </DataTable>
+	  </DataTable>-->
 	</div>
 	<NuxtPage />
   </div>

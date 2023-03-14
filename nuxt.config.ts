@@ -35,7 +35,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: { name: "page", mode: "out-in" },
   },
   runtimeConfig: {
     // The private keys which are only available within server-side
@@ -45,6 +44,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxt/devtools',
     "@nuxtjs/tailwindcss",
     "@nuxt-alt/auth",
     "@nuxt-alt/http",

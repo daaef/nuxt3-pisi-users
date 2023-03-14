@@ -309,6 +309,7 @@ export const useStore = defineStore({
         date: "2022-10-13"
       },
     ],
+    message: null
   }),
   actions: {
     async fetchCryptoCurrencies() {
@@ -337,6 +338,15 @@ export const useStore = defineStore({
           .handle(usePisiFetch().util.getCountries)
           .then(res => {
             this.countries = res.countries
+          })
+    },
+    async sendMessage(payload) {
+      await handler
+          .handle(usePisiFetch().support.sendMessage, { headers: { 'Authorization': useAuth().strategy.token.get() },
+            data: payload
+          })
+          .then(res => {
+            this.message = res
           })
     },
   },

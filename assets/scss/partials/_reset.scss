@@ -145,12 +145,22 @@ body {
   }
   .formkit-inner {
     width: 100%;
+    .input {
+      height: unset;
+      min-height: 3rem;
+    }
+    select {
+      border: 1px solid #ced4da;
+    }
   }
 
   .custom--prime {
     .formkit-inner {
       & > div {
         width: 100%;
+      }
+      .input {
+        height: unset;
       }
     }
   }
