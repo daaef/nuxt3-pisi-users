@@ -348,7 +348,7 @@ export const useStore = defineStore({
           .then(res => {
             this.message = res
           })
-    },
+    }
   },
   getters: {
     userCountry: (state) => {

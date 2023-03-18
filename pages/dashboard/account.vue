@@ -128,8 +128,11 @@ onMounted(()=> {
 						<span>{{ useUtils()?.getCountry(useAuth()?.$state?.user?.countryId)?.name }}</span>
 					</div>
 				</div>
-				<div class="">
-					<Button @click.prevent="account = true" class="primary" label="Edit" icon="iconly-Edit icli" iconPos="right" />
+				<div class="" v-if="$route?.name === 'dashboard-account'">
+					<nuxt-link to="/dashboard/account/update-account" class="btn btn-primary">
+						<span>Edit</span>
+						<i class="iconly-Edit icli" />
+					</nuxt-link>
 				</div>
 			</div>
 			<NuxtPage />

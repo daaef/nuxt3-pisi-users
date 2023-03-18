@@ -83,9 +83,9 @@ export default {
   name: 'LoginView',
   setup(){
 	const auth = useAuth()
-	return {
-	  auth
-	}
+    return {
+      auth
+    }
   },
   data() {
     return {
@@ -100,15 +100,23 @@ export default {
     }
   },
   async mounted() {
+      if (useAuth()?.strategy.token.get()){
+          console.log('found token')
+          useRouter()?.push('/dashboard/')
+      }
   },
   methods: {
     async userLogin(e) {
       this.loading = true
-	  console.log('login data is', e)
         await this.$auth.loginWith('local', {
           body: e
         })
             .then(res => {
+                if (res?.data?.user?.twoFactorAuthType === "AUTH_APP"){
+                    this.$router.push(`/auth/twoFa/verify-app?userId=${res?.data?.user?.id}`)
+                } else if(res?.data?.user?.twoFactorAuthType === "EMAIL_OTP"){
+                    this.$router.push(`/auth/twoFa/verify-mail?userId=${res?.data?.user?.id}`)
+                }
                 this.loading = false
                 // this.currencies = res.data.cryptoCurrencies
             }).catch(e => {

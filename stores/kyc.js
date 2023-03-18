@@ -17,9 +17,7 @@ export const kycStore = defineStore({
           .handle(usePisiFetch().kyc.uploadSelfie, {
               headers: {
                   'Authorization': useAuth().strategy.token.get(),
-                  'Content-Type': 'multipart/form-data',
-                  'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-                  'Access-Control-Allow-Headers': 'Content-Type, Origin, Authorization'
+                  'Content-Type': 'multipart/form-data'
     },
               data: payload
             })
@@ -39,24 +37,22 @@ export const kycStore = defineStore({
               this.loading = false
           })
     },
-    async uploadIdDocument(payload) {
-      console.log('Uploading ID document')
-      this.loading = true
+    async updateSelfieUrl(payload) {
+        this.loading = true
+      console.log('uploading selfie', payload)
       await handler
-          .handle(usePisiFetch().kyc.uploadIdDocument, {
-              headers: { 'Authorization': useAuth().strategy.token.get() },
+          .handle(usePisiFetch().kyc.uploadSelfieUrl, {
+              headers: {
+                  'Authorization': useAuth().strategy.token.get(),
+            },
               data: payload
-          })
+            })
           .then(res => {
-            console.log('returned for uploadIdDocumet', res)
-            success(undefined, 'Successfully Uploaded Id Document')
-
-            this.loading = false
-            // useRouter().push({
-            //   path: '/auth/verify-email',
-            //   query: { email: payload?.email },
-            // })
+            success(undefined, 'Successfully updated Selfie')
+              useAuth()?.fetchUser()
             // this.currencies = res.data.cryptoCurrencies
+              useRouter().push('/dashboard/kyc')
+              this.loading = false
           }).catch(e => {
               if (typeof e !== 'string'){
                   e.forEach(err => {
@@ -65,7 +61,39 @@ export const kycStore = defineStore({
               } else {
                   error(undefined, e)
               }
+              this.loading = false
+          })
+    },
+    async uploadIdDocument(payload) {
+      console.log('Uploading ID document')
+      this.loading = true
+      await handler
+          .handle(usePisiFetch().kyc.uploadIDUrl, {
+              headers: { 'Authorization': useAuth().strategy.token.get() },
+              data: payload
+          })
+          .then(res => {
+            console.log('returned for uploadIdDocumet', res)
+            success(undefined, 'Successfully Uploaded Id Document')
+              useAuth()?.fetchUser()
+              // this.currencies = res.data.cryptoCurrencies
+              useRouter().push('/dashboard/kyc')
+
             this.loading = false
+            // useRouter().push({
+            //   path: '/auth/verify-email',
+            //   query: { email: payload?.email },
+            // })
+            // this.currencies = res.data.cryptoCurrencies
+          }).catch(e => {
+              this.loading = false
+              if (typeof e !== 'string'){
+                  e.forEach(err => {
+                      error(undefined, err)
+                  })
+              } else {
+                  error(undefined, e)
+              }
           })
     },
     async uploadUtilityBill(payload) {

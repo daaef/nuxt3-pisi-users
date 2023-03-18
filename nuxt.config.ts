@@ -3,16 +3,20 @@ const lifecycle = process.env.npm_lifecycle_event;
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
+  extends: [
+    'nuxt-seo-kit'
+  ],
   app: {
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      titleTemplate: "RedOnion - %s",
-      title: "Buy, trade, exchange!",
+      titleTemplate: (titleChunk) => {
+        return titleChunk ? `${titleChunk} - RedOnion` : 'RedOnion - Buy, trade, exchange!'
+      },
+      title: "RedOnion - Buy, trade, exchange!",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { hid: "description", name: "description", content: "" },
         { name: "format-detection", content: "telephone=no" },
       ],
       link: [
@@ -41,6 +45,10 @@ export default defineNuxtConfig({
     // Keys within public, will be also exposed to the client-side
     public: {
       api_url: process.env.BASE_URL,
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://redonion.io',
+      siteName: 'RedOnion - Buy, trade, exchange!',
+      siteDescription: 'Sign up now to find your best P2P match for free! Seamless cross-border value exchange. Make an offer for what you want at your own exchange rate.',
+      language: 'en', // prefer more explicit language codes like `en-AU` over `en`
     },
   },
   modules: [

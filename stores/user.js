@@ -8,7 +8,8 @@ export const userStore = defineStore({
   id: "user",
   state: () => ({
     loading: false,
-    twoFA: null
+    twoFA: null,
+    twoFAToken: null,
   }),
   actions: {
     async addBank(payload) {
@@ -120,10 +121,12 @@ export const userStore = defineStore({
 
               this.loading = false
         success(undefined, 'Check your mail for an otp')
-              useRouter().push({
-                  path: '/auth/complete-reset',
-                  query: { email: payload?.email },
-              })
+              if (useRoute()?.name !== 'dashboard-account-change-password') {
+                  useRouter().push({
+                      path: '/auth/complete-reset',
+                      query: {email: payload?.email},
+                  })
+              }
         // this.currencies = res.data.cryptoCurrencies
       }).catch(err => {
               this.loading = false
@@ -138,7 +141,9 @@ export const userStore = defineStore({
             }).then(() => {
                 this.loading = false
                 success(undefined, 'Password reset successfully!')
-                useRouter().push('/auth/login')
+                if (useRoute()?.name !== 'dashboard-account-change-password') {
+                    useRouter().push('/auth/login')
+                }
                 // this.currencies = res.data.cryptoCurrencies
             }).catch(err => {
                 this.loading = false
@@ -159,5 +164,72 @@ export const userStore = defineStore({
                 error(undefined, err)
             })
     },
+    async verifyAppToken(payload) {
+        this.loading = true
+      await handler
+          .handle(usePisiFetch().auth.verifyAppToken, { headers: { 'Authorization': useAuth().strategy.token.get() },
+              data: payload
+          })
+          .then(async res => {
+              console.log('app things', res)
+              await useAuth()?.strategy.token.set(res?.token)
+              await useAuth()?.strategy.token.sync()
+              console.log(useAuth()?.strategy.token.status())
+              useRouter()?.push('/dashboard/')
+              success(undefined, 'successfully verified')
+              this.twoFAToken = res
+              this.loading = false
+          })
+  },
+    async verifyOTP(payload) {
+          await handler
+              .handle(usePisiFetch().auth.verifyOTP, {
+                  data: payload
+              })
+              .then(async res => {
+                  console.log('Verify OTP code, got something', res)
+                  await useAuth()?.setUser(res?.user)
+                  await useAuth()?.setUserToken(res?.token)
+                  await useAuth()?.strategy.token.set(res?.token)
+                  await useAuth()?.strategy.token.sync()
+                  console.log(useAuth()?.strategy.token.status())
+                  // useRouter()?.push('/dashboard/')
+                  success('Successfully Verified!', 'Email 2FA Successfull')
+                  this.loading = false
+                  return Promise.resolve(res)
+                  // this.currencies = res.data.cryptoCurrencies
+              }).catch(e => {
+                  if (typeof e !== 'string'){
+                      e.forEach(err => {
+                          error(undefined, err)
+                      })
+                  } else {
+                      error(undefined, e)
+                  }
+                  this.loading = false
+              })
+      },
+    async updateUser(payload) {
+          await handler
+              .handle(usePisiFetch().user.updateUser, {
+                  data: payload
+              })
+              .then(async res => {
+                  console.log('Verify OTP code, got something', res)
+                  // useRouter()?.push('/dashboard/')
+                  success('Success!', 'User Updated')
+                  this.loading = false
+                  // this.currencies = res.data.cryptoCurrencies
+              }).catch(e => {
+                  if (typeof e !== 'string'){
+                      e.forEach(err => {
+                          error(undefined, err)
+                      })
+                  } else {
+                      error(undefined, e)
+                  }
+                  this.loading = false
+              })
+      },
   }
 });

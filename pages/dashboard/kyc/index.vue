@@ -2,36 +2,33 @@
   <div class="kyc--view flex justify-center">
     <div class="">
       <div class="card-body items-start bg-base-100/40 backdrop-blur">
-        <a href="#" @click="() => $router.go(-1)">
-          <i class="iconly-Arrow-Left icli"></i>
-        </a>
         <h2
           class="card-title w-full justify-center text-center font-medium text-h5"
         >
-          Welcome to Exchange! Let's get your profile set up
+          Welcome! Click on a step to perform the task
         </h2>
         <div class="w-full mt-2 kyc--panel-container">
-          <nuxt-link to="/dashboard/kyc/identity" class="kyc--panel w-full active--panel">
+          <nuxt-link to="/dashboard/kyc/selfie" class="kyc--panel w-full" :class="useAuth()?.$state?.user?.selfieImage ? 'pointer-events-none active--panel' : ''">
             <div class="number--text-container">
               <span class="number block">1</span>
               <span class="block ml-3 panel--title">Upload a Selfie</span>
             </div>
             <i class="iconly-Arrow-Right-2 text-white icli"></i>
           </nuxt-link>
-          <nuxt-link to="/dashboard/kyc/addAccount" class="kyc--panel w-full">
+          <nuxt-link to="/dashboard/kyc/identity" class="kyc--panel w-full" :class="useAuth()?.$state?.user?.identityDocument ? 'pointer-events-none active--panel' : ''">
             <div class="number--text-container">
               <span class="number block">2</span>
-              <span class="block ml-3 panel--title">Add account details</span>
+              <span class="block ml-3 panel--title">Upload an ID Document</span>
             </div>
             <i class="iconly-Arrow-Right-2 text-white icli"></i>
           </nuxt-link>
-          <div class="kyc--panel w-full">
+          <nuxt-link to="/dashboard/kyc/utility" class="kyc--panel w-full" :class="useAuth()?.$state?.user?.utilityBill ? 'pointer-events-none active--panel' : ''">
             <div class="number--text-container">
               <span class="number block">3</span>
-              <span class="block ml-3 panel--title">Set Transaction Pin</span>
+              <span class="block ml-3 panel--title">Upload a Utility Bill</span>
             </div>
             <i class="iconly-Arrow-Right-2 text-white icli"></i>
-          </div>
+          </nuxt-link>
         </div>
       </div>
     </div>
