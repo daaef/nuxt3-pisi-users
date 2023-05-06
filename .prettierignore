@@ -1,0 +1,21 @@
+### Nuxtjs template
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+
+node_modules
+*.log*
+.nitro
+.cache
+.output
+.env

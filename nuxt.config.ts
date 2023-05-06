@@ -1,17 +1,17 @@
-const lifecycle = process.env.npm_lifecycle_event;
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
+const lifecycle = process.env.npm_lifecycle_event;
 
 export default defineNuxtConfig({
-  extends: [
-    'nuxt-seo-kit'
-  ],
+  extends: ["nuxt-seo-kit"],
   app: {
     head: {
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       titleTemplate: (titleChunk) => {
-        return titleChunk ? `${titleChunk} - RedOnion` : 'RedOnion - Buy, trade, exchange!'
+        return titleChunk
+          ? `${titleChunk} - RedOnion`
+          : "RedOnion - Buy, trade, exchange!";
       },
       title: "RedOnion - Buy, trade, exchange!",
       meta: [
@@ -45,14 +45,15 @@ export default defineNuxtConfig({
     // Keys within public, will be also exposed to the client-side
     public: {
       api_url: process.env.BASE_URL,
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://redonion.io',
-      siteName: 'RedOnion - Buy, trade, exchange!',
-      siteDescription: 'Sign up now to find your best P2P match for free! Seamless cross-border value exchange. Make an offer for what you want at your own exchange rate.',
-      language: 'en', // prefer more explicit language codes like `en-AU` over `en`
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://redonion.io",
+      siteName: "RedOnion - Buy, trade, exchange!",
+      siteDescription:
+        "Sign up now to find your best P2P match for free! Seamless cross-border value exchange. Make an offer for what you want at your own exchange rate.",
+      language: "en", // prefer more explicit language codes like `en-AU` over `en`
     },
   },
   modules: [
-    '@nuxt/devtools',
+    "@nuxt/devtools",
     "@nuxtjs/tailwindcss",
     "@nuxt-alt/auth",
     "@nuxt-alt/http",
@@ -61,6 +62,7 @@ export default defineNuxtConfig({
     "@formkit/nuxt",
     "@sfxcode/nuxt-primevue",
     "@vueuse/nuxt",
+    // "@nuxtjs/eslint-module",
   ],
   // @ts-ignore
   primevue: {
