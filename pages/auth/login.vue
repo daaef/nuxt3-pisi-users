@@ -6,66 +6,62 @@
           Log in to get started
         </h2>
         <div class="w-full mt-4">
+          <FormKit type="form" :actions="false" @submit="userLogin">
             <FormKit
-                    type="form"
-                    :actions="false"
-                    @submit="userLogin"
+              label="Email"
+              name="email"
+              type="email"
+              placeholder="jon@snow.guard"
+              validation="required|email"
+              validation-visibility="live"
             >
-                <FormKit
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder="jon@snow.guard"
-                    validation="required|email"
-                    validation-visibility="live"
-                >
-                  <template #suffix="{ value, state }">
-                      <div class="loader" v-if="state.validating" />
-                      <div class="done" v-if="value && state.complete" />
-                  </template>
-                </FormKit>
-                <div class="relative">
-                  <FormKit
-                      :type="show ? 'text' : 'password'"
-                      name="password"
-                      label="Password"
-                      placeholder="Enter password"
-                      validation="required"
-                      validation-visibility="live"
-                      />
-                  <div
-                          class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 pass-eye"
-                  >
-                      <i
-                              class="iconly-Show icbo text-primary"
-                              :class="{ hidden: show, block: !show }"
-                              @click="show = !show"
-                      ></i>
-                      <i
-                              class="iconly-Hide icbo text-primary"
-                              :class="{ block: show, hidden: !show }"
-                              @click="show = !show"
-                      ></i>
-                  </div>
-                </div>
-                <div class="flex justify-end w-full my-1">
-                    <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
-                </div>
-                <FormKit
-                    type="submit"
-                    label="Log in"
-                    :input-class="loading ? 'loading' : ''"
-                    />
+              <template #suffix="{ value, state }">
+                <div v-if="state.validating" class="loader" />
+                <div v-if="value && state.complete" class="done" />
+              </template>
             </FormKit>
-            <div class="w-full mt-5">
-                <div class="w-full mt-5">
-                  <p class="text-center">
-                    By clicking continue, you agree to Exchange's
-                    <a href="#">Terms of Service</a> and
-                    <a href="#">Privacy Policy.</a>
-                  </p>
-                </div>
+            <div class="relative">
+              <FormKit
+                :type="show ? 'text' : 'password'"
+                name="password"
+                label="Password"
+                placeholder="Enter password"
+                validation="required"
+                validation-visibility="live"
+              />
+              <div
+                class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5 pass-eye"
+              >
+                <i
+                  class="iconly-Show icbo text-primary"
+                  :class="{ hidden: show, block: !show }"
+                  @click="show = !show"
+                ></i>
+                <i
+                  class="iconly-Hide icbo text-primary"
+                  :class="{ block: show, hidden: !show }"
+                  @click="show = !show"
+                ></i>
+              </div>
             </div>
+            <div class="flex justify-end w-full my-1">
+              <nuxt-link to="/auth/forgot-password">Forgot password</nuxt-link>
+            </div>
+            <FormKit
+              type="submit"
+              label="Log in"
+              :input-class="loading ? 'loading' : ''"
+            />
+          </FormKit>
+          <div class="w-full mt-5">
+            <div class="w-full mt-5">
+              <p class="text-center">
+                By clicking continue, you agree to Exchange's
+                <a href="#">Terms of Service</a> and
+                <a href="#">Privacy Policy.</a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,63 +69,69 @@
 </template>
 
 <script>
-import {error, success} from "~/services/ROToastAndConfirmService";
+import { error, success } from "~/services/ROToastAndConfirmService";
 
 definePageMeta({
-  layout: 'authentication',
-  auth: 'guest'
+  layout: "authentication",
+  auth: "guest",
 });
 export default {
-  name: 'LoginView',
-  setup(){
-	const auth = useAuth()
+  name: "LoginView",
+  setup() {
+    const auth = useAuth();
     return {
-      auth
-    }
+      auth,
+    };
   },
   data() {
     return {
       show: false,
       loading: false,
       message: false,
-      notification: '',
+      notification: "",
       login: {
-        email: '',
-        password: ''
-      }
-    }
+        email: "",
+        password: "",
+      },
+    };
   },
   async mounted() {
-      if (useAuth()?.strategy.token.get()){
-          console.log('found token')
-          useRouter()?.push('/dashboard/')
-      }
+    if (useAuth()?.strategy.token.get()) {
+      console.log("found token");
+      useRouter()?.push("/dashboard/");
+    }
   },
   methods: {
     async userLogin(e) {
-      this.loading = true
-        await this.$auth.loginWith('local', {
-          body: e
+      this.loading = true;
+      await this.$auth
+        .loginWith("local", {
+          body: e,
         })
-            .then(res => {
-                if (res?.data?.user?.twoFactorAuthType === "AUTH_APP"){
-                    this.$router.push(`/auth/twoFa/verify-app?userId=${res?.data?.user?.id}`)
-                } else if(res?.data?.user?.twoFactorAuthType === "EMAIL_OTP"){
-                    this.$router.push(`/auth/twoFa/verify-mail?userId=${res?.data?.user?.id}`)
-                }
-                this.loading = false
-                // this.currencies = res.data.cryptoCurrencies
-            }).catch(e => {
-                error('Login Failed!', e?.data?.msg)
-                this.loading = false
-            })
-    }
-  }
-}
+        .then((res) => {
+          if (res?.data?.user?.twoFactorAuthType === "AUTH_APP") {
+            this.$router.push(
+              `/auth/twoFa/verify-app?userId=${res?.data?.user?.id}`
+            );
+          } else if (res?.data?.user?.twoFactorAuthType === "EMAIL_OTP") {
+            this.$router.push(
+              `/auth/twoFa/verify-mail?userId=${res?.data?.user?.id}`
+            );
+          }
+          this.loading = false;
+          // this.currencies = res.data.cryptoCurrencies
+        })
+        .catch((e) => {
+          error("Login Failed!", e?.data?.msg);
+          this.loading = false;
+        });
+    },
+  },
+};
 </script>
 <style>
-  .pass-eye {
-      top: 47px;
-      height: 42px;
-  }
+.pass-eye {
+  top: 47px;
+  height: 42px;
+}
 </style>

@@ -67,7 +67,7 @@ export default defineNuxtConfig({
   // @ts-ignore
   primevue: {
     config: {
-      ripple: true,
+      ripple: false,
       inputStyle: "filled",
     },
     components: {
@@ -118,6 +118,7 @@ export default defineNuxtConfig({
         },
       },
     },
+    sessionStorage: true,
     redirect: {
       login: "/auth/login",
       logout: "/auth/login",
