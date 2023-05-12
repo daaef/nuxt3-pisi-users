@@ -14,14 +14,24 @@
               </div>
             </ClientOnly>
           </div>
-          <a
-            v-if="!imgSrc.length"
-            href="#"
-            class="cam--container"
-            @click.prevent="snapshot"
-          >
-            <i class="iconly-Camera icli"></i>
-          </a>
+          <div class="flex justify-center gap-4">
+            <a
+              v-if="!imgSrc.length"
+              href="#"
+              class="cam--container"
+              @click.prevent="snapshot"
+            >
+              <i class="iconly-Camera icli"></i>
+            </a>
+            <a
+              v-if="!imgSrc.length"
+              href="#"
+              class="cam--container"
+              @click.prevent="changeCamera"
+            >
+              <i class="iconly-More-Circle icli"></i>
+            </a>
+          </div>
           <a
             v-if="imgSrc.length"
             href="#"
@@ -74,8 +84,12 @@ export default {
     const image: any = ref(null);
     const imageFile: any = ref(null);
     const changeCamera = () => {
-      const device = devices[0];
-      camera.value?.changeCamera(device.deviceId);
+      camera?.value.devices(["videoinput"]).then((res) => {
+        const device = res[0];
+        camera.value?.changeCamera(device.deviceId);
+      });
+      /* const device = devices[0];
+      camera.value?.changeCamera(device.deviceId); */
     };
     const blobToFile = (theBlob: Blob, fileName: string): File => {
       return new File(
